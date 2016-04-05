@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingBottom="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="15dp">
+
+        <TextView
+            android:id="@+id/tv_message_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:singleLine="true"
+            android:text="消息中心每个条目的标题"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/title_size" />
+
+
+        <TextView
+            android:id="@+id/tv_message_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:maxLength="44"
+            android:textColor="@color/black"
+            android:text="消息中心每个条目的描述，消息中心每个条目的描述，消息中心每个条目的描的描的描······"
+            android:textSize="@dimen/min_size" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_publish_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="2小时前"
+                android:textColor="@color/black"
+                android:textSize="@dimen/content_size" />
+
+            <TextView
+                android:id="@+id/tv_show_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(查看详情)"
+                android:textColor="@color/blue"
+                android:paddingRight="15dp"
+                android:textSize="@dimen/content_size" />
+
+            <View
+                android:id="@+id/view_1"
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:layout_alignBottom="@id/tv_username"
+                android:layout_alignTop="@id/tv_username"
+                android:layout_toRightOf="@id/tv_username"
+                android:background="@color/divider" />
+
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:src="@drawable/delete" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

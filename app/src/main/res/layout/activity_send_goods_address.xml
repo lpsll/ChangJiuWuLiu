@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_back_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_serch_address">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/serch_address" />
+
+        <EditText
+            android:id="@+id/ed_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/car_gray"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="18dp"
+            android:layout_weight="1"
+            android:maxLength="60"
+            android:textColor="@color/black"
+            android:hint="@string/address_detail"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/img_clean"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="8dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/cancel" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_send_address_comfir"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/no_order_btn"
+        android:gravity="center"
+        android:text="@string/ok"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"/>
+</LinearLayout>

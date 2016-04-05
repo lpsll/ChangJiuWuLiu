@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/light_gray">
+    <include layout="@layout/layout_back_title"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/my_item_bg_shape"
+        android:orientation="horizontal"
+
+        android:id="@+id/ll_select_begin_city">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="17dp"
+            android:src="@drawable/location" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
+            android:hint="请选择出发城市"
+            android:textSize="@dimen/content_size"
+            android:id="@+id/select_city_begin"
+            android:textColor="@color/black"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/right_arrow"
+            android:layout_marginRight="17dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/my_item_bg_shape"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="17dp"
+            android:src="@drawable/adress2" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
+            android:hint="请填写目的城市"
+            android:textSize="@dimen/content_size"
+            android:textColor="@color/black"
+            android:id="@+id/destilation_city" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="17dp"
+            android:src="@drawable/right_arrow" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="确认"
+        android:textColor="@color/black"
+        android:textSize="@dimen/button_size"
+        android:background="@drawable/no_order_btn"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查询结果"
+            android:layout_marginBottom="10dp"
+            android:textSize="@dimen/content_size"
+            android:textColor="@color/black"/>
+        <TextView
+            android:padding="5dp"
+            android:background="@drawable/rectangle_white_shape"
+            android:id="@+id/tv_query_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="4"
+            android:textSize="@dimen/content_size"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:layout_marginTop="50dp"
+        android:id="@+id/vp_route_foot"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="bottom"
+        />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

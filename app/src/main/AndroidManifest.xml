@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.htlc.cjwl"
+    >
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+     
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="0386c83aa438b52520dfe93c3ea088f1" />
+
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MessageCenterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PersonalInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PreModifyPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ModifyPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ModifyTelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SettingTelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SettingPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ServiceDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.WebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CallServiceTelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RuteQueryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NetworkQueryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CityListActivity"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".activity.OrderInfoActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.SelectRuteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddAdressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DepartureCityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SelectCarNumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OrderConfirActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SendGoodsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SendGoodsAddressActivity"
+            android:screenOrientation="portrait"
+            android:sharedUserId="android.uid.system"/>
+        <activity
+            android:name=".activity.GetGoodsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GetGoodsAddressActivity"
+            android:screenOrientation="portrait"
+            android:sharedUserId="android.uid.system" />
+        <activity
+            android:name=".activity.BuyInsuranceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DestinationActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.GetWayActivity"/>
+        <activity android:name=".activity.SendWayActivity"/>
+
+    </application>
+
+</manifest>

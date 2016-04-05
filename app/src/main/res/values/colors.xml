@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#464646</color>
+    <color name="light_gray">#F5F5F5</color>
+    <color name="black">#3c3c3c</color>
+    <color name="red">#ff0000</color>
+    <color name="blue">#0a198c</color>
+    <color name="black_bg_title">#343434</color>
+    <color name="black_bg_tab">#0c0c0c</color>
+    <color name="bg_pop">#85313130</color>
+    <!-- indicator-->
+    <color name="slidingtab_indicatorcolor">#0B198C</color>
+
+    <!--my-->
+    <color name="my_v">#FF5001</color>
+    <!--login-->
+    <color name="divider">#D7D7D7</color>
+    <color name="order">#0a198c</color>
+    <color name="rmb">#ff5001</color>
+    <!-- car_icon-->
+    <color name="car_gray">#dcdcdc</color>
+    <color name="address_location">#969696</color>
+
+    <!--orders-->
+    <color name="orders_gray_text">#bebebe</color>
+    <color name="right_bg">#696969</color>
+    <color name="blur_bg">#FFFAF0</color>
+</resources>

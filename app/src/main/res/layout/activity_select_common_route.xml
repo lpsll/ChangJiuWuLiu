@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_back_title" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="18dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/common_route_img"></ImageView>
+
+        <ImageView
+            android:id="@+id/add_address"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:src="@drawable/common_route_img2" />
+    </FrameLayout>
+
+    <!--
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/ptr_common_rute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="#00000000"
+        android:divider="@color/light_gray"
+        android:dividerHeight="18dp"
+        android:fadingEdge="none"
+        android:background="@color/white"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true"
+        android:listSelector="@android:color/transparent"
+        android:orientation="vertical">
+
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
+    -->
+    <com.htlc.cjwl.widget.SwipeListView
+        android:id="@+id/lv_as"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/light_gray"
+        android:dividerHeight="12dp" />
+
+
+</LinearLayout>

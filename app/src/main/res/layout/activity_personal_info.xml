@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray">
+    <include layout="@layout/layout_back_title"/>
+    <LinearLayout
+        android:id="@+id/ll_modify_tel"
+        style="@style/LinearLayoutItemStyle">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/modify_tel"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="@dimen/content_size"/>
+        <TextView
+            android:id="@+id/tv_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:gravity="center_vertical"
+            android:paddingRight="15dp"
+            android:textSize="@dimen/content_size"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/right_arrow"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_modify_password"
+        android:gravity="center_vertical"
+        style="@style/LinearLayoutItemStyle"
+        android:layout_marginTop="2dp">
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/modify_password"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/content_size"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/right_arrow"/>
+    </LinearLayout>
+
+</LinearLayout>

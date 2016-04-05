@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_all"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_back_title" />
+
+    <LinearLayout
+        android:id="@+id/ll_all2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_all1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_stander_car"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/my_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="17dp"
+                    android:layout_weight="1"
+                    android:text="@string/ordinary_cars"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_od_car_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:text="1"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="17dp"
+                    android:src="@drawable/right_arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_stander_suv"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/my_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="17dp"
+                    android:layout_weight="1"
+                    android:text="@string/stander_suv"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/tv_stsuv_car_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:text="1"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="17dp"
+                    android:src="@drawable/right_arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_big_suv"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/my_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="17dp"
+                    android:layout_weight="1"
+                    android:text="@string/big_suv"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/tv_bigsuv_car_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:text="1"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="17dp"
+                    android:src="@drawable/right_arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_other_car"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/my_item_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="17dp"
+                    android:layout_weight="1"
+                    android:text="@string/other_car"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/tv_other_car_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:text="1"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="17dp"
+                    android:src="@drawable/right_arrow" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/no_order_btn"
+            android:gravity="center"
+            android:text="@string/ok"
+            android:textColor="@color/black" />
+    </LinearLayout>
+</LinearLayout>

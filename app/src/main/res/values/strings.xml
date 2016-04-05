@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">长久物流</string>
+    <string name="home_fragment_title">长久运车</string>
+    <string name="home_fragment_name">运车</string>
+    <string name="orders_fragment_title">我的订单</string>
+    <string name="orders_fragment_name">我的订单</string>
+    <string name="service_fragment_title">产品推介</string>
+    <string name="service_fragment_name">产品推介</string>
+    <string name="my_fragment_title">我的</string>
+    <string name="my_fragment_name">我的</string>
+
+    <!--home-->
+    <string name="consign">我要运车</string>
+    <string name="call_service_tel">一键客服</string>
+    <string name="route_query">路线查询</string>
+    <string name="network_query">网点查询</string>
+    <string name="show_more">查看更多</string>
+    <string name="more_network">更多网点</string>
+
+    <!--my-->
+    <string name="rank">等级：</string>
+    <string name="tel">电话：</string>
+    <string name="my_money">我的退款</string>
+    <string name="my_bill">我的发票</string>
+    <string name="my_address">我的地址</string>
+    <string name="my_score">我的积分</string>
+    <string name="message_center">消息中心</string>
+    <string name="setting">设置</string>
+    <string name="login">登录</string>
+    <string name="logout">安全退出</string>
+    <string name="register">注册</string>
+    <string name="hint_tel">请输入手机号</string>
+    <string name="hint_pwd">请输入登录密码</string>
+    <string name="username">用户名</string>
+    <string name="pwd">密码</string>
+    <string name="forget_pwd">忘记密码?</string>
+    <string name="feedback">意见反馈</string>
+    <string name="personal_info">个人信息</string>
+    <string name="modify_tel">更换手机</string>
+    <string name="modify_password">修改密码</string>
+    <string name="binding_tel">绑定手机</string>
+    <string name="setting_new_tel">设置新手机</string>
+    <string name="next">下一步</string>
+
+    <!-- 我要运车-->
+    <string name="departure_city">出发城市</string>
+    <string name="hot_city">热门城市</string>
+    <string name="car_models">车型：</string>
+    <string name="car_num">数量：</string>
+    <string name="car_price">价格：</string>
+    <string name="insurance_amount">保单金额：</string>
+    <string name="order_immediately">立即下单</string>
+    <string name="ordinary_cars">普通轿车</string>
+    <string name="car_type">车型类别</string>
+    <string name="stander_suv">标准SUV</string>
+    <string name="big_suv">大型SUV</string>
+    <string name="other_car">其他车型</string>
+    <string name="from_city_name">北京</string>
+    <string name="to_city_name">重庆</string>
+    <string name="car_msg">车辆信息</string>
+    <string name="insurance">我要投保</string>
+    <string name="number">数量</string>
+    <string name="send_way">发车方式</string>
+    <string name="get_way">提车方式</string>
+    <string name="ok">确认</string>
+    <string name="input_phone">请输入联系电话</string>
+    <string name="address_detail">请输入详细地址</string>
+
+
+
+    <!--Service fragment-->
+    <string name="oders">我要下单</string>
+    <string name="detail">详情</string>
+
+    <!--order-->
+    <string name="no_order_hint">您当前还没有货单，请先去发货吧！</string>
+    <string name="no_oder_send">现在去发货</string>
+    <string-array name="order_state_title">
+        <item>全部</item>
+        <item>待确认</item>
+        <item>代收款</item>
+        <item>在途跟踪</item>
+        <item>已收车</item>
+    </string-array>
+
+    <!--tips 网络请求提示信息-->
+    <string name="network_error">网络出错！</string>
+    <string name="request_failed_verification">获取验证码失败！</string>
+    <string name="request_success_verification">获取验证码成功！</string>
+</resources>

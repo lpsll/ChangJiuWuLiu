@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_back_title" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:scaleType="fitXY"
+                android:id="@+id/iv_service_detail"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="15dp"
+
+                 />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="详情"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:id="@+id/tv_service_detail_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="@dimen/content_size" />
+
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_service_detail_orders"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/no_order_btn"
+                android:gravity="center"
+                android:text="@string/oders"
+                android:textColor="@color/black"
+                android:textSize="@dimen/button_size" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
