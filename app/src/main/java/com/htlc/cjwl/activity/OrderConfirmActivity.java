@@ -1,0 +1,82 @@
+package com.htlc.cjwl.activity;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.htlc.cjwl.R;
+import com.htlc.cjwl.bean.AddressInfo;
+
+import java.util.ArrayList;
+
+import model.CarInfoBean;
+
+/**
+ * Created by Larno on 16/04/07.
+ */
+public class OrderConfirmActivity extends Activity {
+    public static final String OrderDetail = "OrderDetail";
+    private TextView textTitle,textFromAddress,textToAddress,
+            textCarTypeNameArray,textCarNumArray,textPrice;
+    private EditText editFromUsername,editFromTel,editFromUserCard,
+            editToUsername,editToTel,editToUserCard;
+    private LinearLayout linearCarCardContainer;
+    private ArrayList<CarInfoBean> carArray;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_order_confirmation);
+        getIntent().getStringExtra(OrderDetail);
+        initView();
+    }
+
+    private void initView() {
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        textTitle = (TextView) findViewById(R.id.tv_activity_title);
+        textTitle.setText("订单确认");
+        textFromAddress = (TextView) findViewById(R.id.textFromAddress);
+        textToAddress = (TextView) findViewById(R.id.textToAddress);
+        textCarTypeNameArray = (TextView) findViewById(R.id.textCarTypeNameArray);
+        textCarNumArray = (TextView) findViewById(R.id.textCarNumArray);
+        textPrice = (TextView) findViewById(R.id.textPrice);
+
+        editFromUsername = (EditText) findViewById(R.id.editFromUsername);
+        editFromTel = (EditText) findViewById(R.id.editFromTel);
+        editFromUserCard = (EditText) findViewById(R.id.editFromUserCard);
+
+        editToUsername = (EditText) findViewById(R.id.editToUsername);
+        editToTel = (EditText) findViewById(R.id.editToTel);
+        editToUserCard = (EditText) findViewById(R.id.editToUserCard);
+
+        linearCarCardContainer = (LinearLayout) findViewById(R.id.linearCarCardContainer);
+        initLinearCarCardContainer();
+    }
+    private void initLinearCarCardContainer() {
+        carArray = new ArrayList<>();
+        carArray.add(new CarInfoBean());
+        carArray.add(new CarInfoBean());
+        carArray.add(new CarInfoBean());
+        carArray.add(new CarInfoBean());
+        carArray.add(new CarInfoBean());
+        for (int i = 0; i < carArray.size(); i++) {
+            Log.e("Car", carArray.get(i).carName + ";num=" + carArray.get(i).carNum);
+            LinearLayout linearLayout = (LinearLayout) View.inflate(this,R.layout.layout_car_card,null);
+//            TextView textCarName = (TextView) linearLayout.findViewById(R.id.textCarName);
+//            textCarName.setText(carArray.get(i).carName);
+//            TextView textCarNum = (TextView) linearLayout.findViewById(R.id.textCarNum);
+//            textCarNum.setText(carArray.get(i).carNum);
+            linearLayout.setTag(i);
+            linearCarCardContainer.addView(linearLayout);
+        }
+    }
+}

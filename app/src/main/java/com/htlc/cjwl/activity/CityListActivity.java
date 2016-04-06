@@ -34,8 +34,6 @@ public class CityListActivity  extends AppCompatActivity implements View.OnClick
         fragment.setFlag(Constant.TYPE_FRAGMENT_CITY_LIST_MORE);
         fragmentTransaction.replace(R.id.fl_container, fragment);
         fragmentTransaction.commit();
-
-
     }
 
 

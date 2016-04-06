@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.htlc.cjwl.R;
+import com.htlc.cjwl.bean.CityInfoBean;
 import com.htlc.cjwl.bean.HotCity;
 
 import java.util.List;
@@ -19,14 +20,14 @@ import java.util.List;
 public class HotcityAdapter extends BaseAdapter {
 
     private Context context;
-    private List<HotCity> list;
+    private List<CityInfoBean> list;
     private TextView hotCity;
     private int clickTemp = -1;
     //标识选择的Item
     public void setSeclection(int position) {
         clickTemp = position;
     }
-    public HotcityAdapter(Context context, List<HotCity> list) {
+    public HotcityAdapter(Context context, List<CityInfoBean> list) {
         this.context = context;
         this.list = list;
 
@@ -51,7 +52,7 @@ public class HotcityAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout view = (LinearLayout) convertView.inflate(context, R.layout.layout_hot_city_item,null);
         TextView tv = (TextView) view.getChildAt(0);
-        tv.setText(list.get(position).getCityname());
+        tv.setText(list.get(position).cityname);
         tv.setBackgroundResource(R.drawable.hot_city_btn0);
         if (clickTemp == position) {
             tv.setBackgroundResource(R.drawable.hot_city_btn1);

@@ -4,6 +4,8 @@ package api;
 import api.net.okhttp.callback.ResultCallback;
 
 public interface Api {
+    String[] TransportWayArray = {"1","2","3","5"};
+
     String Host = "http://t2.damaimob.com/";
     String SendSmsCode = Host + "Home/CYUser/getMobileCode";
     String Register = Host + "Home/CYUser/user_register";
@@ -16,11 +18,19 @@ public interface Api {
     String ResetTel = Host + "Home/CYUser/reSetUserMobile";
 
     String OrderList = Host + "Home/CYOrder/getOrderList";
+    String LastOrderDetail = Host + "Home/CYTransport/transportCarInfo";
+    String TransportWay = Host + "Home/CYTransport/transportMethod";
 
     String HomeBanner = Host + "Home/CYBanner/getBannerList";
     String ServiceList = Host + "Home/CYService/getServiceList";
     String ServiceLocalDetail = Host + "Home/CYService/getServiceInfo";
     String ServiceHtmlDetail = Host + "Home/CYService/info?service_ID=%1$s";
+    String HotCity = Host + "Home/CYCitys/hotCitysList";
+    String CityList = Host + "Home/CYCitys/moreHotCitysList";
+    String CityHtmlDetail = Host + "Home/CYCitys/cityInfo?id=%1$s";
+    String ProtocolTransport = "http://www.youdao.com/search?q="+"运输协议"+"&keyfrom=dict.top";
+    String ProtocolRefund = "http://www.youdao.com/search?q="+"退款规则"+"&keyfrom=dict.top";
+    String ProtocolService = "http://www.youdao.com/search?q="+"服务协议"+"&keyfrom=dict.top";
 
 
     /**
@@ -99,6 +109,19 @@ public interface Api {
     void orderList(String order_status, String page, ResultCallback<String> callback);
 
     /**
+     * 获取最后一笔订单的详细信息
+     * @param callback
+     */
+    void lastOrderDetail(ResultCallback<String> callback);
+
+    /**
+     * 设置发车或取车方式时，用于获取当前城市营业网点详情
+     * @param cityName 城市名称
+     * @param callback
+     */
+    void transportWay(String cityName, ResultCallback<String> callback);
+
+    /**
      *
      * @param callback
      * 返回说明：{"code": "1","msg": "请求成功","data": [{"id": "3","image": "http://t2.IC5d.jpg",--图片地址
@@ -123,4 +146,11 @@ public interface Api {
      */
     void serviceLocalDetail(String serviceId, ResultCallback<String> callback);
 
+    /**
+     * 热门城市列表
+     * @param callback 返回说明：{"code": "1","msg": "密码修改成功","data": [{"id": "1","cityname": "安阳"}]}
+     */
+    void hotCity(ResultCallback<String> callback);
+
+    void cityList(ResultCallback<String> callback);
 }

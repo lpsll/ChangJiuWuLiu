@@ -14,13 +14,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
+import com.htlc.cjwl.activity.SelectCityForAddressActivity;
 import com.htlc.cjwl.activity.WebActivity;
 import com.htlc.cjwl.adapter.CitysListAdapter;
 import com.htlc.cjwl.bean.CityInfoBean;
 import com.htlc.cjwl.util.Constant;
 import com.htlc.cjwl.util.JsonUtil;
 import com.htlc.cjwl.util.LogUtil;
+import com.htlc.cjwl.util.ToastUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +32,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import api.Api;
+import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/5.
@@ -74,6 +80,24 @@ public class CityListFragment extends Fragment implements View.OnClickListener,A
      * 获取城市列表的数据，并解析
      */
     private void initData() {
+        App.appAction.cityList(new ActionCallbackListener<String>() {
+            @Override
+            public void onSuccess(String data) {
+                try {
+                    JSONObject jsonObj = new JSONObject(data);
+                    parseJson(jsonObj);
+                    initQickIndex();
+                    adapter = new CitysListAdapter(list);
+                    lv_city_list.setAdapter(adapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                ToastUtil.showToast(App.app,message);
+            }
+        });
     }
 
     /**
@@ -150,16 +174,15 @@ public class CityListFragment extends Fragment implements View.OnClickListener,A
         if(flag==Constant.TYPE_FRAGMENT_CITY_LIST_MORE){
             LogUtil.i(this,list.get(position).name+"---查看网点详情");
             Intent intent = new Intent(getActivity(), WebActivity.class);
-            // TODO: 2015/11/17 添加网点的html页面地址
-            String url = String.format("",list.get(position).id);
+            String url = String.format(Api.CityHtmlDetail,list.get(position).id);
             intent.putExtra(Constant.SERVICE_DETAIL_ID, url);
             intent.putExtra(Constant.SERVICE_DETAIL_TITLE,"网点详情");
             startActivity(intent);
         }else if(flag==Constant.TYPE_FRAGMENT_CITY_LIST_HOT){
             LogUtil.i(this, list.get(position).name + "---返回地址");
             Intent intent = new Intent();
-            intent.putExtra("KEY_TEST", list.get(position).name);
-            intent.putExtra("ID", list.get(position).id);
+            intent.putExtra(SelectCityForAddressActivity.SelectCityName, list.get(position).name);
+            intent.putExtra(SelectCityForAddressActivity.SelectCityID, list.get(position).id);
             getActivity().setResult(Activity.RESULT_OK, intent);
             getActivity().finish();
         }

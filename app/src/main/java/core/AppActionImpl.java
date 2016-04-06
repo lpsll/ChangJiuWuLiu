@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
+import com.htlc.cjwl.bean.CityInfoBean;
 import com.htlc.cjwl.bean.HomeBannerInfo;
 import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.bean.ServiceDetailInfoBean;
@@ -435,6 +436,40 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
+    public void lastOrderDetail(ActionCallbackListener<String> listener) {
+
+    }
+
+    @Override
+    public void transportWay(String cityName, final ActionCallbackListener<String> listener) {
+        api.transportWay(cityName, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String address = jsonObject.getJSONObject("data").getString("address");
+                        listener.onSuccess(address);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
     public void homeBanner(final ActionCallbackListener<ArrayList<HomeBannerInfo>> listener) {
         api.homeBanner(new ResultCallback<String>() {
             @Override
@@ -516,6 +551,66 @@ public class AppActionImpl implements AppAction {
                         String jsonObj = jsonObject.getString("data");
                         ServiceDetailInfoBean bean = JsonUtil.parseJsonToBean(jsonObj, ServiceDetailInfoBean.class);
                         listener.onSuccess(bean);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void hotCity(final ActionCallbackListener<ArrayList<CityInfoBean>> listener) {
+        api.hotCity(new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String jsonArray = jsonObject.getString("data");
+                        ArrayList<CityInfoBean> array = (ArrayList<CityInfoBean>) JsonUtil.parseJsonToList(jsonArray,
+                                new TypeToken<ArrayList<CityInfoBean>>() {
+                                }.getType());
+                        listener.onSuccess(array);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void cityList(final ActionCallbackListener<String> listener) {
+        api.cityList(new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                       listener.onSuccess(response);
                     } else {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);

@@ -99,42 +99,46 @@
             android:name=".activity.OrderInfoActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".activity.SelectCityForAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CarTypeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.SetDetailWithNoLocationActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.SetDetailWithLocationActivity"
+            android:screenOrientation="portrait"
+            android:sharedUserId="android.uid.system" />
+
+
+
+        <activity
             android:name=".activity.SelectRuteActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AddAdressActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.DepartureCityActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.SelectCarNumActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.OrderConfirActivity"
+            android:name=".activity.OrderConfirmActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SendGoodsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SendGoodsAddressActivity"
-            android:screenOrientation="portrait"
-            android:sharedUserId="android.uid.system"/>
-        <activity
             android:name=".activity.GetGoodsActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.GetGoodsAddressActivity"
-            android:screenOrientation="portrait"
-            android:sharedUserId="android.uid.system" />
         <activity
             android:name=".activity.BuyInsuranceActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.DestinationActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.GetWayActivity"/>
-        <activity android:name=".activity.SendWayActivity"/>
+        <activity android:name=".activity.TransportWayActivity"/>
 
     </application>
 

@@ -4,19 +4,19 @@
     android:layout_height="match_parent"
     android:background="@color/light_gray"
     android:orientation="vertical">
+
     <include layout="@layout/layout_back_title" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="24dp"
         android:layout_marginLeft="17dp"
         android:layout_marginRight="17dp"
         android:orientation="horizontal"
         android:background="@drawable/bg_serch_address">
         <ImageView
-            android:id="@+id/iv_map_locator"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
@@ -29,11 +29,11 @@
             android:layout_height="wrap_content"
             android:background="@color/car_gray"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="12dp"
-            android:maxLength="60"
+            android:layout_marginLeft="18dp"
             android:layout_weight="1"
+            android:maxLength="60"
             android:textColor="@color/black"
-            android:hint="请输入地点 如：朝阳区"
+            android:hint="@string/address_detail"
             android:textSize="14sp" />
 
         <ImageView
@@ -44,44 +44,19 @@
             android:layout_gravity="center_vertical"
             android:src="@drawable/cancel" />
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/ll_amap_location"
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:background="@color/white"
-        android:orientation="vertical"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="12dp"
-            android:text="中国"
-            android:textSize="14sp"
-            android:textColor="@color/black"
-            android:id="@+id/tv_amap_desc" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="10dp"
-            android:textSize="14sp"
-            android:text="定位地址"
-            android:textColor="@android:color/darker_gray"
-            android:id="@+id/tv_amap_location" />
-    </LinearLayout>
+
+
     <TextView
         android:id="@+id/tv_get_comfir"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/no_order_btn"
         android:gravity="center"
         android:text="@string/ok"
-        android:textColor="@color/black"
         android:textSize="14sp"
+        android:textColor="@color/black"
         android:layout_marginLeft="17dp"
         android:layout_marginRight="17dp"/>
 </LinearLayout>

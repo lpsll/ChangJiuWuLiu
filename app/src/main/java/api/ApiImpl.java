@@ -116,6 +116,24 @@ public class ApiImpl implements Api {
     }
 
     @Override
+    public void lastOrderDetail(ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
+        String url = Api.LastOrderDetail;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void transportWay(String cityName, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("cityname", cityName);
+        String url = Api.TransportWay;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
     public void homeBanner(ResultCallback<String> callback) {
         String url = Api.HomeBanner;
         new OkHttpRequest.Builder().url(url).get(callback);
@@ -133,5 +151,17 @@ public class ApiImpl implements Api {
         params.put("service_ID", serviceId);
         String url = Api.ServiceLocalDetail;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void hotCity(ResultCallback<String> callback) {
+        String url = Api.HotCity;
+        new OkHttpRequest.Builder().url(url).get(callback);
+    }
+
+    @Override
+    public void cityList(ResultCallback<String> callback) {
+        String url = Api.CityList;
+        new OkHttpRequest.Builder().url(url).get(callback);
     }
 }

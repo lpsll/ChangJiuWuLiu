@@ -17,14 +17,17 @@ import com.htlc.cjwl.activity.CallServiceTelActivity;
 import com.htlc.cjwl.activity.NetworkQueryActivity;
 import com.htlc.cjwl.activity.OrderInfoActivity;
 import com.htlc.cjwl.activity.RuteQueryActivity;
+import com.htlc.cjwl.activity.WebActivity;
 import com.htlc.cjwl.adapter.HomeAdapter;
 import com.htlc.cjwl.bean.HomeBannerInfo;
+import com.htlc.cjwl.util.Constant;
 import com.htlc.cjwl.util.LogUtil;
 import com.htlc.cjwl.util.LoginUtil;
 import com.htlc.cjwl.util.ToastUtil;
 
 import java.util.ArrayList;
 
+import api.Api;
 import core.ActionCallbackListener;
 
 
@@ -118,7 +121,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.ib_home_rute_query:
                 LogUtil.i(this, "ib_home_rute_query");
-                Intent intent_rute_query = new Intent(getActivity(), RuteQueryActivity.class);
+//                Intent intent_rute_query = new Intent(getActivity(), RuteQueryActivity.class);
+                Intent intent_rute_query = new Intent(getActivity(), WebActivity.class);
+                String serviceID = String.format(Api.ServiceHtmlDetail,"20");
+                intent_rute_query.putExtra(Constant.SERVICE_DETAIL_ID, serviceID);
+                intent_rute_query.putExtra(Constant.SERVICE_DETAIL_TITLE, "托运须知");
                 startActivity(intent_rute_query);
                 break;
             case R.id.ib_home_phone:

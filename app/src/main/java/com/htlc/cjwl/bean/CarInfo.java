@@ -1,7 +1,7 @@
 package com.htlc.cjwl.bean;
 
 /**
- * Created by luochuan on 15/11/4.
+ * Created by Larno on 15/11/4.
  */
 public class CarInfo {
 

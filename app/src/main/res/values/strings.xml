@@ -57,8 +57,8 @@
     <string name="other_car">其他车型</string>
     <string name="from_city_name">北京</string>
     <string name="to_city_name">重庆</string>
-    <string name="car_msg">车辆信息</string>
-    <string name="insurance">我要投保</string>
+    <string name="car_msg">品牌/车型</string>
+    <string name="insurance">投保车辆价值</string>
     <string name="number">数量</string>
     <string name="send_way">发车方式</string>
     <string name="get_way">提车方式</string>

@@ -10,17 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.RouteQueryAdapter;
-import com.htlc.cjwl.bean.RouteQueryBean;
-import com.htlc.cjwl.bean.RouteQueryFootBean;
 import com.htlc.cjwl.bean.RouteQueryFootInfoBean;
-import com.htlc.cjwl.util.CommonUtil;
-import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.JsonUtil;
 import com.htlc.cjwl.util.LogUtil;
 import com.htlc.cjwl.util.ToastUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -124,12 +116,12 @@ public class RuteQueryActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.select_city_begin:
                 LogUtil.i(this, "select_city_begin");
-                Intent intent1 = new Intent(this, DepartureCityActivity.class);
+                Intent intent1 = new Intent(this, SelectCityForAddressActivity.class);
                 startActivityForResult(intent1,0);
                 break;
             case R.id.destilation_city:
                 LogUtil.i(this, "destilation_city");
-                Intent intent2 = new Intent(this, DepartureCityActivity.class);
+                Intent intent2 = new Intent(this, SelectCityForAddressActivity.class);
                 startActivityForResult(intent2,1);
                 break;
             case R.id.tv_confirm:

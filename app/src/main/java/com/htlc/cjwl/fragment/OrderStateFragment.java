@@ -159,7 +159,7 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener 
     }
 
     private void goShopping() {
-        if (LoginUtil.isOnline()) {
+        if (!LoginUtil.isOnline()) {
             startActivity(new Intent(getActivity(), LoginActivity.class));
         } else {
             startActivity(new Intent(getActivity(), OrderInfoActivity.class));

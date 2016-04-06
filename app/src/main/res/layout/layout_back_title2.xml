@@ -6,7 +6,7 @@
     android:background="@color/black_bg_title">
 
     <ImageView
-        android:id="@+id/back"
+        android:id="@+id/iv_back"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@drawable/left_arrow"
@@ -14,7 +14,7 @@
         android:layout_marginLeft="17dp"
         />
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_activity_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -22,7 +22,7 @@
         android:textColor="@color/white"
         android:textSize="18sp" />
     <TextView
-        android:id="@+id/confrim"
+        android:id="@+id/confirm"
         android:layout_width="40dp"
         android:layout_height="20dp"
         android:textColor="@color/white"

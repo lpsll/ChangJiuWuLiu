@@ -9,17 +9,18 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.HotCitysAdapter;
 import com.htlc.cjwl.bean.CityInfoBean;
-import com.htlc.cjwl.bean.HotCitysBean;
-import com.htlc.cjwl.util.CommonUtil;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.JsonUtil;
 import com.htlc.cjwl.util.LogUtil;
 import com.htlc.cjwl.util.ToastUtil;
 
 import java.util.ArrayList;
+
+import api.Api;
+import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/4.
@@ -30,7 +31,7 @@ public class NetworkQueryActivity extends AppCompatActivity implements View.OnCl
     private GridView gv_grid_view;
     private TextView tv_show_more;
 
-    private ArrayList<CityInfoBean> list;
+    private ArrayList<CityInfoBean> list = new ArrayList<>();
     private HotCitysAdapter adapter;
 
 
@@ -44,22 +45,31 @@ public class NetworkQueryActivity extends AppCompatActivity implements View.OnCl
         gv_grid_view = (GridView) findViewById(R.id.gv_grid_view);
         tv_show_more = (TextView) findViewById(R.id.tv_show_more);
 
-
         tv_activity_title.setText(R.string.network_query);
 
         iv_back.setOnClickListener(this);
         tv_show_more.setOnClickListener(this);
         gv_grid_view.setOnItemClickListener(this);
 
-
+        adapter = new HotCitysAdapter(list);
+        gv_grid_view.setAdapter(adapter);
         initData();
-
-
     }
 
     private void initData() {
+        App.appAction.hotCity(new ActionCallbackListener<ArrayList<CityInfoBean>>() {
+            @Override
+            public void onSuccess(ArrayList<CityInfoBean> data) {
+                list.clear();
+                list.addAll(data);
+                adapter.notifyDataSetChanged();
+            }
 
-
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                ToastUtil.showToast(App.app,message);
+            }
+        });
     }
 
     @Override
@@ -71,11 +81,8 @@ public class NetworkQueryActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.tv_show_more:
                 LogUtil.i(this, "tv_show_more");
-                // TODO: 2015/11/4 跳转到所有城市列表界面
                 startActivity(new Intent(this,CityListActivity.class));
                 break;
-
-
         }
     }
 
@@ -84,8 +91,7 @@ public class NetworkQueryActivity extends AppCompatActivity implements View.OnCl
         CityInfoBean cityInfoBean = list.get(position);
         LogUtil.i(this,"点击了城市："+ cityInfoBean.cityname+";id为："+cityInfoBean.id);
         Intent intent = new Intent(this, WebActivity.class);
-        // TODO: 2015/11/17 添加网点的html页面地址
-        String url = String.format("",cityInfoBean.id);
+        String url = String.format(Api.CityHtmlDetail,cityInfoBean.id);
         intent.putExtra(Constant.SERVICE_DETAIL_ID, url);
         intent.putExtra(Constant.SERVICE_DETAIL_TITLE,"网点详情");
         startActivity(intent);
