@@ -10,13 +10,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.bean.MessageInfoBean;
 import com.htlc.cjwl.util.CommonUtil;
 import com.htlc.cjwl.util.Constant;
 import com.htlc.cjwl.util.LogUtil;
+import com.htlc.cjwl.util.ToastUtil;
 
 import java.util.ArrayList;
+
+import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/3.
@@ -63,12 +67,7 @@ public class MessageCenterAdapter extends BaseAdapter{
         holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2015/11/3 进行删除操作
-
-                LogUtil.i(MessageCenterAdapter.this, "删除条目：" + bean.id);
-                String url = String.format("aaa", bean.id);
-                showDialog(position,url);
-
+                showDialog(position);
 
             }
         });
@@ -91,12 +90,24 @@ public class MessageCenterAdapter extends BaseAdapter{
         TextView tv_publish_time;
         ImageView iv_delete;
     }
-    private void requestData(final int position,String url){
+    private void requestData(final int position){
+        App.appAction.messageDelete(list.get(position).id, new ActionCallbackListener<Void>() {
+            @Override
+            public void onSuccess(Void data) {
+                list.remove(position);
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                ToastUtil.showToast(App.app,message);
+            }
+        });
     }
     /**
      * 确认对话框
      */
-    public void showDialog(final int position, final String url) {
+    public void showDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 //        View view = View.inflate(getActivity(),R.layout.layout_dialog_confirm,null);
 //        builder.setView(view);
@@ -107,7 +118,7 @@ public class MessageCenterAdapter extends BaseAdapter{
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加确定按钮
             @Override
             public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
-                requestData(position,url);
+                requestData(position);
             }
         });
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {//添加返回按钮

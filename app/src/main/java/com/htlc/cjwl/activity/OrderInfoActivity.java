@@ -156,7 +156,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     }
 
     private void getPrice() {
-        textPrice.setText("￥300");
+        textPrice.setText("300");
         state = true;
     }
 

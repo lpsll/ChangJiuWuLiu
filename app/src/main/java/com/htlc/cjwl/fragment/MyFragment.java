@@ -17,9 +17,11 @@ import android.widget.TextView;
 
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
+import com.htlc.cjwl.activity.BillActivity;
 import com.htlc.cjwl.activity.LoginActivity;
 import com.htlc.cjwl.activity.MessageCenterActivity;
 import com.htlc.cjwl.activity.PersonalInformationActivity;
+import com.htlc.cjwl.activity.RefundActivity;
 import com.htlc.cjwl.activity.SelectRuteActivity;
 import com.htlc.cjwl.activity.SettingActivity;
 import com.htlc.cjwl.util.CommonUtil;
@@ -88,6 +90,7 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
         ll_account.setOnClickListener(this);
         iv_my_head.setOnClickListener(this);
         ll_money.setOnClickListener(this);
+        ll_bill.setOnClickListener(this);
         ll_socre.setOnClickListener(this);
         ll_message_center.setOnClickListener(this);
         ll_setting.setOnClickListener(this);
@@ -187,7 +190,7 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
                 if (TextUtils.isEmpty(node)) {
                     getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
                 } else {
-
+                    getActivity().startActivity(new Intent(getActivity(), RefundActivity.class));
                 }
                 break;
             case R.id.ll_bill:
@@ -195,7 +198,7 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
                 if (TextUtils.isEmpty(node)) {
                     getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
                 } else {
-
+                    getActivity().startActivity(new Intent(getActivity(), BillActivity.class));
                 }
                 break;
             case R.id.ll_socre:

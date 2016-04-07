@@ -16,10 +16,16 @@ public interface Api {
     String CheckPassword = Host + "Home/CYUser/checkUserPwd";
     String UpdatePassword = Host + "Home/CYUser/user_updatepwd";
     String ResetTel = Host + "Home/CYUser/reSetUserMobile";
+    String MessageCenter = Host + "Home/CYMessage/messageList";
+    String MessageHtmlDetail = Host + "Home/CYMessage/info?mID=%1$s";
+    String MessageDelete = Host + "Home/CYMessage/removeMessage";
 
     String OrderList = Host + "Home/CYOrder/getOrderList";
     String LastOrderDetail = Host + "Home/CYTransport/transportCarInfo";
     String TransportWay = Host + "Home/CYTransport/transportMethod";
+    String ProtocolTransport = "http://www.youdao.com/search?q="+"运输协议"+"&keyfrom=dict.top";
+    String ProtocolRefund = "http://www.youdao.com/search?q="+"退款规则"+"&keyfrom=dict.top";
+    String ProtocolService = "http://www.youdao.com/search?q="+"服务协议"+"&keyfrom=dict.top";
 
     String HomeBanner = Host + "Home/CYBanner/getBannerList";
     String ServiceList = Host + "Home/CYService/getServiceList";
@@ -28,9 +34,7 @@ public interface Api {
     String HotCity = Host + "Home/CYCitys/hotCitysList";
     String CityList = Host + "Home/CYCitys/moreHotCitysList";
     String CityHtmlDetail = Host + "Home/CYCitys/cityInfo?id=%1$s";
-    String ProtocolTransport = "http://www.youdao.com/search?q="+"运输协议"+"&keyfrom=dict.top";
-    String ProtocolRefund = "http://www.youdao.com/search?q="+"退款规则"+"&keyfrom=dict.top";
-    String ProtocolService = "http://www.youdao.com/search?q="+"服务协议"+"&keyfrom=dict.top";
+
 
 
     /**
@@ -99,6 +103,20 @@ public interface Api {
      * @param callback
      */
     void resetTel(String newTel, ResultCallback<String> callback);
+
+    /**
+     * 消息中心，
+     * @param page page从1开始
+     * @param callback
+     */
+    void messageCenter(String page, ResultCallback<String> callback);
+
+    /**
+     * 删除指定消息
+     * @param msgID
+     * @param callback
+     */
+    void messageDelete(String msgID, ResultCallback<String> callback);
 
     /**
      *

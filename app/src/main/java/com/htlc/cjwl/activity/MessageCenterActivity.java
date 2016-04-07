@@ -11,14 +11,17 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.MessageCenterAdapter;
-import com.htlc.cjwl.bean.MessageCenterBean;
 import com.htlc.cjwl.bean.MessageInfoBean;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.LogUtil;
+import com.htlc.cjwl.util.ToastUtil;
 
 import java.util.ArrayList;
+
+import api.Api;
+import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/2.
@@ -28,9 +31,7 @@ public class MessageCenterActivity extends AppCompatActivity implements View.OnC
     private ImageView iv_back;
 
     private PullToRefreshListView lv_message_list;//带下拉刷新的list view
-    private MessageCenterAdapter adapter;//list view 的adapter
-    private MessageCenterBean bean;
-    //    private boolean isRefreshing = false;
+    private MessageCenterAdapter adapter;
     private int pageIndex = 1;//当前消息的页码
     private ArrayList<MessageInfoBean> messageList = new ArrayList<MessageInfoBean>();//消息集合
 
@@ -47,11 +48,13 @@ public class MessageCenterActivity extends AppCompatActivity implements View.OnC
         iv_back.setOnClickListener(this);
         //设置list view的条目点击事件
         lv_message_list.setOnItemClickListener(this);
+        adapter = new MessageCenterAdapter(messageList,this);
+        lv_message_list.setAdapter(adapter);
         //设置下拉刷新模式，即下拉又可以上拉
         lv_message_list.setMode(PullToRefreshBase.Mode.BOTH);
-//        lv_message_list.getLoadingLayoutProxy(false, true).setPullLabel(getString(R.string.pull_to_load));
-//        lv_message_list.getLoadingLayoutProxy(false, true).setRefreshingLabel(getString(R.string.loading));
-//        lv_message_list.getLoadingLayoutProxy(false, true).setReleaseLabel(getString(R.string.release_to_load));
+//        lv_message_list.getLoadingLayoutProxy(false, true).setPullLabel("setPullLabel");
+//        lv_message_list.getLoadingLayoutProxy(false, true).setRefreshingLabel("setRefreshingLabel");
+//        lv_message_list.getLoadingLayoutProxy(false, true).setReleaseLabel("setReleaseLabel");
         //设置刷新监听
         lv_message_list.setOnRefreshListener(this);
         initData();
@@ -64,6 +67,22 @@ public class MessageCenterActivity extends AppCompatActivity implements View.OnC
      */
     private void initData() {
         pageIndex = 1;
+        App.appAction.messageCenter(pageIndex, new ActionCallbackListener<ArrayList<MessageInfoBean>>() {
+            @Override
+            public void onSuccess(ArrayList<MessageInfoBean> data) {
+                messageList.clear();
+                messageList.addAll(data);
+                adapter.notifyDataSetChanged();
+                lv_message_list.onRefreshComplete();
+                pageIndex++;
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                ToastUtil.showToast(App.app,message);
+                lv_message_list.onRefreshComplete();
+            }
+        });
     }
 
     @Override
@@ -77,7 +96,6 @@ public class MessageCenterActivity extends AppCompatActivity implements View.OnC
 
     /**
      * list view 条目点击事件，点击开启web Activity，传入网页的地址和标题
-     *
      * @param parent
      * @param view
      * @param position
@@ -87,9 +105,8 @@ public class MessageCenterActivity extends AppCompatActivity implements View.OnC
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String itemId = messageList.get(position-1).id;
         String itemTitle = messageList.get(position-1).title;
-        LogUtil.i(this, "点击了条目位置：" + position + "点击了条目id：" + itemId + ";title:+" + itemTitle);
 
-        String url = "aa";
+        String url = String.format(Api.MessageHtmlDetail,itemId);
         Intent intent = new Intent(this, WebActivity.class);
         intent.putExtra(Constant.SERVICE_DETAIL_ID, url);
         intent.putExtra(Constant.SERVICE_DETAIL_TITLE, itemTitle);
@@ -102,21 +119,31 @@ public class MessageCenterActivity extends AppCompatActivity implements View.OnC
      */
     @Override
     public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-        LogUtil.i(this, "刷新。。。。。。。。。。:" + lv_message_list.isRefreshing());
-        //下拉刷新
         if (lv_message_list.isShownHeader()) {
-            LogUtil.i(this, "pull-to-refresh");
             initData();
         } else if (lv_message_list.isShownFooter()) {//上拉加载
-            LogUtil.i(this, "pull-to-load-more");
             loadNextPage();
         }
-
     }
 
     /**
      * 加载第pageIndex页
      */
     private void loadNextPage() {
+        App.appAction.messageCenter(pageIndex, new ActionCallbackListener<ArrayList<MessageInfoBean>>() {
+            @Override
+            public void onSuccess(ArrayList<MessageInfoBean> data) {
+                messageList.addAll(data);
+                adapter.notifyDataSetChanged();
+                lv_message_list.onRefreshComplete();
+                pageIndex++;
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                ToastUtil.showToast(App.app,message);
+                lv_message_list.onRefreshComplete();
+            }
+        });
     }
 }

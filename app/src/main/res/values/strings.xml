@@ -63,6 +63,7 @@
     <string name="send_way">发车方式</string>
     <string name="get_way">提车方式</string>
     <string name="ok">确认</string>
+    <string name="pay">支付</string>
     <string name="input_phone">请输入联系电话</string>
     <string name="address_detail">请输入详细地址</string>
 
@@ -78,9 +79,14 @@
     <string-array name="order_state_title">
         <item>全部</item>
         <item>待确认</item>
-        <item>代收款</item>
+        <item>待付款</item>
         <item>在途跟踪</item>
         <item>已收车</item>
+    </string-array>
+
+    <string-array name="refund_state_title">
+        <item>历史订单</item>
+        <item>历史退款</item>
     </string-array>
 
     <!--tips 网络请求提示信息-->

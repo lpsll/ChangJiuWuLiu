@@ -105,6 +105,22 @@ public class ApiImpl implements Api {
     }
 
     @Override
+    public void messageCenter(String page, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("page", page);
+        String url = Api.MessageCenter;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void messageDelete(String msgID, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("mID", msgID);
+        String url = Api.MessageDelete;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
     public void orderList(String order_status, String page, ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
         String userId = App.app.getUser().node;

@@ -186,180 +186,41 @@
                 android:layout_marginBottom="12dp"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="12dp"
-                android:text="发货人信息"
+                android:text="付款方式"
                 android:textColor="@color/black"
                 android:textSize="14sp"/>
-            <!--发货人-->
+            <!--付款方式列表-->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/my_item_bg"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="17dp"
-                    android:src="@drawable/contacts"/>
-
-                <EditText
-                    android:id="@+id/editFromUsername"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="12dp"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:hint="请输入发货人姓名"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-            <!--发货人手机-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/my_item_bg"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="17dp"
-                    android:src="@drawable/phone"/>
-
-                <EditText
-                    android:id="@+id/editFromTel"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="12dp"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:hint="请输入联系电话"
-                    android:phoneNumber="true"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-            <!--发货人身份证-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/my_item_bg"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="17dp"
-                    android:src="@drawable/order_user_card"/>
-
-                <EditText
-                    android:id="@+id/editFromUserCard"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="12dp"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:hint="请输入身份证号"
-                    android:phoneNumber="true"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-            <!--车架号列表-->
-            <LinearLayout
-                android:id="@+id/linearCarCardContainer"
+                android:id="@+id/linearPayContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"></LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginTop="12dp"
-                android:text="收货人信息"
-                android:textColor="@color/black"
-                android:textSize="14sp"/>
-            <!--收货人-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/my_item_bg"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="17dp"
-                    android:src="@drawable/contacts"/>
-
-                <EditText
-                    android:id="@+id/editToUsername"
-                    android:layout_width="0dp"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:id="@+id/textScore"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="12dp"
-                    android:layout_weight="1"
-                    android:background="@color/white"
-                    android:hint="请输入收货人姓名"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-            <!--收货人手机-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/my_item_bg"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
                     android:layout_marginLeft="17dp"
-                    android:src="@drawable/phone"/>
-
-                <EditText
-                    android:id="@+id/editToTel"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="12dp"
-                    android:layout_weight="1"
                     android:background="@color/white"
-                    android:hint="请输入联系电话"
-                    android:phoneNumber="true"
+                    android:text=""
                     android:textSize="14sp"/>
-            </LinearLayout>
-            <!--收货人身份证-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/my_item_bg"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="17dp"
-                    android:src="@drawable/order_user_card"/>
-
-                <EditText
-                    android:id="@+id/editToUserCard"
+                <CheckBox
+                    android:layout_marginRight="17dp"
+                    android:id="@+id/checkBox"
+                    android:button="@null"
+                    android:drawableRight="@drawable/circle_checkbox"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="12dp"
                     android:layout_weight="1"
-                    android:background="@color/white"
-                    android:hint="请输入身份证号"
-                    android:phoneNumber="true"
-                    android:textSize="14sp"/>
+                    android:layout_height="wrap_content"
+                    />
             </LinearLayout>
-
             <TextView
                 android:id="@+id/tv_sure"
                 android:layout_width="match_parent"
@@ -371,7 +232,7 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/no_order_btn"
                 android:gravity="center"
-                android:text="@string/ok"
+                android:text="@string/pay"
                 android:textColor="@color/black"
                 android:textSize="14sp"/>
         </LinearLayout>

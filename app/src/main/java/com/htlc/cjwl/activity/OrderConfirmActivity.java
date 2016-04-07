@@ -1,6 +1,7 @@
 package com.htlc.cjwl.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -22,7 +23,8 @@ import model.CarInfoBean;
 public class OrderConfirmActivity extends Activity {
     public static final String OrderDetail = "OrderDetail";
     private TextView textTitle,textFromAddress,textToAddress,
-            textCarTypeNameArray,textCarNumArray,textPrice;
+            textCarTypeNameArray,textCarNumArray,textPrice,
+            textInsurancePrice;
     private EditText editFromUsername,editFromTel,editFromUserCard,
             editToUsername,editToTel,editToUserCard;
     private LinearLayout linearCarCardContainer;
@@ -49,6 +51,7 @@ public class OrderConfirmActivity extends Activity {
         textCarTypeNameArray = (TextView) findViewById(R.id.textCarTypeNameArray);
         textCarNumArray = (TextView) findViewById(R.id.textCarNumArray);
         textPrice = (TextView) findViewById(R.id.textPrice);
+        textInsurancePrice = (TextView) findViewById(R.id.textInsurancePrice);
 
         editFromUsername = (EditText) findViewById(R.id.editFromUsername);
         editFromTel = (EditText) findViewById(R.id.editFromTel);
@@ -60,7 +63,14 @@ public class OrderConfirmActivity extends Activity {
 
         linearCarCardContainer = (LinearLayout) findViewById(R.id.linearCarCardContainer);
         initLinearCarCardContainer();
+        findViewById(R.id.tv_sure).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitOrder();
+            }
+        });
     }
+
     private void initLinearCarCardContainer() {
         carArray = new ArrayList<>();
         carArray.add(new CarInfoBean());
@@ -71,12 +81,18 @@ public class OrderConfirmActivity extends Activity {
         for (int i = 0; i < carArray.size(); i++) {
             Log.e("Car", carArray.get(i).carName + ";num=" + carArray.get(i).carNum);
             LinearLayout linearLayout = (LinearLayout) View.inflate(this,R.layout.layout_car_card,null);
-//            TextView textCarName = (TextView) linearLayout.findViewById(R.id.textCarName);
-//            textCarName.setText(carArray.get(i).carName);
-//            TextView textCarNum = (TextView) linearLayout.findViewById(R.id.textCarNum);
-//            textCarNum.setText(carArray.get(i).carNum);
             linearLayout.setTag(i);
             linearCarCardContainer.addView(linearLayout);
         }
     }
+
+    /**
+     * 提交订单
+     */
+    private void submitOrder() {
+        Intent intent = new Intent(this,PayActivity.class);
+        intent.putExtra(PayActivity.PayDetail,"");
+        startActivity(intent);
+    }
+
 }

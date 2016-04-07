@@ -5,8 +5,10 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
+import com.htlc.cjwl.App;
 import com.htlc.cjwl.bean.CityInfoBean;
 import com.htlc.cjwl.bean.HomeBannerInfo;
+import com.htlc.cjwl.bean.MessageInfoBean;
 import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.bean.ServiceDetailInfoBean;
 import com.htlc.cjwl.bean.ServiceInfoBean;
@@ -401,6 +403,66 @@ public class AppActionImpl implements AppAction {
                 }
             }
         });
+    }
+
+    @Override
+    public void messageCenter(int page, final ActionCallbackListener<ArrayList<MessageInfoBean>> listener) {
+        api.messageCenter(page + "", new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String jsonArray = jsonObject.getString("data");
+                        ArrayList<MessageInfoBean> array = (ArrayList<MessageInfoBean>) JsonUtil.parseJsonToList(jsonArray,
+                                new TypeToken<ArrayList<MessageInfoBean>>() {
+                                }.getType());
+                        listener.onSuccess(array);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void messageDelete(String msgID, final ActionCallbackListener<Void> listener) {
+       api.messageDelete(msgID, new ResultCallback<String>() {
+           @Override
+           public void onError(Request request, Exception e) {
+               e.printStackTrace();
+               listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+           }
+
+           @Override
+           public void onResponse(String response) {
+               try {
+                   JSONObject jsonObject = new JSONObject(response);
+                   String code = jsonObject.getString("code");
+                   if ("1".equals(code)) {
+                       listener.onSuccess(null);
+                   } else {
+                       String msg = jsonObject.getString("msg");
+                       listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                   }
+               } catch (JSONException e) {
+                   e.printStackTrace();
+                   listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+               }
+           }
+       });
     }
 
     @Override

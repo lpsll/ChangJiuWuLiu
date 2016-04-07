@@ -111,7 +111,24 @@
             android:name=".activity.SetDetailWithLocationActivity"
             android:screenOrientation="portrait"
             android:sharedUserId="android.uid.system" />
-
+        <activity
+            android:name=".activity.SelectCarNumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OrderConfirmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RefundActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BillActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SubmitBillActivity"
+            android:screenOrientation="portrait" />
 
 
         <activity
@@ -119,12 +136,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AddAdressActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.SelectCarNumActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.OrderConfirmActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SendGoodsActivity"

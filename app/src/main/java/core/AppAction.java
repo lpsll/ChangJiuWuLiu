@@ -4,6 +4,7 @@ package core;
 
 import com.htlc.cjwl.bean.CityInfoBean;
 import com.htlc.cjwl.bean.HomeBannerInfo;
+import com.htlc.cjwl.bean.MessageInfoBean;
 import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.bean.ServiceDetailInfoBean;
 import com.htlc.cjwl.bean.ServiceInfoBean;
@@ -32,6 +33,10 @@ public interface AppAction {
     void updatePassword(String newPwd, String confirmNewPwd, ActionCallbackListener<Void> listener);
 
     void resetTel(String newTel, ActionCallbackListener<Void> listener);
+
+    void messageCenter(int page, ActionCallbackListener<ArrayList<MessageInfoBean>> listener);
+
+    void messageDelete(String msgID, ActionCallbackListener<Void> listener);
 
     void orderList(String order_status, int page, ActionCallbackListener<ArrayList<OrderInfoBean>> listener);
 
