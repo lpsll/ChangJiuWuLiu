@@ -63,6 +63,7 @@
     <string name="send_way">发车方式</string>
     <string name="get_way">提车方式</string>
     <string name="ok">确认</string>
+    <string name="confirm">确定</string>
     <string name="pay">支付</string>
     <string name="input_phone">请输入联系电话</string>
     <string name="address_detail">请输入详细地址</string>

@@ -105,6 +105,9 @@
             android:name=".activity.CarTypeActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".activity.TransportWayActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".activity.SetDetailWithNoLocationActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -129,28 +132,9 @@
         <activity
             android:name=".activity.SubmitBillActivity"
             android:screenOrientation="portrait" />
-
-
         <activity
-            android:name=".activity.SelectRuteActivity"
+            android:name=".activity.OrderDetailActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.AddAdressActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.SendGoodsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.GetGoodsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.BuyInsuranceActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.DestinationActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".activity.TransportWayActivity"/>
-
     </application>
 
 </manifest>

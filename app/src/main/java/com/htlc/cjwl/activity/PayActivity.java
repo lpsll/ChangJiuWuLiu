@@ -23,21 +23,23 @@ import model.CarInfoBean;
  */
 public class PayActivity extends Activity implements View.OnClickListener {
     public static final String PayDetail = "PayDetail";
-    private TextView textTitle,textFromAddress,textToAddress,
-            textCarTypeNameArray,textCarNumArray,textPrice,
-            textInsurancePrice,textScore;
-    private EditText editFromUsername,editFromTel,editFromUserCard,
-            editToUsername,editToTel,editToUserCard;
+    private TextView textTitle, textFromAddress, textToAddress,
+            textFromTel,textToTel,textFromName,textToName,
+            textCarTypeNameArray, textCarNumArray, textPrice,
+            textInsurancePrice, textScore;
+    private EditText editFromUsername, editFromTel, editFromUserCard,
+            editToUsername, editToTel, editToUserCard;
     private LinearLayout linearPayContainer;
     private CheckBox checkBox;
 
     private ArrayList<String> payArray;
     private int selectPayWay = 0;
     private String html = "<font color=\"#3c3c3c\">本次可用积分</font>" +
-            "<font color=\"#ff0000\">%1$s</font>"+
-            "<font color=\"#3c3c3c\">分，可抵</font>"+
-            "<font color=\"#ff0000\">%2$s</font>"+
+            "<font color=\"#ff0000\">%1$s</font>" +
+            "<font color=\"#3c3c3c\">分，可抵</font>" +
+            "<font color=\"#ff0000\">%2$s</font>" +
             "<font color=\"#3c3c3c\">元</font>";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +57,13 @@ public class PayActivity extends Activity implements View.OnClickListener {
         });
         textTitle = (TextView) findViewById(R.id.tv_activity_title);
         textTitle.setText("支付");
-        textFromAddress = (TextView) findViewById(R.id.textFromAddress);
-        textToAddress = (TextView) findViewById(R.id.textToAddress);
+        textFromAddress = (TextView) findViewById(R.id.tv_from_address);
+        textToAddress = (TextView) findViewById(R.id.tv_to_address);
+        textFromTel = (TextView) findViewById(R.id.tv_from_tel);
+        textToTel = (TextView) findViewById(R.id.tv_to_tel);
+        textFromName = (TextView) findViewById(R.id.tv_from_name);
+        textToName = (TextView) findViewById(R.id.tv_to_name);
+
         textCarTypeNameArray = (TextView) findViewById(R.id.textCarTypeNameArray);
         textCarNumArray = (TextView) findViewById(R.id.textCarNumArray);
         textPrice = (TextView) findViewById(R.id.textPrice);
@@ -86,10 +93,10 @@ public class PayActivity extends Activity implements View.OnClickListener {
         payArray.add("微信");
         payArray.add("银联");
         for (int i = 0; i < payArray.size(); i++) {
-            LinearLayout linearLayout = (LinearLayout) View.inflate(this,R.layout.layout_pay,null);
+            LinearLayout linearLayout = (LinearLayout) View.inflate(this, R.layout.layout_pay, null);
             linearLayout.setTag(i);
             linearLayout.setOnClickListener(this);
-            if(selectPayWay == i){
+            if (selectPayWay == i) {
                 CheckBox checkBox = (CheckBox) linearLayout.findViewById(R.id.checkBox);
                 checkBox.setChecked(true);
             }
@@ -101,7 +108,7 @@ public class PayActivity extends Activity implements View.OnClickListener {
      * 提交订单
      */
     private void submitOrder() {
-        Intent intent = new Intent(this,PayActivity.class);
+        Intent intent = new Intent(this, PayActivity.class);
     }
 
     @Override
