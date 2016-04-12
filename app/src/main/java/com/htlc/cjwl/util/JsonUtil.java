@@ -46,6 +46,15 @@ public class JsonUtil {
         return null;
     }
 
+    public static String parseObjectToJson(Object obj) {
+        try {
+            Gson gson = new Gson();
+            return gson.toJson(obj);
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
     /**
      * 把一个json字符串变成对象
      *

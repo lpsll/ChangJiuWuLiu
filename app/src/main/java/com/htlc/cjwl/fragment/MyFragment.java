@@ -206,11 +206,11 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
                 break;
             case R.id.ll_message_center:
                 LogUtil.i(this, "消息中心");
-                if (TextUtils.isEmpty(node)) {
-                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
-                } else {
+//                if (TextUtils.isEmpty(node)) {
+//                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+//                } else {
                     getActivity().startActivity(new Intent(getActivity(), MessageCenterActivity.class));
-                }
+//                }
                 break;
             case R.id.ll_setting:
                 LogUtil.i(this, "设置");

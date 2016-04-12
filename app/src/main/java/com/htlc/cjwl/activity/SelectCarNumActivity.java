@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -71,12 +69,12 @@ public class SelectCarNumActivity extends Activity implements View.OnClickListen
 
     private void initView() {
         for (int i = 0; i < carArray.size(); i++) {
-            Log.e("Car",carArray.get(i).carName+";num="+carArray.get(i).carNum);
+            Log.e("Car",carArray.get(i).name +";num="+carArray.get(i).num);
             LinearLayout linearLayout = (LinearLayout) View.inflate(this,R.layout.layout_select_car_num,null);
             TextView textCarName = (TextView) linearLayout.findViewById(R.id.textCarName);
-            textCarName.setText(carArray.get(i).carName);
+            textCarName.setText(carArray.get(i).name);
             TextView textCarNum = (TextView) linearLayout.findViewById(R.id.textCarNum);
-            textCarNum.setText(carArray.get(i).carNum);
+            textCarNum.setText(carArray.get(i).num);
             linearLayout.setTag(i);
             linearLayout.setOnClickListener(this);
             linearCarNumContainer.addView(linearLayout);
@@ -123,7 +121,7 @@ public class SelectCarNumActivity extends Activity implements View.OnClickListen
             public void onSelect(String num) {
                 TextView textNum = (TextView) linearCarNumContainer.getChildAt(currentPosition).findViewById(R.id.textCarNum);
                 textNum.setText(num);
-                carArray.get(currentPosition).carNum =num;
+                carArray.get(currentPosition).num =num;
             }
         });
         pvNum.setSelected(1);

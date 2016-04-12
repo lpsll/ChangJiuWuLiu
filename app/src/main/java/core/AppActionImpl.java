@@ -3,7 +3,9 @@ package core;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.bean.CityInfoBean;
@@ -25,6 +27,10 @@ import java.util.regex.Pattern;
 import api.Api;
 import api.ApiImpl;
 import api.net.okhttp.callback.ResultCallback;
+import model.AddressInfoBean;
+import model.CalculatePriceInfoBean;
+import model.CarInfoBean;
+import model.CarTypeInfoBean;
 import model.UserBean;
 
 
@@ -498,8 +504,93 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void lastOrderDetail(ActionCallbackListener<String> listener) {
+    public void lastOrderDetail(final ActionCallbackListener<AddressInfoBean> listener) {
+        api.lastOrderDetail(new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
 
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String address = jsonObject.getJSONObject("data").getString("addressInfo");
+                        AddressInfoBean addressInfoBean = JsonUtil.parseJsonToBean(address,AddressInfoBean.class);
+                        listener.onSuccess(addressInfoBean);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void carTypeList(final ActionCallbackListener<ArrayList<CarTypeInfoBean>> listener) {
+        api.carTypeList(new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String jsonArray = jsonObject.getString("data");
+                        ArrayList<CarTypeInfoBean> list = (ArrayList<CarTypeInfoBean>) JsonUtil.parseJsonToList(jsonArray,new TypeToken<ArrayList<CarTypeInfoBean>>(){}.getType());
+                        listener.onSuccess(list);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void carNameList(String carType, final ActionCallbackListener<ArrayList<CarTypeInfoBean>> listener) {
+        api.carNameList(carType, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String jsonArray = jsonObject.getString("data");
+                        ArrayList<CarTypeInfoBean> list = (ArrayList<CarTypeInfoBean>) JsonUtil.parseJsonToList(jsonArray,new TypeToken<ArrayList<CarTypeInfoBean>>(){}.getType());
+                        listener.onSuccess(list);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
     }
 
     @Override
@@ -519,6 +610,63 @@ public class AppActionImpl implements AppAction {
                     if ("1".equals(code)) {
                         String address = jsonObject.getJSONObject("data").getString("address");
                         listener.onSuccess(address);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void calculatePrice(String fromCity, String toCity, String fromCityDetail, String toCityDetail,
+                               String sendWay, String getWay, ArrayList<CarInfoBean> carInfo, final ActionCallbackListener<CalculatePriceInfoBean> listener) {
+        if (TextUtils.isEmpty(fromCity)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请选择出发城市");
+            return;
+        }
+        if (TextUtils.isEmpty(toCity)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请选择目的城市");
+            return;
+        }
+        if (Api.TransportWayArray[0].equals(sendWay) && TextUtils.isEmpty(fromCityDetail)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请输入详细出发地址");
+            return;
+        }else if(!Api.TransportWayArray[0].equals(sendWay)){
+            fromCityDetail = "";
+        }
+        if (Api.TransportWayArray[0].equals(getWay) && TextUtils.isEmpty(fromCityDetail)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请输入详细目的地址");
+            return;
+        }else if(!Api.TransportWayArray[0].equals(getWay)){
+            toCityDetail = "";
+        }
+        if(carInfo.size()<=0){
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请选择汽车");
+            return;
+        }
+        String carsInfo = JsonUtil.parseObjectToJson(carInfo);
+        Log.e("AppAction",carsInfo);
+        api.calculatePrice(fromCity, toCity, fromCityDetail, toCityDetail, sendWay, getWay, carsInfo, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String jsonStr = jsonObject.getString("data");
+                        CalculatePriceInfoBean bean = JsonUtil.parseJsonToBean(jsonStr,CalculatePriceInfoBean.class);
+                        listener.onSuccess(bean);
                     } else {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);

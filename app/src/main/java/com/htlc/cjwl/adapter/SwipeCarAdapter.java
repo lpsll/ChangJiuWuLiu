@@ -1,8 +1,5 @@
 package com.htlc.cjwl.adapter;
 
-import android.app.Activity;
-import android.graphics.Color;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,7 +10,6 @@ import com.htlc.cjwl.R;
 import com.htlc.cjwl.activity.OrderInfoActivity;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import model.CarInfoBean;
 
@@ -57,7 +53,7 @@ public class SwipeCarAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         CarInfoBean bean = list.get(position);
-        holder.textView.setText(bean.carName);
+        holder.textView.setText(bean.name);
         holder.imageDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

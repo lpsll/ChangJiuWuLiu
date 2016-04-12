@@ -4,7 +4,7 @@ package api;
 import api.net.okhttp.callback.ResultCallback;
 
 public interface Api {
-    String[] TransportWayArray = {"1","2","3","5"};
+    String[] TransportWayArray = {"0","2"};//index=0 为 长久送车
 
     String Host = "http://t2.damaimob.com/";
     String SendSmsCode = Host + "Home/CYUser/getMobileCode";
@@ -22,10 +22,14 @@ public interface Api {
 
     String OrderList = Host + "Home/CYOrder/getOrderList";
     String LastOrderDetail = Host + "Home/CYTransport/transportCarInfo";
+    String CarTypeList = Host + "Home/CYTransport/getbrandlist";
+    String CarNameList = Host + "Home/CYTransport/getcarclasslist";
     String TransportWay = Host + "Home/CYTransport/transportMethod";
+    String CalculatePrice = Host + "Home/CYTransport/transportCalculateprice";
     String ProtocolTransport = "http://www.youdao.com/search?q="+"运输协议"+"&keyfrom=dict.top";
     String ProtocolRefund = "http://www.youdao.com/search?q="+"退款规则"+"&keyfrom=dict.top";
     String ProtocolService = "http://www.youdao.com/search?q="+"服务协议"+"&keyfrom=dict.top";
+    String OrderCreate = Host + "Home/CYOrder/createOrder";
 
     String HomeBanner = Host + "Home/CYBanner/getBannerList";
     String ServiceList = Host + "Home/CYService/getServiceList";
@@ -133,12 +137,41 @@ public interface Api {
     void lastOrderDetail(ResultCallback<String> callback);
 
     /**
+     * 获取汽车品牌列表
+     * @param callback
+     */
+    void carTypeList(ResultCallback<String> callback);
+
+    /**
+     * 根据汽车品牌，获取汽车型号列表
+     * @param carType
+     * @param callback
+     */
+    void carNameList(String carType, ResultCallback<String> callback);
+
+    /**
      * 设置发车或取车方式时，用于获取当前城市营业网点详情
      * @param cityName 城市名称
      * @param callback
      */
     void transportWay(String cityName, ResultCallback<String> callback);
 
+    /**
+     * 计算运输价格
+     * @param fromCity
+     * @param toCity
+     * @param fromCityDetail
+     * @param toCityDetail
+     * @param sendWay
+     * @param getWay
+     * @param carInfo
+     * @param callback
+     */
+    void calculatePrice(String fromCity,String toCity, String fromCityDetail, String toCityDetail,
+                        String sendWay, String getWay, String carInfo,
+                        ResultCallback<String> callback);
+
+//    void orderCreate(String from);
     /**
      *
      * @param callback

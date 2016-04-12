@@ -12,6 +12,8 @@ import com.htlc.cjwl.R;
 
 import java.util.ArrayList;
 
+import model.CarTypeInfoBean;
+
 /**
  * Created by sks on 2015/11/5.
  */
@@ -59,7 +61,8 @@ public class CarTypeLeftAdapter extends BaseAdapter {
             holder.imageView.setVisibility(View.INVISIBLE);
             convertView.setBackgroundColor(0xf3f3f3);
         }
-        holder.textView.setText("宝马"+position);
+        CarTypeInfoBean bean = (CarTypeInfoBean) list.get(position);
+        holder.textView.setText(bean.car_brand);
         return convertView;
     }
 

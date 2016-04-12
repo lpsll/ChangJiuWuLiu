@@ -18,6 +18,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
+import cn.jpush.android.api.JPushInterface;
 import core.ActionCallbackListener;
 import core.AppAction;
 import core.AppActionImpl;
@@ -43,9 +44,18 @@ public class App extends Application{
         //在主线程创建handler
         mHandler = new Handler();
         initImageLoader(getApplicationContext());
+        initJpush();
         //调用登录方法进行登录，如果 本地保存了 用户的帐号和密码
         CommonUtil.login();
         CrashHandler.getInstance().init(this);
+    }
+
+    /**
+     * 初始化Jpush
+     */
+    private void initJpush() {
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     /**

@@ -3,7 +3,7 @@ package com.htlc.cjwl.bean;
 import java.io.Serializable;
 
 /**
- * Created by luochuan on 15/11/4.
+ * Created by Larno on 16/04/04.
  */
 public class AddressInfo implements Serializable{
 

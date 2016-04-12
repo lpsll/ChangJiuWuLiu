@@ -2,6 +2,7 @@
 package core;
 
 
+import com.htlc.cjwl.bean.AddressInfo;
 import com.htlc.cjwl.bean.CityInfoBean;
 import com.htlc.cjwl.bean.HomeBannerInfo;
 import com.htlc.cjwl.bean.MessageInfoBean;
@@ -11,6 +12,10 @@ import com.htlc.cjwl.bean.ServiceInfoBean;
 
 import java.util.ArrayList;
 
+import model.AddressInfoBean;
+import model.CalculatePriceInfoBean;
+import model.CarInfoBean;
+import model.CarTypeInfoBean;
 import model.UserBean;
 
 
@@ -40,9 +45,16 @@ public interface AppAction {
 
     void orderList(String order_status, int page, ActionCallbackListener<ArrayList<OrderInfoBean>> listener);
 
-    void lastOrderDetail(ActionCallbackListener<String> listener);
+    void lastOrderDetail(ActionCallbackListener<AddressInfoBean> listener);
+
+    void carTypeList(ActionCallbackListener<ArrayList<CarTypeInfoBean>> listener);
+
+    void carNameList(String carType, ActionCallbackListener<ArrayList<CarTypeInfoBean>> listener);
 
     void transportWay(String cityName, ActionCallbackListener<String> listener);
+
+    void calculatePrice(String fromCity, String toCity, String fromCityDetail, String toCityDetail,
+                        String sendWay, String getWay, ArrayList<CarInfoBean> carInfo, ActionCallbackListener<CalculatePriceInfoBean> listener);
 
     void homeBanner(ActionCallbackListener<ArrayList<HomeBannerInfo>> listener);
 

@@ -7,14 +7,15 @@ import android.os.Parcelable;
  * Created by sks on 2016/4/6.
  */
 public class CarInfoBean implements Parcelable {
-    public String carName;
-    public String carId;
-    public String carNum = "1";
+    public String name;
+    public String id;
+    public String price;
+    public String type;
+    public String num = "1";
 
 
     public CarInfoBean() {
     }
-
 
     @Override
     public int describeContents() {
@@ -23,18 +24,22 @@ public class CarInfoBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.carName);
-        dest.writeString(this.carId);
-        dest.writeString(this.carNum);
+        dest.writeString(this.name);
+        dest.writeString(this.id);
+        dest.writeString(this.price);
+        dest.writeString(this.type);
+        dest.writeString(this.num);
     }
 
     protected CarInfoBean(Parcel in) {
-        this.carName = in.readString();
-        this.carId = in.readString();
-        this.carNum = in.readString();
+        this.name = in.readString();
+        this.id = in.readString();
+        this.price = in.readString();
+        this.type = in.readString();
+        this.num = in.readString();
     }
 
-    public static final Parcelable.Creator<CarInfoBean> CREATOR = new Parcelable.Creator<CarInfoBean>() {
+    public static final Creator<CarInfoBean> CREATOR = new Creator<CarInfoBean>() {
         public CarInfoBean createFromParcel(Parcel source) {
             return new CarInfoBean(source);
         }

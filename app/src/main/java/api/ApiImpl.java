@@ -141,11 +141,40 @@ public class ApiImpl implements Api {
     }
 
     @Override
+    public void carTypeList(ResultCallback<String> callback) {
+        String url = Api.CarTypeList;
+        new OkHttpRequest.Builder().url(url).get(callback);
+    }
+
+    @Override
+    public void carNameList(String carType, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("car_brand", carType);
+        String url = Api.CarNameList;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
     public void transportWay(String cityName, ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
-        String userId = App.app.getUser().node;
         params.put("cityname", cityName);
         String url = Api.TransportWay;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void calculatePrice(String fromCity, String toCity, String fromCityDetail, String toCityDetail,
+                               String sendWay, String getWay, String carInfo,
+                               ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("fromCityName", fromCity);
+        params.put("fromCityAddress", fromCityDetail);
+        params.put("toCityName", toCity);
+        params.put("toCityAddress", toCityDetail);
+        params.put("sendMethod", sendWay);
+        params.put("getMethod", getWay);
+        params.put("carsinfo", carInfo);
+        String url = Api.CalculatePrice;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
     }
 

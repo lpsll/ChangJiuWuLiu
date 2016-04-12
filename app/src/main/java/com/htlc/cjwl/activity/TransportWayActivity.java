@@ -108,7 +108,7 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
             setSendToHall();
         }else {
             Intent result = new Intent();
-            result.putExtra(WayID,Api.TransportWayArray[1]);
+            result.putExtra(WayID,Api.TransportWayArray[0]);
             result.putExtra(AddressDetail,addressDetail);
             result.putExtra(WayName,textChangJiuGet.getText().toString());
             setResult(Activity.RESULT_OK, result);
@@ -134,7 +134,7 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
      */
     private void setSendToHall() {
         Intent result = new Intent();
-        result.putExtra(WayID, Api.TransportWayArray[0]);
+        result.putExtra(WayID, Api.TransportWayArray[1]);
         result.putExtra(AddressDetail,"");
         result.putExtra(WayName,textSendToHall.getText().toString());
         setResult(Activity.RESULT_OK, result);

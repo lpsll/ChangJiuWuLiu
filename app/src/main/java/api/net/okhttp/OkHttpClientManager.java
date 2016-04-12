@@ -149,10 +149,12 @@ public class OkHttpClientManager
             @Override
             public void onResponse(final Response response)
             {
+
                 if (response.code() >= 400 && response.code() <= 599)
                 {
                     try
-                    {
+                    {  final String stringTemp = response.body().string();
+                        L.e(stringTemp);
                         sendFailResultCallback(request, new RuntimeException(response.body().string()), resCallBack);
                     } catch (IOException e)
                     {
@@ -164,6 +166,7 @@ public class OkHttpClientManager
                 try
                 {
                     final String stringTemp = response.body().string();
+                    L.e(stringTemp);
                     String string = stringTemp.substring(stringTemp.indexOf("{"));
                     if (resCallBack.mType == String.class)
                     {

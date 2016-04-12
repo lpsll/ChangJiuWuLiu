@@ -3,7 +3,6 @@ package com.htlc.cjwl.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -11,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.htlc.cjwl.R;
-import com.htlc.cjwl.bean.AddressInfo;
 
 import java.util.ArrayList;
 
@@ -79,7 +77,7 @@ public class OrderConfirmActivity extends Activity {
         carArray.add(new CarInfoBean());
         carArray.add(new CarInfoBean());
         for (int i = 0; i < carArray.size(); i++) {
-            Log.e("Car", carArray.get(i).carName + ";num=" + carArray.get(i).carNum);
+            Log.e("Car", carArray.get(i).name + ";num=" + carArray.get(i).num);
             LinearLayout linearLayout = (LinearLayout) View.inflate(this,R.layout.layout_car_card,null);
             linearLayout.setTag(i);
             linearCarCardContainer.addView(linearLayout);

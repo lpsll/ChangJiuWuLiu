@@ -10,6 +10,8 @@ import com.htlc.cjwl.R;
 
 import java.util.ArrayList;
 
+import model.CarTypeInfoBean;
+
 /**
  * Created by sks on 2015/11/5.
  */
@@ -48,7 +50,8 @@ public class CarTypeRightAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.textCarTypeName.setText("X"+position);
+        CarTypeInfoBean bean = (CarTypeInfoBean) list.get(position);
+        holder.textCarTypeName.setText(bean.car_name);
         return convertView;
     }
     class ViewHolder{

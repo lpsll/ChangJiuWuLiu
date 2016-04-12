@@ -20,6 +20,9 @@ import com.htlc.cjwl.util.ToastUtil;
 import java.util.ArrayList;
 
 import api.Api;
+import core.ActionCallbackListener;
+import model.AddressInfoBean;
+import model.CalculatePriceInfoBean;
 import model.CarInfoBean;
 
 /**
@@ -45,7 +48,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     private TextView textButton;
 
     private boolean state = false;
-    private String fromCityID, toCityID, fromCityDetail, toCityDetail, sendWayID, getWayID;
+    private String fromCityID, toCityID, fromCityDetail, toCityDetail,fromName,toName,fromTel,toTel, sendWayID = Api.TransportWayArray[1], getWayID = Api.TransportWayArray[1];
     private ArrayList<CarInfoBean> carArray = new ArrayList<>();
 
     @Override
@@ -104,7 +107,28 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     }
 
     private void initData() {
+        App.appAction.lastOrderDetail(new ActionCallbackListener<AddressInfoBean>() {
+            @Override
+            public void onSuccess(AddressInfoBean data) {
+                refreshAddressView(data);
+            }
 
+            @Override
+            public void onFailure(String errorEvent, String message) {
+
+            }
+        });
+    }
+
+    private void refreshAddressView(AddressInfoBean data) {
+        textFromAddress.setText(data.from_cityname);
+        textToAddress.setText(data.to_cityname);
+        fromCityDetail = data.from_address;
+        toCityDetail = data.to_address;
+        fromName = data.from_name;
+        toName = data.to_name;
+        fromTel = data.from_mobile;
+        toTel = data.to_mobile;
     }
 
     @Override
@@ -156,8 +180,23 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     }
 
     private void getPrice() {
-        textPrice.setText("300");
-        state = true;
+        String fromCity = textFromAddress.getText().toString();
+        String toCity = textToAddress.getText().toString();
+        App.appAction.calculatePrice(fromCity, toCity, fromCityDetail, toCityDetail, sendWayID, getWayID, carArray, new ActionCallbackListener<CalculatePriceInfoBean>() {
+            @Override
+            public void onSuccess(CalculatePriceInfoBean data) {
+                editEnsurance.setText("￥"+data.insure);
+                textPrice.setText(data.node);
+                state = true;
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                ToastUtil.showToast(App.app, message);
+            }
+        });
+
+
     }
 
     /**
@@ -178,7 +217,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     private void setGetCarWay() {
         stateChange();
         Intent intent = new Intent(this, TransportWayActivity.class);
-        if (TextUtils.isEmpty(toCityID)) {
+        if (TextUtils.isEmpty(textToAddress.getText().toString())) {
             ToastUtil.showToast(App.app, "请填写目的城市");
         } else {
             intent.putExtra(TransportWayActivity.CityName, textToAddress.getText().toString());
@@ -194,7 +233,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     private void setSendCarWay() {
         stateChange();
         Intent intent = new Intent(this, TransportWayActivity.class);
-        if (TextUtils.isEmpty(fromCityID)) {
+        if (TextUtils.isEmpty(textFromAddress.getText().toString())) {
             ToastUtil.showToast(App.app, "请填写出发城市");
         } else {
             intent.putExtra(TransportWayActivity.CityName, textFromAddress.getText().toString());
@@ -251,7 +290,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     public void stateChange() {
         if (state) {
             textButton.setText("计算价格");
-            textButton.setText("0.00");
+            textPrice.setText("0.00");
         }
         state = false;
     }
@@ -309,7 +348,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     public void refreshTextCarNum() {
         int totalNum = 0;
         for(int i=0; i<carArray.size();i++){
-           int temp = Integer.parseInt(carArray.get(i).carNum);
+           int temp = Integer.parseInt(carArray.get(i).num);
             totalNum += temp;
         }
         textCarNum.setText(totalNum+"");

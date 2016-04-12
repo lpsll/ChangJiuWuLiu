@@ -3,19 +3,22 @@ package com.htlc.cjwl.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.CarTypeLeftAdapter;
 import com.htlc.cjwl.adapter.CarTypeRightAdapter;
+import com.htlc.cjwl.util.ToastUtil;
 
 import java.util.ArrayList;
 
+import core.ActionCallbackListener;
 import model.CarInfoBean;
+import model.CarTypeInfoBean;
 
 /**
  * Created by sks on 2016/4/6.
@@ -74,11 +77,14 @@ public class CarTypeActivity extends Activity {
     }
     private void setResultData(int position) {
         int checkPosition = leftAdapter.getCheckPosition();
+        CarTypeInfoBean carTypeInfoBean = (CarTypeInfoBean) rightList.get(position);
         CarInfoBean bean = new CarInfoBean();
-        bean.carName = "Left:"+checkPosition+";right:"+position;
-        bean.carId = checkPosition+"/"+position;
+        bean.name = carTypeInfoBean.car_name;
+        bean.id = carTypeInfoBean.id;
+        bean.price = carTypeInfoBean.car_price;
+        bean.type = carTypeInfoBean.car_type;
         for(int i=0;i<carArray.size();i++){
-            if(bean.carId.equals(carArray.get(i).carId)){
+            if(bean.id.equals(carArray.get(i).id)){
                 finish();
                 return;
             }
@@ -90,17 +96,38 @@ public class CarTypeActivity extends Activity {
     }
 
     private void initData() {
-        for(int i=0;i<20;i++){
-            leftList.add(true);
-        }
-        leftAdapter.notifyDataSetChanged();
-        getRightData(0);
+        App.appAction.carTypeList(new ActionCallbackListener<ArrayList<CarTypeInfoBean>>() {
+            @Override
+            public void onSuccess(ArrayList<CarTypeInfoBean> data) {
+                leftList.clear();
+                leftList.addAll(data);
+                leftAdapter.notifyDataSetChanged();
+                getRightData(0);
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                ToastUtil.showToast(App.app, message);
+            }
+        });
+
     }
     private void getRightData(int position) {
-        // TODO: 2016/4/6 获取网络数据
-        for(int i=0;i<position+1;i++){
-            rightList.add(true);
-        }
+        rightList.clear();
         rightAdapter.notifyDataSetChanged();
+        String carType = ((CarTypeInfoBean) leftList.get(position)).car_brand;
+        App.appAction.carNameList(carType, new ActionCallbackListener<ArrayList<CarTypeInfoBean>>() {
+            @Override
+            public void onSuccess(ArrayList<CarTypeInfoBean> data) {
+                rightList.addAll(data);
+                rightAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                rightAdapter.notifyDataSetChanged();
+                ToastUtil.showToast(App.app, message);
+            }
+        });
     }
 }
