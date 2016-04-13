@@ -1,10 +1,15 @@
 package api.net.okhttp.callback;
 
+import android.text.TextUtils;
+
 import com.google.gson.internal.$Gson$Types;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+
+import api.net.okhttp.L;
 
 public abstract class ResultCallback<T>
 {
@@ -28,6 +33,7 @@ public abstract class ResultCallback<T>
 
     public void onBefore(Request request)
     {
+        L.e(request.toString());
     }
 
     public void onAfter()

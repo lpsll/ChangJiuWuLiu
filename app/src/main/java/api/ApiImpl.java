@@ -164,7 +164,7 @@ public class ApiImpl implements Api {
 
     @Override
     public void calculatePrice(String fromCity, String toCity, String fromCityDetail, String toCityDetail,
-                               String sendWay, String getWay, String carInfo,
+                               String sendWay, String getWay, String carInfo,String insure,
                                ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("fromCityName", fromCity);
@@ -174,8 +174,38 @@ public class ApiImpl implements Api {
         params.put("sendMethod", sendWay);
         params.put("getMethod", getWay);
         params.put("carsinfo", carInfo);
+        params.put("insure", insure);
         String url = Api.CalculatePrice;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void orderCreate(String fromCity, String toCity, String fromCityDetail, String toCityDetail,
+                            String fromName, String toName, String fromTel, String toTel, String fromIdCard, String toIdCard,
+                            String vinnum, String carsInfo, String price, String insure, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_ID", TextUtils.isEmpty(userId) ? "" : userId);
+
+        params.put("from_cityname", fromCity);
+        params.put("from_address", fromCityDetail);
+        params.put("from_name", fromName);
+        params.put("from_ID", fromIdCard);
+        params.put("from_mobile", fromTel);
+
+        params.put("to_cityname", toCity);
+        params.put("to_address", toCityDetail);
+        params.put("to_name", toName);
+        params.put("to_ID", toIdCard);
+        params.put("to_mobile", toTel);
+
+        params.put("vinnum", vinnum);
+        params.put("carsinfo", carsInfo);
+        params.put("price", price);
+        params.put("insure", insure);
+        String url = Api.OrderCreate;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+
     }
 
     @Override

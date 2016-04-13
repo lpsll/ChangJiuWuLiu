@@ -260,38 +260,10 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_buy_insurance"
+                    android:id="@+id/linearCarInsurance"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="@drawable/my_item_bg"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="17dp"
-                        android:layout_weight="1"
-                        android:text="@string/insurance"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"/>
-
-                    <EditText
-                        android:focusable="false"
-                        android:enabled="false"
-                        android:id="@+id/et_insurance_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="27dp"
-                        android:background="@color/white"
-                        android:gravity="right"
-                        android:hint="请输入投保金额"
-                        android:text="￥0.0"
-                        android:minEms="5"
-                        android:phoneNumber="true"
-                        android:textColor="@color/red"
-                        android:textSize="14sp"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
                 </LinearLayout>
             </LinearLayout>
 

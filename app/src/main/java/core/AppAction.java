@@ -11,12 +11,16 @@ import com.htlc.cjwl.bean.ServiceDetailInfoBean;
 import com.htlc.cjwl.bean.ServiceInfoBean;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import model.AddressInfoBean;
 import model.CalculatePriceInfoBean;
 import model.CarInfoBean;
 import model.CarTypeInfoBean;
+import model.InsuranceInfoBean;
 import model.UserBean;
+import model.VinInfoBean;
 
 
 public interface AppAction {
@@ -54,7 +58,11 @@ public interface AppAction {
     void transportWay(String cityName, ActionCallbackListener<String> listener);
 
     void calculatePrice(String fromCity, String toCity, String fromCityDetail, String toCityDetail,
-                        String sendWay, String getWay, ArrayList<CarInfoBean> carInfo, ActionCallbackListener<CalculatePriceInfoBean> listener);
+                        String sendWay, String getWay, ArrayList<CarInfoBean> carInfo, ArrayList<InsuranceInfoBean> insure, ActionCallbackListener<CalculatePriceInfoBean> listener);
+
+    void orderCreate(String fromCity, String toCity, String fromCityDetail, String toCityDetail,
+                     String fromName, String toName, String fromTel, String toTel, String fromIdCard, String toIdCard,
+                     ArrayList<VinInfoBean> vinnum, ArrayList<CarInfoBean> carsInfo, String price, ArrayList<InsuranceInfoBean> insure, ActionCallbackListener<Void> listener);
 
     void homeBanner(ActionCallbackListener<ArrayList<HomeBannerInfo>> listener);
 

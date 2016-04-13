@@ -60,6 +60,7 @@ public class SwipeCarAdapter extends BaseAdapter {
                 list.remove(position);
                 notifyDataSetChanged();
                 activity.refreshTextCarNum();
+                activity.refreshInsuranceLinearLayout();
             }
         });
         return convertView;

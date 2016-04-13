@@ -21,6 +21,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,7 +33,9 @@ import model.AddressInfoBean;
 import model.CalculatePriceInfoBean;
 import model.CarInfoBean;
 import model.CarTypeInfoBean;
+import model.InsuranceInfoBean;
 import model.UserBean;
+import model.VinInfoBean;
 
 
 public class AppActionImpl implements AppAction {
@@ -624,7 +628,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void calculatePrice(String fromCity, String toCity, String fromCityDetail, String toCityDetail,
-                               String sendWay, String getWay, ArrayList<CarInfoBean> carInfo, final ActionCallbackListener<CalculatePriceInfoBean> listener) {
+                               String sendWay, String getWay, ArrayList<CarInfoBean> carInfo, ArrayList<InsuranceInfoBean> insure,  final ActionCallbackListener<CalculatePriceInfoBean> listener) {
         if (TextUtils.isEmpty(fromCity)) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请选择出发城市");
             return;
@@ -650,8 +654,8 @@ public class AppActionImpl implements AppAction {
             return;
         }
         String carsInfo = JsonUtil.parseObjectToJson(carInfo);
-        Log.e("AppAction",carsInfo);
-        api.calculatePrice(fromCity, toCity, fromCityDetail, toCityDetail, sendWay, getWay, carsInfo, new ResultCallback<String>() {
+        String insureStr = JsonUtil.parseObjectToJson(insure);
+        api.calculatePrice(fromCity, toCity, fromCityDetail, toCityDetail, sendWay, getWay, carsInfo,insureStr, new ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
@@ -677,6 +681,67 @@ public class AppActionImpl implements AppAction {
                 }
             }
         });
+    }
+
+    @Override
+    public void orderCreate(String fromCity, String toCity, String fromCityDetail, String toCityDetail, String fromName, String toName,
+                            String fromTel, String toTel, String fromIdCard, String toIdCard,
+                            ArrayList<VinInfoBean> vinnum, ArrayList<CarInfoBean> carsInfo, String price, ArrayList<InsuranceInfoBean> insure, final ActionCallbackListener<Void> listener) {
+        if (TextUtils.isEmpty(fromName)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请填写发货人");
+            return;
+        }
+        if (TextUtils.isEmpty(toName)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请填写收货人");
+            return;
+        }
+        if (TextUtils.isEmpty(fromTel)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请填写发货人联系电话");
+            return;
+        }
+        if (TextUtils.isEmpty(toTel)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请填写收货人联系电话");
+            return;
+        }
+        if (TextUtils.isEmpty(fromIdCard)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请填写发货人身份证号");
+            return;
+        }
+        if (TextUtils.isEmpty(toIdCard)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请填写收货人身份证号");
+            return;
+        }
+        String carsInfoStr = JsonUtil.parseObjectToJson(carsInfo);
+        String vinnumStr = JsonUtil.parseObjectToJson(vinnum);
+        String insureStr = JsonUtil.parseObjectToJson(insure);
+        Log.e("AppAction", carsInfoStr+"\n"+vinnumStr+"\n"+insureStr);
+        api.orderCreate(fromCity, toCity, fromCityDetail, toCityDetail, fromName, toName,
+                fromTel, toTel, fromIdCard, toIdCard,
+                vinnumStr, carsInfoStr, price, insureStr, new ResultCallback<String>() {
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        e.printStackTrace();
+                        listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String code = jsonObject.getString("code");
+                            if ("1".equals(code)) {
+                                listener.onSuccess(null);
+                            } else {
+                                String msg = jsonObject.getString("msg");
+                                listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                        }
+                    }
+                });
+
     }
 
     @Override

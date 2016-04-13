@@ -1,9 +1,12 @@
 package com.htlc.cjwl.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -24,6 +27,7 @@ import core.ActionCallbackListener;
 import model.AddressInfoBean;
 import model.CalculatePriceInfoBean;
 import model.CarInfoBean;
+import model.InsuranceInfoBean;
 
 /**
  * Created by Larno on 16/04/05.
@@ -38,18 +42,21 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     private TextView textTitle;
     private LinearLayout linearFromAddress, linearToAddress,
             linearSelectCarType, linearCarNum, linearSendCarWay,
-            linearGetCarWay;
+            linearGetCarWay,linearCarInsurance;
     private ListView swipeListViewCarContainer;
     private SwipeCarAdapter swipeCarAdapter;
     private TextView textFromAddress, textToAddress, textCarNum,
             textSendCarWay, textGetCarWay, textPrice;
-    private EditText editEnsurance;
     private CheckBox checkBox;
     private TextView textButton;
 
     private boolean state = false;
-    private String fromCityID, toCityID, fromCityDetail, toCityDetail,fromName,toName,fromTel,toTel, sendWayID = Api.TransportWayArray[1], getWayID = Api.TransportWayArray[1];
+    private String fromCityID, toCityID, fromCityDetail = "", toCityDetail = "",
+            fromName = "", toName = "", fromTel = "", toTel = "",
+            sendWayID = Api.TransportWayArray[1], getWayID = Api.TransportWayArray[1],
+            orderPrice = "0.0";
     private ArrayList<CarInfoBean> carArray = new ArrayList<>();
+    private ArrayList<InsuranceInfoBean> insuranceArray = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +98,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         linearGetCarWay.setOnClickListener(this);
         textGetCarWay = (TextView) findViewById(R.id.tv_get_car_way);
 
-        editEnsurance = (EditText) findViewById(R.id.et_insurance_price);
+        linearCarInsurance = (LinearLayout) findViewById(R.id.linearCarInsurance);
 
         findViewById(R.id.textTransport).setOnClickListener(this);
         findViewById(R.id.textRefund).setOnClickListener(this);
@@ -156,10 +163,10 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                 showProtocol("运输协议", Api.ProtocolTransport);
                 break;
             case R.id.textRefund:
-                showProtocol("退款规则",Api.ProtocolTransport);
+                showProtocol("退款规则", Api.ProtocolTransport);
                 break;
             case R.id.textService:
-                showProtocol("服务协议",Api.ProtocolTransport);
+                showProtocol("服务协议", Api.ProtocolTransport);
                 break;
             case R.id.next_step:
                 nextStep();
@@ -171,10 +178,28 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
      * 进行下一步，获取价格或下单操作
      */
     private void nextStep() {
-        if(state){
+        if (state) {
+            if(sendWayID.equals(Api.TransportWayArray[1])){
+                fromCityDetail = "";
+            }
+            if(getWayID.equals(Api.TransportWayArray[1])){
+                toCityDetail = "";
+            }
             Intent intent = new Intent(this, OrderConfirmActivity.class);
+            intent.putParcelableArrayListExtra(OrderConfirmActivity.CarArray, carArray);
+            intent.putExtra(OrderConfirmActivity.CarArray, carArray);
+            intent.putExtra(OrderConfirmActivity.FromCity, textFromAddress.getText());
+            intent.putExtra(OrderConfirmActivity.ToCity, textToAddress.getText());
+            intent.putExtra(OrderConfirmActivity.FromCityDetail, fromCityDetail);
+            intent.putExtra(OrderConfirmActivity.ToCityDetail, toCityDetail);
+            intent.putExtra(OrderConfirmActivity.FromName, fromName);
+            intent.putExtra(OrderConfirmActivity.FromTel, fromTel);
+            intent.putExtra(OrderConfirmActivity.ToName, toName);
+            intent.putExtra(OrderConfirmActivity.ToTel, toTel);
+            intent.putExtra(OrderConfirmActivity.OrderPrice, orderPrice);
+            intent.putParcelableArrayListExtra(OrderConfirmActivity.OrderInsure, insuranceArray);
             startActivity(intent);
-        }else {
+        } else {
             getPrice();
         }
     }
@@ -182,17 +207,34 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     private void getPrice() {
         String fromCity = textFromAddress.getText().toString();
         String toCity = textToAddress.getText().toString();
-        App.appAction.calculatePrice(fromCity, toCity, fromCityDetail, toCityDetail, sendWayID, getWayID, carArray, new ActionCallbackListener<CalculatePriceInfoBean>() {
+        for(int i=0; i<linearCarInsurance.getChildCount(); i++){
+            EditText editInsurancePrice = (EditText) linearCarInsurance.getChildAt(i).findViewById(R.id.et_insurance_price);
+            String insurancePrice = editInsurancePrice.getText().toString();
+            if(TextUtils.isEmpty(insurancePrice)){
+                ToastUtil.showToast(App.app,"投保价值不能为空");
+                return;
+            }
+            insuranceArray.get(i).insurePrice = insurancePrice;
+        }
+        final ProgressDialog progressDialog = ProgressDialog.show(this, "", "请稍等...", true);
+        App.appAction.calculatePrice(fromCity, toCity, fromCityDetail, toCityDetail, sendWayID, getWayID, carArray, insuranceArray, new ActionCallbackListener<CalculatePriceInfoBean>() {
             @Override
             public void onSuccess(CalculatePriceInfoBean data) {
-                editEnsurance.setText("￥"+data.insure);
                 textPrice.setText(data.node);
+                orderPrice = data.node;
                 state = true;
+                textButton.setText("下一步");
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
+                }
             }
 
             @Override
             public void onFailure(String errorEvent, String message) {
                 ToastUtil.showToast(App.app, message);
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
+                }
             }
         });
 
@@ -201,13 +243,14 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
     /**
      * 显示条款
+     *
      * @param title
      * @param url
      */
-    private void showProtocol(String title,String url) {
+    private void showProtocol(String title, String url) {
         Intent intent = new Intent(this, WebActivity.class);
         intent.putExtra(Constant.SERVICE_DETAIL_ID, url);
-        intent.putExtra(Constant.SERVICE_DETAIL_TITLE,title);
+        intent.putExtra(Constant.SERVICE_DETAIL_TITLE, title);
         startActivity(intent);
     }
 
@@ -248,7 +291,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     private void setCarNum() {
         stateChange();
         Intent intent = new Intent(this, SelectCarNumActivity.class);
-        if (carArray.size()<1) {
+        if (carArray.size() < 1) {
             ToastUtil.showToast(App.app, "请选择车辆");
         } else {
             intent.putParcelableArrayListExtra(SelectCarNumActivity.SelectCarNumWithType, carArray);
@@ -330,6 +373,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                     CarInfoBean temp = data.getParcelableExtra(CarTypeActivity.SelectCar);
                     carArray.add(temp);
                     swipeCarAdapter.notifyDataSetChanged();
+                    refreshInsuranceLinearLayout();
                     refreshTextCarNum();
                 }
                 break;
@@ -339,18 +383,48 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                     carArray.clear();
                     carArray.addAll(temp);
                     swipeCarAdapter.notifyDataSetChanged();
+                    refreshInsuranceLinearLayout();
                     refreshTextCarNum();
                 }
                 break;
         }
     }
 
+    public void refreshInsuranceLinearLayout() {
+        linearCarInsurance.removeAllViews();
+        insuranceArray.clear();
+        for(int i=0; i<carArray.size(); i++){
+            CarInfoBean bean = carArray.get(i);
+            for(int j=0; j<Integer.parseInt(bean.num); j++){
+                InsuranceInfoBean insuranceInfoBean = new InsuranceInfoBean();
+                insuranceInfoBean.id = bean.id;
+                insuranceArray.add(insuranceInfoBean);
+
+                LinearLayout linearLayout = (LinearLayout) View.inflate(this,R.layout.layout_order_insure,null);
+                TextView textLabelInsurance = (TextView) linearLayout.findViewById(R.id.textLabelInsurance);
+                textLabelInsurance.setText("投保第"+(j+1)+"辆"+bean.name+"价值");
+                final EditText editInsurancePrice = (EditText) linearLayout.findViewById(R.id.et_insurance_price);
+                editInsurancePrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if(hasFocus){
+                            editInsurancePrice.setText("");
+                            stateChange();
+                        }
+                    }
+                });
+                linearCarInsurance.addView(linearLayout);
+            }
+        }
+    }
+
     public void refreshTextCarNum() {
         int totalNum = 0;
-        for(int i=0; i<carArray.size();i++){
-           int temp = Integer.parseInt(carArray.get(i).num);
+        for (int i = 0; i < carArray.size(); i++) {
+            int temp = Integer.parseInt(carArray.get(i).num);
             totalNum += temp;
         }
-        textCarNum.setText(totalNum+"");
+        textCarNum.setText(totalNum + "");
+        stateChange();
     }
 }
