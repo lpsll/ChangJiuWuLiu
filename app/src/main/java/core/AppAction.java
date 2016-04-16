@@ -19,6 +19,8 @@ import model.CalculatePriceInfoBean;
 import model.CarInfoBean;
 import model.CarTypeInfoBean;
 import model.InsuranceInfoBean;
+import model.OrderDetailBean;
+import model.RefundOrderBean;
 import model.UserBean;
 import model.VinInfoBean;
 
@@ -48,6 +50,11 @@ public interface AppAction {
     void messageDelete(String msgID, ActionCallbackListener<Void> listener);
 
     void orderList(String order_status, int page, ActionCallbackListener<ArrayList<OrderInfoBean>> listener);
+
+    void orderDetail(String orderId,ActionCallbackListener<OrderDetailBean> listener);
+    void cancelOrder(String orderId,ActionCallbackListener<Void> listener);
+    void refundOrderList(String order_status, int page, ActionCallbackListener<ArrayList<RefundOrderBean>> listener);
+    void submitRefundOrder(String orderIdArrayStr, ActionCallbackListener<Void> listener);
 
     void lastOrderDetail(ActionCallbackListener<AddressInfoBean> listener);
 

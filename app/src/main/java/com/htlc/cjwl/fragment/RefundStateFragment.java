@@ -23,11 +23,13 @@ import com.htlc.cjwl.adapter.RefundListAdapter;
 import com.htlc.cjwl.adapter.RefundListSelectAdapter;
 import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.util.CommonUtil;
+import com.htlc.cjwl.util.LogUtil;
 import com.htlc.cjwl.util.ToastUtil;
 
 import java.util.ArrayList;
 
 import core.ActionCallbackListener;
+import model.RefundOrderBean;
 
 /**
  * Created by Larno 2016/04/01;
@@ -68,7 +70,7 @@ public class RefundStateFragment extends Fragment {
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
                 //下拉刷新
                 if (listView.isShownHeader()) {
-                    initData1();
+                    initData();
                 } else if (listView.isShownFooter()) {//上拉加载
                     getMoreData();
                 }
@@ -89,10 +91,32 @@ public class RefundStateFragment extends Fragment {
      * 申请退款
      */
     public void submitRefund(){
-        long[] checkedItemIds = listView.getRefreshableView().getCheckedItemIds();
-        // TODO: 2016/4/7 申请退款
-        initData1();
-        showSuccessDialog();
+        SparseBooleanArray checkedItemPositions = listView.getRefreshableView().getCheckedItemPositions();
+        StringBuilder ordersArray  = new StringBuilder();
+        for(int i=0; i<checkedItemPositions.size(); i++){
+            int key = checkedItemPositions.keyAt(i);
+            if(checkedItemPositions.get(key)){
+                if(key-1<0){
+                    key = 1;
+                }
+                RefundOrderBean bean = (RefundOrderBean) refundsList.get(key-1);
+                ordersArray.append(bean.order_no+",");
+            }
+        }
+        String ordersArrayStr = ordersArray.toString();
+        App.appAction.submitRefundOrder(ordersArrayStr, new ActionCallbackListener<Void>() {
+            @Override
+            public void onSuccess(Void data) {
+                initData();
+                showSuccessDialog();
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                ToastUtil.showToast(App.app,message);
+            }
+        });
+
     }
 
     private void showSuccessDialog() {
@@ -114,34 +138,20 @@ public class RefundStateFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData1();
-    }
 
-    private void initData1() {
-        for(int i=0; i<listView.getRefreshableView().getCount(); i++){
-            listView.getRefreshableView().setItemChecked(i,false);
-        }
-
-        refundsList.clear();
-        int i = 0;
-        while(i<10){
-            refundsList.add(Math.random());
-            i++;
-        }
-        adapter.notifyDataSetChanged();
-        listView.onRefreshComplete();
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        initData();
     }
 
-    private void initData() {
+    public void initData() {
         page = 1;
-        App.appAction.orderList(RefundFragmentStatus[id], page, new ActionCallbackListener<ArrayList<OrderInfoBean>>() {
+        App.appAction.refundOrderList(RefundFragmentStatus[id], page, new ActionCallbackListener<ArrayList<RefundOrderBean>>() {
             @Override
-            public void onSuccess(ArrayList<OrderInfoBean> data) {
+            public void onSuccess(ArrayList<RefundOrderBean> data) {
                 refundsList.clear();
                 refundsList.addAll(data);
                 adapter.notifyDataSetChanged();
@@ -170,9 +180,9 @@ public class RefundStateFragment extends Fragment {
     }
 
     private void getMoreData() {
-        App.appAction.orderList(RefundFragmentStatus[id], page, new ActionCallbackListener<ArrayList<OrderInfoBean>>() {
+        App.appAction.refundOrderList(RefundFragmentStatus[id], page, new ActionCallbackListener<ArrayList<RefundOrderBean>>() {
             @Override
-            public void onSuccess(ArrayList<OrderInfoBean> data) {
+            public void onSuccess(ArrayList<RefundOrderBean> data) {
                 refundsList.addAll(data);
                 adapter.notifyDataSetChanged();
                 page++;

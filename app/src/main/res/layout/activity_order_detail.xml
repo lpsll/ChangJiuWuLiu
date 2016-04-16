@@ -136,7 +136,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <include layout="@layout/layout_order_item"/>
+            <include layout="@layout/layout_order_detail_id"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

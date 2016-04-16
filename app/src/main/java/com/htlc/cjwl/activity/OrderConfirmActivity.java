@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.htlc.cjwl.App;
+import com.htlc.cjwl.MainActivity;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.util.ToastUtil;
 
@@ -171,17 +172,27 @@ public class OrderConfirmActivity extends Activity {
     private void submitOrder() {
         String fromIdCard = editFromUserCard.getText().toString().trim();
         String toIdCard = editToUserCard.getText().toString().trim();
+        fromName = editFromUsername.getText().toString().trim();
+        toName = editToUsername.getText().toString().trim();
+        fromTel = editFromTel.getText().toString().trim();
+        toTel = editToTel.getText().toString().trim();
         for(int i=0; i<linearCarCardContainer.getChildCount(); i++){
             EditText editCarCard = (EditText) linearCarCardContainer.getChildAt(i).findViewById(R.id.editCarCard);
             String vinnum = editCarCard.getText().toString().trim();
             if(TextUtils.isEmpty(vinnum)){
                 ToastUtil.showToast(App.app,"请输入车架号");
+                resetVinnumArray();
+                return;
+            }
+            if(vinnumArray.contains(new VinInfoBean(vinnum))){
+                ToastUtil.showToast(App.app,"车架号不能重复");
+                resetVinnumArray();
                 return;
             }
             vinnumArray.get(i).vinnumId = vinnum;
         }
-        final ProgressDialog progressDialog = ProgressDialog.show(this, "", "请稍等...",true);
-        App.appAction.orderCreate(fromCity, fromCityDetail, toCity, toCityDetail, fromName, toName, fromTel, toTel, fromIdCard, toIdCard,
+        final ProgressDialog progressDialog = ProgressDialog.show(this, "", "请稍等...", true);
+        App.appAction.orderCreate(fromCity,toCity, fromCityDetail, toCityDetail, fromName, toName, fromTel, toTel, fromIdCard, toIdCard,
                 vinnumArray, carArray, orderPrice, orderInsure, new ActionCallbackListener<Void>() {
             @Override
             public void onSuccess(Void data) {
@@ -189,6 +200,7 @@ public class OrderConfirmActivity extends Activity {
                     progressDialog.dismiss();
                 }
                 ToastUtil.showToast(App.app,"订单提交成功");
+                startActivity(new Intent(OrderConfirmActivity.this, MainActivity.class));
             }
 
             @Override
@@ -196,12 +208,16 @@ public class OrderConfirmActivity extends Activity {
                 if(progressDialog!=null){
                     progressDialog.dismiss();
                 }
+                resetVinnumArray();
                 ToastUtil.showToast(App.app,message);
             }
         });
-//        Intent intent = new Intent(this,PayActivity.class);
-//        intent.putExtra(PayActivity.PayDetail,"");
-//        startActivity(intent);
+    }
+
+    private void resetVinnumArray() {
+        for(int i=0; i<vinnumArray.size(); i++){
+            vinnumArray.get(i).vinnumId = null;
+        }
     }
 
 }

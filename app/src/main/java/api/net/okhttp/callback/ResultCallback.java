@@ -33,7 +33,7 @@ public abstract class ResultCallback<T>
 
     public void onBefore(Request request)
     {
-        L.e(request.toString());
+
     }
 
     public void onAfter()

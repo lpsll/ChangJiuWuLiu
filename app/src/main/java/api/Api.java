@@ -21,6 +21,11 @@ public interface Api {
     String MessageDelete = Host + "Home/CYMessage/removeMessage";
 
     String OrderList = Host + "Home/CYOrder/getOrderList";
+    String OrderDetail = Host + "Home/CYOrder/getOrderinfo";
+    String CancelOrder = Host + "Home/CYOrder/cancelOrder";
+    String RefundOrderList = Host + "Home/CYOrder/getrepayList";
+    String SubmitRefundOrder = Host + "Home/CYOrder/repayquest";
+
     String LastOrderDetail = Host + "Home/CYTransport/transportCarInfo";
     String CarTypeList = Host + "Home/CYTransport/getbrandlist";
     String CarNameList = Host + "Home/CYTransport/getcarclasslist";
@@ -129,6 +134,15 @@ public interface Api {
      * @param callback
      */
     void orderList(String order_status, String page, ResultCallback<String> callback);
+
+    void orderDetail(String orderId, ResultCallback<String> callback);
+
+    void cancelOrder(String orderId, ResultCallback<String> callback);
+
+    void refundOrderList(String order_status,String page, ResultCallback<String> callback);
+
+    void submitRefundOrder(String orderIdArrayStr,ResultCallback<String> callback);
+
 
     /**
      * 获取最后一笔订单的详细信息

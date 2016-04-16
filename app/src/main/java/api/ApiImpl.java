@@ -3,8 +3,10 @@ package api;
 
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.htlc.cjwl.App;
+import com.htlc.cjwl.util.LogUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -126,8 +128,45 @@ public class ApiImpl implements Api {
         String userId = App.app.getUser().node;
         params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
         params.put("order_status", order_status);
-        params.put("page", order_status);
+        params.put("page", page);
         String url = Api.OrderList;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void orderDetail(String orderId, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("orderno", orderId);
+        String url = Api.OrderDetail;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void cancelOrder(String orderId, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("orderno", orderId);
+        String url = Api.CancelOrder;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void refundOrderList(String order_status, String page, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
+        params.put("order_status", order_status);
+        params.put("page", page);
+        String url = Api.RefundOrderList;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void submitRefundOrder(String orderIdArrayStr, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
+        params.put("ordernostr", orderIdArrayStr);
+        String url = Api.SubmitRefundOrder;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
     }
 
@@ -186,7 +225,6 @@ public class ApiImpl implements Api {
         Map<String, String> params = new HashMap<String, String>();
         String userId = App.app.getUser().node;
         params.put("user_ID", TextUtils.isEmpty(userId) ? "" : userId);
-
         params.put("from_cityname", fromCity);
         params.put("from_address", fromCityDetail);
         params.put("from_name", fromName);
@@ -203,6 +241,7 @@ public class ApiImpl implements Api {
         params.put("carsinfo", carsInfo);
         params.put("price", price);
         params.put("insure", insure);
+        Log.e("OrderDetail", params.toString());
         String url = Api.OrderCreate;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
 

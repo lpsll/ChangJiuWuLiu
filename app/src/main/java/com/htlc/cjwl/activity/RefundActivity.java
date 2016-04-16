@@ -68,6 +68,7 @@ public class RefundActivity extends AppCompatActivity {
                     TextView tv = (TextView) mTabsLinearLayout.getChildAt(i);
                     if (i == position) {
                         tv.setTextColor(getResources().getColor(R.color.blue));
+                        ((RefundStateFragment)adapter.getItem(position)).initData();
                     } else {
                         tv.setEnabled(true);
                         tv.setTextColor(getResources().getColor(R.color.black));

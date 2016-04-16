@@ -25,6 +25,26 @@ public class VinInfoBean implements Parcelable {
     public VinInfoBean() {
     }
 
+    public VinInfoBean(String vinnumId) {
+        this.vinnumId = vinnumId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        VinInfoBean that = (VinInfoBean) o;
+
+        return !(vinnumId != null ? !vinnumId.equals(that.vinnumId) : that.vinnumId != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return vinnumId != null ? vinnumId.hashCode() : 0;
+    }
+
     protected VinInfoBean(Parcel in) {
         this.id = in.readString();
         this.vinnumId = in.readString();

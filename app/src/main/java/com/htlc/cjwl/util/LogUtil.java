@@ -32,4 +32,9 @@ public class LogUtil {
             Log.i(obj.getClass().getSimpleName().toString(),msg);
         }
     }
+    public static void e(Object obj, String msg){
+        if(isDebug){
+            Log.e(obj.getClass().getSimpleName().toString(),msg);
+        }
+    }
 }

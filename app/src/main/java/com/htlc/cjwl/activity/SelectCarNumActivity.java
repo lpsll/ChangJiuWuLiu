@@ -33,6 +33,7 @@ public class SelectCarNumActivity extends Activity implements View.OnClickListen
     private ArrayList<CarInfoBean> carArray;
 
     private int currentPosition;
+    private String currentNum;
 
 
     @Override
@@ -109,7 +110,7 @@ public class SelectCarNumActivity extends Activity implements View.OnClickListen
                 return false;
             }
         });
-        PickerView pvNum = (PickerView) view.findViewById(R.id.pv_num);
+        final PickerView pvNum = (PickerView) view.findViewById(R.id.pv_num);
         List<String> data = new ArrayList<String>();
 
         for (int i = 1; i < 20; i++) {
@@ -119,15 +120,17 @@ public class SelectCarNumActivity extends Activity implements View.OnClickListen
         pvNum.setOnSelectListener(new PickerView.onSelectListener() {
             @Override
             public void onSelect(String num) {
-                TextView textNum = (TextView) linearCarNumContainer.getChildAt(currentPosition).findViewById(R.id.textCarNum);
-                textNum.setText(num);
-                carArray.get(currentPosition).num =num;
+                currentNum = num;
             }
         });
-        pvNum.setSelected(1);
+        currentNum = carArray.get(currentPosition).num;
+        pvNum.setSelected(Integer.parseInt( carArray.get(currentPosition).num)-1);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView textNum = (TextView) linearCarNumContainer.getChildAt(currentPosition).findViewById(R.id.textCarNum);
+                textNum.setText(currentNum);
+                carArray.get(currentPosition).num = currentNum;
                 linearCarNumContainer.setAlpha(1f);
                 pw.dismiss();
             }

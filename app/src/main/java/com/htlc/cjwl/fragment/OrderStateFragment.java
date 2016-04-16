@@ -1,5 +1,6 @@
 package com.htlc.cjwl.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.htlc.cjwl.activity.OrderInfoActivity;
 import com.htlc.cjwl.adapter.PullOrderAdapter;
 import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.util.CommonUtil;
+import com.htlc.cjwl.util.LogUtil;
 import com.htlc.cjwl.util.LoginUtil;
 import com.htlc.cjwl.util.ToastUtil;
 
@@ -33,7 +35,7 @@ import core.ActionCallbackListener;
  * Created by Larno 2016/04/01;
  */
 public class OrderStateFragment extends Fragment implements App.OnLoginListener, AdapterView.OnItemClickListener {
-    private static final String[] OrderStatus = {"1","2","3","4","5"};
+    private static final String[] OrderStatus = {"all","1","2","3","5"};
     private int id;
     private PullOrderAdapter adapter;
     private ArrayList<OrderInfoBean> ordersList = new ArrayList<OrderInfoBean>();//某种类型的订单集合
@@ -71,13 +73,15 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
                 //下拉刷新
                 if (listView.isShownHeader()) {
+                    LogUtil.e(OrderStateFragment.this,"initData");
                     initData();
                 } else if (listView.isShownFooter()) {//上拉加载
+                    LogUtil.e(OrderStateFragment.this,"getMoreData");
                     getMoreData();
                 }
             }
         });
-        adapter = new PullOrderAdapter(id, ordersList, getActivity());
+        adapter = new PullOrderAdapter(id, ordersList, getActivity(),this);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
         relativeNoOrder = (RelativeLayout) view.findViewById(R.id.relativeNoOrder);
@@ -94,7 +98,7 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.e("OrderStateFragment", "id:" + id + ";onActivityCreated");
-        refreshData();
+//        refreshData();
     }
 
     private void refreshData() {
@@ -109,9 +113,10 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
     @Override
     public void onStart() {
         super.onStart();
+        refreshData();
     }
 
-    private void initData() {
+    public void initData() {
         page = 1;
         App.appAction.orderList(OrderStatus[id], page, new ActionCallbackListener<ArrayList<OrderInfoBean>>() {
             @Override
@@ -182,7 +187,12 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.e("OrderList","position="+position);
+        position--;
+        if(position<0){
+            position = 0;
+        }
         Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+        intent.putExtra(OrderDetailActivity.OrderId, ordersList.get(position).order_no);
         startActivity(intent);
     }
 }

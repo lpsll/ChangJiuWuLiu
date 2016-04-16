@@ -13,16 +13,18 @@ import com.htlc.cjwl.widget.RefundListSelectItem;
 
 import java.util.ArrayList;
 
+import model.RefundOrderBean;
+
 /**
  * Created by Larno on 16/04/07.
  */
 public class RefundListSelectAdapter extends BaseAdapter{
 
     private int id;
-    private ArrayList<OrderInfoBean> ordersList;
+    private ArrayList<RefundOrderBean> ordersList;
     private Context context;
 
-    public RefundListSelectAdapter(int id, ArrayList<OrderInfoBean> ordersList, Context context) {
+    public RefundListSelectAdapter(int id, ArrayList<RefundOrderBean> ordersList, Context context) {
         this.id = id;
         this.ordersList = ordersList;
         this.context = context;
@@ -45,24 +47,16 @@ public class RefundListSelectAdapter extends BaseAdapter{
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null ;
         if(convertView == null){
             convertView = new RefundListSelectItem(context);
-            holder = new ViewHolder();
-            convertView.setTag(holder);
-        }else {
-            holder = (ViewHolder)convertView.getTag();
         }
+        RefundOrderBean bean = ordersList.get(position);
+        RefundListSelectItem refundListSelectItem = (RefundListSelectItem) convertView;
+        refundListSelectItem.textTime.setText(bean.order_date);
+        refundListSelectItem.textOrderId.setText("订单号: "+bean.order_no);
+        refundListSelectItem.textPrice.setText("金额: "+bean.order_price);
         return convertView;
     }
 
-    class ViewHolder {
-        TextView tvOrderNo;//订单编号
-        TextView tvOrderDes;//目的地
-        TextView tvorderDep;//出发地
-        TextView tvOrderDate;//订单日期
-        TextView tvOrderState;//订单状态
-        TextView tvOrderCancel;//订单状态
-    }
 }
 
