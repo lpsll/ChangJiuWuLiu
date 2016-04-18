@@ -15,11 +15,14 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import model.AddressInfoBean;
+import model.BillOrderBean;
 import model.CalculatePriceInfoBean;
 import model.CarInfoBean;
 import model.CarTypeInfoBean;
 import model.InsuranceInfoBean;
 import model.OrderDetailBean;
+import model.PayChargeBean;
+import model.PayOrderBean;
 import model.RefundOrderBean;
 import model.UserBean;
 import model.VinInfoBean;
@@ -51,10 +54,23 @@ public interface AppAction {
 
     void orderList(String order_status, int page, ActionCallbackListener<ArrayList<OrderInfoBean>> listener);
 
-    void orderDetail(String orderId,ActionCallbackListener<OrderDetailBean> listener);
-    void cancelOrder(String orderId,ActionCallbackListener<Void> listener);
+    void orderDetail(String orderId, ActionCallbackListener<OrderDetailBean> listener);
+
+    void cancelOrder(String orderId, ActionCallbackListener<Void> listener);
+
     void refundOrderList(String order_status, int page, ActionCallbackListener<ArrayList<RefundOrderBean>> listener);
+
     void submitRefundOrder(String orderIdArrayStr, ActionCallbackListener<Void> listener);
+
+    void billOrderList(int page, ActionCallbackListener<ArrayList<BillOrderBean>> listener);
+
+    void submitBillOrder(String billHeader, String price, String billType, String address, String receiverName, String orderIdStr, ActionCallbackListener<Void> listener);
+
+    void payOrderDetail(String orderId, ActionCallbackListener<PayOrderBean> listener);
+
+    void pay(String orderId, String channel, String score, ActionCallbackListener<PayChargeBean> listener);
+
+    void verifyPay(String payResultData, ActionCallbackListener<Void> listener);
 
     void lastOrderDetail(ActionCallbackListener<AddressInfoBean> listener);
 

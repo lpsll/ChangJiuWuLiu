@@ -2,9 +2,11 @@
 package api;
 
 import api.net.okhttp.callback.ResultCallback;
+import core.ActionCallbackListener;
 
 public interface Api {
     String[] TransportWayArray = {"0","2"};//index=0 为 长久送车
+    String[] PayWayArray = {"1","2","3","4"};//支付宝，微信，银联，现付
 
     String Host = "http://t2.damaimob.com/";
     String SendSmsCode = Host + "Home/CYUser/getMobileCode";
@@ -25,6 +27,12 @@ public interface Api {
     String CancelOrder = Host + "Home/CYOrder/cancelOrder";
     String RefundOrderList = Host + "Home/CYOrder/getrepayList";
     String SubmitRefundOrder = Host + "Home/CYOrder/repayquest";
+    String BillOrderList = Host + "Home/CYOrder/getbillList";
+    String SubmitBillOrder = Host + "Home/CYOrder/rebillquest";
+
+    String PayOrderDetail = Host + "Home/CYPay/getpayinfo";
+    String Pay = Host + "Home/CYPay/pay";
+    String VerifyPay = Host + "Home/CYYlpay/validateinfo";
 
     String LastOrderDetail = Host + "Home/CYTransport/transportCarInfo";
     String CarTypeList = Host + "Home/CYTransport/getbrandlist";
@@ -143,7 +151,14 @@ public interface Api {
 
     void submitRefundOrder(String orderIdArrayStr,ResultCallback<String> callback);
 
+    void billOrderList(String page, ResultCallback<String> callback);
 
+    void submitBillOrder(String billHeader, String price,String billType, String address, String receiverName, String orderIdStr, ResultCallback<String> callback);
+
+    void payOrderDetail(String orderId, ResultCallback<String> callback);
+
+    void pay(String orderId, String channel, String score,ResultCallback<String> callback);
+    void verifyPay(String payResultData, ResultCallback<String> callback);
     /**
      * 获取最后一笔订单的详细信息
      * @param callback

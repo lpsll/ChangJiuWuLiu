@@ -1,23 +1,37 @@
 package com.htlc.cjwl.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
+import com.htlc.cjwl.util.ToastUtil;
+
+import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2016/4/7.
  */
 public class SubmitBillActivity extends Activity{
+    public static final String TotalPrice = "TotalPrice";
+    public static final String OrderArrayStr = "OrderArrayStr";
+    public static String orderArrayStr;
+    public static String totalPrice;
     private TextView textTitle,textBillPrice;
     private EditText editBillHeader,editBillType,editBillAddress,editBillReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_bill);
+        Intent intent = getIntent();
+
+        totalPrice = intent.getStringExtra(TotalPrice);
+        orderArrayStr = intent.getStringExtra(OrderArrayStr);
 
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,6 +43,7 @@ public class SubmitBillActivity extends Activity{
         textTitle.setText("发票");
 
         textBillPrice = (TextView) findViewById(R.id.textBillPrice);
+        textBillPrice.setText(totalPrice+"");
         editBillHeader = (EditText) findViewById(R.id.editBillHeader);
         editBillType = (EditText) findViewById(R.id.editBillType);
         editBillAddress = (EditText) findViewById(R.id.editBillAddress);
@@ -43,6 +58,22 @@ public class SubmitBillActivity extends Activity{
     }
 
     private void submit() {
+        String billHeader = editBillHeader.getText().toString().trim();
+        String billType = editBillType.getText().toString().trim();
+        String address = editBillAddress.getText().toString().trim();
+        String billReceiver = editBillReceiver.getText().toString().trim();
 
+        App.appAction.submitBillOrder(billHeader, totalPrice + "", billType, address, billReceiver, orderArrayStr, new ActionCallbackListener<Void>() {
+            @Override
+            public void onSuccess(Void data) {
+                ToastUtil.showToast(App.app,"申请发票成功！");
+                finish();
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                ToastUtil.showToast(App.app,message);
+            }
+        });
     }
 }

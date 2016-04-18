@@ -31,11 +31,14 @@ import api.Api;
 import api.ApiImpl;
 import api.net.okhttp.callback.ResultCallback;
 import model.AddressInfoBean;
+import model.BillOrderBean;
 import model.CalculatePriceInfoBean;
 import model.CarInfoBean;
 import model.CarTypeInfoBean;
 import model.InsuranceInfoBean;
 import model.OrderDetailBean;
+import model.PayChargeBean;
+import model.PayOrderBean;
 import model.RefundOrderBean;
 import model.UserBean;
 import model.VinInfoBean;
@@ -111,7 +114,7 @@ public class AppActionImpl implements AppAction {
             listener.onFailure(ErrorEvent.PARAM_NULL, "密码不能为空");
             return;
         }
-        if (pwd.length()<5) {
+        if (pwd.length() < 5) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "密码至少为5位");
             return;
         }
@@ -198,7 +201,7 @@ public class AppActionImpl implements AppAction {
             listener.onFailure(ErrorEvent.PARAM_NULL, "密码不能为空");
             return;
         }
-        if (pwd.length()<5) {
+        if (pwd.length() < 5) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "密码至少为5位");
             return;
         }
@@ -340,12 +343,12 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void updatePassword(String newPwd,String confirmNewPwd, final ActionCallbackListener<Void> listener) {
+    public void updatePassword(String newPwd, String confirmNewPwd, final ActionCallbackListener<Void> listener) {
         if (TextUtils.isEmpty(newPwd)) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "密码不能为空");
             return;
         }
-        if (newPwd.length()<5) {
+        if (newPwd.length() < 5) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "密码至少为5位");
             return;
         }
@@ -452,35 +455,35 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void messageDelete(String msgID, final ActionCallbackListener<Void> listener) {
-       api.messageDelete(msgID, new ResultCallback<String>() {
-           @Override
-           public void onError(Request request, Exception e) {
-               e.printStackTrace();
-               listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
-           }
+        api.messageDelete(msgID, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
 
-           @Override
-           public void onResponse(String response) {
-               try {
-                   JSONObject jsonObject = new JSONObject(response);
-                   String code = jsonObject.getString("code");
-                   if ("1".equals(code)) {
-                       listener.onSuccess(null);
-                   } else {
-                       String msg = jsonObject.getString("msg");
-                       listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
-                   }
-               } catch (JSONException e) {
-                   e.printStackTrace();
-                   listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
-               }
-           }
-       });
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        listener.onSuccess(null);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
     }
 
     @Override
     public void orderList(final String order_status, final int page, final ActionCallbackListener<ArrayList<OrderInfoBean>> listener) {
-        LogUtil.e(this,"page:"+page+"------order_status:"+order_status);
+        LogUtil.e(this, "page:" + page + "------order_status:" + order_status);
         api.orderList(order_status, page + "", new ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
@@ -491,8 +494,8 @@ public class AppActionImpl implements AppAction {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("orderList","page:"+page+"------order_status:"+order_status);
-                    Log.e("orderList",response);
+                    Log.e("orderList", "page:" + page + "------order_status:" + order_status);
+                    Log.e("orderList", response);
                     JSONObject jsonObject = new JSONObject(response);
                     String code = jsonObject.getString("code");
                     if ("1".equals(code)) {
@@ -525,7 +528,7 @@ public class AppActionImpl implements AppAction {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("OrderDetail", "onResponse= "+response);
+                    Log.e("OrderDetail", "onResponse= " + response);
                     JSONObject jsonObject = new JSONObject(response);
                     String code = jsonObject.getString("code");
                     if ("1".equals(code)) {
@@ -584,8 +587,8 @@ public class AppActionImpl implements AppAction {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("refundOrderList","page:"+page+"------order_status:"+order_status);
-                    Log.e("refundOrderList",response);
+                    Log.e("refundOrderList", "page:" + page + "------order_status:" + order_status);
+                    Log.e("refundOrderList", response);
                     JSONObject jsonObject = new JSONObject(response);
                     String code = jsonObject.getString("code");
                     if ("1".equals(code)) {
@@ -635,6 +638,173 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
+    public void billOrderList(final int page, final ActionCallbackListener<ArrayList<BillOrderBean>> listener) {
+        api.billOrderList(page + "", new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.e("billOrderList", "page" + page + ";--------" + response);
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String jsonArray = jsonObject.getString("data");
+                        ArrayList<BillOrderBean> array = (ArrayList<BillOrderBean>) JsonUtil.parseJsonToList(jsonArray,
+                                new TypeToken<ArrayList<BillOrderBean>>() {
+                                }.getType());
+                        listener.onSuccess(array);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void submitBillOrder(String billHeader, String price, String billType, String address, String receiverName, String orderIdStr, final ActionCallbackListener<Void> listener) {
+        // 参数检查
+        if (TextUtils.isEmpty(billHeader)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "发票抬头不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(billType)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请输入发票类型");
+            return;
+        }
+        if (TextUtils.isEmpty(address)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请输入寄送地址");
+            return;
+        }
+        if (TextUtils.isEmpty(receiverName)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请输入收票人");
+            return;
+        }
+        api.submitBillOrder(billHeader, price, billType, address, receiverName, orderIdStr, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        listener.onSuccess(null);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void payOrderDetail(String orderId, final ActionCallbackListener<PayOrderBean> listener) {
+        api.payOrderDetail(orderId, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.e("OrderDetail", "onResponse= " + response);
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String jsonObjStr = jsonObject.getString("data");
+                        PayOrderBean bean = JsonUtil.parseJsonToBean(jsonObjStr, PayOrderBean.class);
+                        listener.onSuccess(bean);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void pay(String orderId, String channel, String score, final ActionCallbackListener<PayChargeBean> listener) {
+        api.pay(orderId, channel, score, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String jsonObjStr = jsonObject.getString("data");
+                        PayChargeBean bean = JsonUtil.parseJsonToBean(jsonObjStr, PayChargeBean.class);
+                        listener.onSuccess(bean);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void verifyPay(String payResultData, final ActionCallbackListener<Void> listener) {
+        api.verifyPay(payResultData, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        listener.onSuccess(null);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
     public void lastOrderDetail(final ActionCallbackListener<AddressInfoBean> listener) {
         api.lastOrderDetail(new ResultCallback<String>() {
             @Override
@@ -650,7 +820,7 @@ public class AppActionImpl implements AppAction {
                     String code = jsonObject.getString("code");
                     if ("1".equals(code)) {
                         String address = jsonObject.getJSONObject("data").getString("addressInfo");
-                        AddressInfoBean addressInfoBean = JsonUtil.parseJsonToBean(address,AddressInfoBean.class);
+                        AddressInfoBean addressInfoBean = JsonUtil.parseJsonToBean(address, AddressInfoBean.class);
                         listener.onSuccess(addressInfoBean);
                     } else {
                         String msg = jsonObject.getString("msg");
@@ -680,7 +850,8 @@ public class AppActionImpl implements AppAction {
                     String code = jsonObject.getString("code");
                     if ("1".equals(code)) {
                         String jsonArray = jsonObject.getString("data");
-                        ArrayList<CarTypeInfoBean> list = (ArrayList<CarTypeInfoBean>) JsonUtil.parseJsonToList(jsonArray,new TypeToken<ArrayList<CarTypeInfoBean>>(){}.getType());
+                        ArrayList<CarTypeInfoBean> list = (ArrayList<CarTypeInfoBean>) JsonUtil.parseJsonToList(jsonArray, new TypeToken<ArrayList<CarTypeInfoBean>>() {
+                        }.getType());
                         listener.onSuccess(list);
                     } else {
                         String msg = jsonObject.getString("msg");
@@ -710,7 +881,8 @@ public class AppActionImpl implements AppAction {
                     String code = jsonObject.getString("code");
                     if ("1".equals(code)) {
                         String jsonArray = jsonObject.getString("data");
-                        ArrayList<CarTypeInfoBean> list = (ArrayList<CarTypeInfoBean>) JsonUtil.parseJsonToList(jsonArray,new TypeToken<ArrayList<CarTypeInfoBean>>(){}.getType());
+                        ArrayList<CarTypeInfoBean> list = (ArrayList<CarTypeInfoBean>) JsonUtil.parseJsonToList(jsonArray, new TypeToken<ArrayList<CarTypeInfoBean>>() {
+                        }.getType());
                         listener.onSuccess(list);
                     } else {
                         String msg = jsonObject.getString("msg");
@@ -755,7 +927,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void calculatePrice(String fromCity, String toCity, String fromCityDetail, String toCityDetail,
-                               String sendWay, String getWay, ArrayList<CarInfoBean> carInfo, ArrayList<InsuranceInfoBean> insure,  final ActionCallbackListener<CalculatePriceInfoBean> listener) {
+                               String sendWay, String getWay, ArrayList<CarInfoBean> carInfo, ArrayList<InsuranceInfoBean> insure, final ActionCallbackListener<CalculatePriceInfoBean> listener) {
         if (TextUtils.isEmpty(fromCity)) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请选择出发城市");
             return;
@@ -767,22 +939,22 @@ public class AppActionImpl implements AppAction {
         if (Api.TransportWayArray[0].equals(sendWay) && TextUtils.isEmpty(fromCityDetail)) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请输入详细出发地址");
             return;
-        }else if(!Api.TransportWayArray[0].equals(sendWay)){
+        } else if (!Api.TransportWayArray[0].equals(sendWay)) {
             fromCityDetail = "";
         }
         if (Api.TransportWayArray[0].equals(getWay) && TextUtils.isEmpty(fromCityDetail)) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请输入详细目的地址");
             return;
-        }else if(!Api.TransportWayArray[0].equals(getWay)){
+        } else if (!Api.TransportWayArray[0].equals(getWay)) {
             toCityDetail = "";
         }
-        if(carInfo.size()<=0){
+        if (carInfo.size() <= 0) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请选择汽车");
             return;
         }
         String carsInfo = JsonUtil.parseObjectToJson(carInfo);
         String insureStr = JsonUtil.parseObjectToJson(insure);
-        api.calculatePrice(fromCity, toCity, fromCityDetail, toCityDetail, sendWay, getWay, carsInfo,insureStr, new ResultCallback<String>() {
+        api.calculatePrice(fromCity, toCity, fromCityDetail, toCityDetail, sendWay, getWay, carsInfo, insureStr, new ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
@@ -796,7 +968,7 @@ public class AppActionImpl implements AppAction {
                     String code = jsonObject.getString("code");
                     if ("1".equals(code)) {
                         String jsonStr = jsonObject.getString("data");
-                        CalculatePriceInfoBean bean = JsonUtil.parseJsonToBean(jsonStr,CalculatePriceInfoBean.class);
+                        CalculatePriceInfoBean bean = JsonUtil.parseJsonToBean(jsonStr, CalculatePriceInfoBean.class);
                         listener.onSuccess(bean);
                     } else {
                         String msg = jsonObject.getString("msg");
@@ -841,7 +1013,7 @@ public class AppActionImpl implements AppAction {
         String carsInfoStr = JsonUtil.parseObjectToJson(carsInfo);
         String vinnumStr = JsonUtil.parseObjectToJson(vinnum);
         String insureStr = JsonUtil.parseObjectToJson(insure);
-        Log.e("AppAction", carsInfoStr+"\n"+vinnumStr+"\n"+insureStr);
+        Log.e("AppAction", carsInfoStr + "\n" + vinnumStr + "\n" + insureStr);
         api.orderCreate(fromCity, toCity, fromCityDetail, toCityDetail, fromName, toName,
                 fromTel, toTel, fromIdCard, toIdCard,
                 vinnumStr, carsInfoStr, price, insureStr, new ResultCallback<String>() {
@@ -1012,7 +1184,7 @@ public class AppActionImpl implements AppAction {
                     JSONObject jsonObject = new JSONObject(response);
                     String code = jsonObject.getString("code");
                     if ("1".equals(code)) {
-                       listener.onSuccess(response);
+                        listener.onSuccess(response);
                     } else {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);

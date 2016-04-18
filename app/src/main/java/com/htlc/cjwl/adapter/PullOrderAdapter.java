@@ -3,6 +3,7 @@ package com.htlc.cjwl.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
+import com.htlc.cjwl.activity.PayActivity;
 import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.fragment.OrderStateFragment;
 import com.htlc.cjwl.util.CommonUtil;
@@ -212,12 +214,47 @@ public class PullOrderAdapter extends BaseAdapter{
 
     }
 
-    private void submitRefund(int position) {
+    private void submitRefund(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("申请退款");//设置对话框标题
+        builder.setMessage("您确认申请退款吗？申请退款订单将取消！");//设置显示的内容
 
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加确定按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+                App.appAction.submitRefundOrder(ordersList.get(position).order_no, new ActionCallbackListener<Void>() {
+                    @Override
+                    public void onSuccess(Void data) {
+                        ToastUtil.showToast(App.app,"取消订单成功！");
+                        orderStateFragment.initData();
+                    }
+
+                    @Override
+                    public void onFailure(String errorEvent, String message) {
+                        ToastUtil.showToast(App.app,message);
+                    }
+                });
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {//添加返回按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {//响应事件
+
+            }
+
+        });//在按键响应事件中显示此对话框
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setTextColor(CommonUtil.getResourceColor(R.color.blue));
+        Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        negativeButton.setTextColor(CommonUtil.getResourceColor(R.color.blue));
     }
 
     private void goPay(int position) {
-
+        Intent intent = new Intent(context, PayActivity.class);
+        intent.putExtra(PayActivity.OrderID,ordersList.get(position).order_no);
+        context.startActivity(intent);
     }
 
     private void cancelOrder(final int position) {

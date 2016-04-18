@@ -153,6 +153,7 @@ public class ApiImpl implements Api {
     public void refundOrderList(String order_status, String page, ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
         String userId = App.app.getUser().node;
+        LogUtil.e(this, "userId:" + userId);
         params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
         params.put("order_status", order_status);
         params.put("page", page);
@@ -169,6 +170,60 @@ public class ApiImpl implements Api {
         String url = Api.SubmitRefundOrder;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
     }
+
+    @Override
+    public void billOrderList(String page, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
+        params.put("page", page);
+        String url = Api.BillOrderList;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void submitBillOrder(String billHeader, String price,String billType, String address, String receiverName, String orderIdStr, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
+        params.put("buyer", billHeader);
+        params.put("price", price);
+        params.put("type", billType);
+        params.put("address", address);
+        params.put("taker", receiverName);
+        params.put("ordernostr", orderIdStr);
+        String url = Api.SubmitBillOrder;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void payOrderDetail(String orderId, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("orderno", orderId);
+        String url = Api.PayOrderDetail;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void pay(String orderId, String channel, String score, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
+        params.put("orderno", orderId);
+        params.put("channel", channel);
+        params.put("socre", score);
+        String url = Api.Pay;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void verifyPay(String payResultData, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("htmldata", payResultData);
+        String url = Api.VerifyPay;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
 
     @Override
     public void lastOrderDetail(ResultCallback<String> callback) {
@@ -203,7 +258,7 @@ public class ApiImpl implements Api {
 
     @Override
     public void calculatePrice(String fromCity, String toCity, String fromCityDetail, String toCityDetail,
-                               String sendWay, String getWay, String carInfo,String insure,
+                               String sendWay, String getWay, String carInfo, String insure,
                                ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("fromCityName", fromCity);

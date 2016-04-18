@@ -76,10 +76,10 @@ public class RefundStateFragment extends Fragment {
                 }
             }
         });
-        if(id == 0){
+        if (id == 0) {
             listView.getRefreshableView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
             adapter = new RefundListSelectAdapter(id, refundsList, getActivity());
-        }else {
+        } else {
             adapter = new RefundListAdapter(id, refundsList, getActivity());
         }
         listView.setAdapter(adapter);
@@ -90,32 +90,42 @@ public class RefundStateFragment extends Fragment {
     /**
      * 申请退款
      */
-    public void submitRefund(){
+    public void submitRefund() {
         SparseBooleanArray checkedItemPositions = listView.getRefreshableView().getCheckedItemPositions();
-        StringBuilder ordersArray  = new StringBuilder();
-        for(int i=0; i<checkedItemPositions.size(); i++){
+        StringBuilder ordersArray = new StringBuilder();
+        if (checkedItemPositions.size() < 1) {
+            return;
+        }
+        boolean flag = false;
+        for (int i = 0; i < checkedItemPositions.size(); i++) {
             int key = checkedItemPositions.keyAt(i);
-            if(checkedItemPositions.get(key)){
-                if(key-1<0){
+            if (checkedItemPositions.get(key)) {
+                if (key - 1 < 0) {
                     key = 1;
                 }
-                RefundOrderBean bean = (RefundOrderBean) refundsList.get(key-1);
-                ordersArray.append(bean.order_no+",");
+                RefundOrderBean bean = (RefundOrderBean) refundsList.get(key - 1);
+                ordersArray.append(bean.order_no + ",");
+                flag = true;
             }
         }
         String ordersArrayStr = ordersArray.toString();
-        App.appAction.submitRefundOrder(ordersArrayStr, new ActionCallbackListener<Void>() {
-            @Override
-            public void onSuccess(Void data) {
-                initData();
-                showSuccessDialog();
-            }
+        for (int i = 0; i < listView.getRefreshableView().getCount(); i++) {
+            listView.getRefreshableView().setItemChecked(i, false);
+        }
+        if (flag) {
+            App.appAction.submitRefundOrder(ordersArrayStr, new ActionCallbackListener<Void>() {
+                @Override
+                public void onSuccess(Void data) {
+                    initData();
+                    showSuccessDialog();
+                }
 
-            @Override
-            public void onFailure(String errorEvent, String message) {
-                ToastUtil.showToast(App.app,message);
-            }
-        });
+                @Override
+                public void onFailure(String errorEvent, String message) {
+                    ToastUtil.showToast(App.app, message);
+                }
+            });
+        }
 
     }
 
@@ -163,6 +173,7 @@ public class RefundStateFragment extends Fragment {
             @Override
             public void onFailure(String errorEvent, String message) {
                 ToastUtil.showToast(App.app, message);
+                refundsList.clear();
                 refreshView();
                 listView.onRefreshComplete();
             }
