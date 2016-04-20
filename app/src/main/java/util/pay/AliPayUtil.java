@@ -12,16 +12,29 @@ import java.util.Random;
  */
 public class AliPayUtil {
     // 商户PID
-    public static final String PARTNER = "";
+    public static final String PARTNER = "2088121015509109";
     // 商户收款账号
-    public static final String SELLER = "";
+    public static final String SELLER = "cjwlvxzfb@changjiulogistics.com";
     // 商户私钥，pkcs8格式
-    public static final String RSA_PRIVATE = "";
+    public static final String RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALyFk+2gqFHH2joC" +
+            "t3bbapZR9m4tAgD1T0shP/gR12lsSsGBv2mshBxGdh4PiosneR6pi+IydeX+Y9KZ" +
+            "t8kmOWmj/Peupg06KGUejgFLMtkKEuGhPOazhv7Z07bMQpkrwaMLoxcFWZqNI7KY" +
+            "UJcFe6oP9gwfl/h0gSnTDYj5m66BAgMBAAECgYB4Hqy49msJYMv9tolrpDbv/N2G" +
+            "KgtizOtvNYpq6ANXWvbvAVsTXCb5VTQhx0lBjS8xiFpnEDvrBgJYyDVAZ6igOyxE" +
+            "1/MgYhdAnYVGTdZIQ9OLlJeEU6zAJPmO6jMI5KXRNetjVhdBxUzVKlI6uJpBnmqy" +
+            "BokKJ3KSW2PUtygLoQJBAPfYmvTy+xzHMENoI/lIARg69/p9o7YL2OeSYzLQSN1v" +
+            "v3uyJfGDEbsqNNC6WUYrHAroFXSQu90A4BpVVpq+dgUCQQDCuVWyy/JQb/CkhniT" +
+            "ZoIzthmj+0x8N7m08GqEVUwT6nFTtfuG9D53INJ473vIk/1VmI+B+LP5si3/2Ftn" +
+            "CaNNAkAY3IN+urjxxBFVUab6JHznn1Ksr9myMzII2KhWuon0nHcKw24G8ezfZ3Zw" +
+            "0aCO51gix/EPBk2x95qDSbgsQZq5AkEAneqqCneFiyBNG1CGppuiigdrYeZiD/ct" +
+            "XwT+jVWTfi9KOuZCFx8rLXdr2XH2hCMod2tjLregVabf0TYIYlaZnQJBAKZ9FvOP" +
+            "Mz1nWixQwM6mWX2+G1bgTf/QCOXzgtoOMzvlBalbXWVMMYMCQGiylIlxn8H/Lloc" +
+            "5rOn9ymc+673kpQ=";
     // 支付宝公钥
     public static final String RSA_PUBLIC = "";
 
-    public static String getPayInfo(){
-        String orderInfo = getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
+    public static String getPayInfo(String name,String desc,String price, String orderId){
+        String orderInfo = getOrderInfo(name, desc, price,orderId);
 
         /**
          * 特别注意，这里的签名逻辑需要放在服务端，切勿将私钥泄露在代码中！
@@ -47,7 +60,7 @@ public class AliPayUtil {
      * create the order info. 创建订单信息
      *
      */
-    private static String getOrderInfo(String subject, String body, String price) {
+    private static String getOrderInfo(String subject, String body, String price,String orderId) {
 
         // 签约合作者身份ID
         String orderInfo = "partner=" + "\"" + PARTNER + "\"";
@@ -56,7 +69,7 @@ public class AliPayUtil {
         orderInfo += "&seller_id=" + "\"" + SELLER + "\"";
 
         // 商户网站唯一订单号
-        orderInfo += "&out_trade_no=" + "\"" + getOutTradeNo() + "\"";
+        orderInfo += "&out_trade_no=" + "\"" + orderId + "\"";
 
         // 商品名称
         orderInfo += "&subject=" + "\"" + subject + "\"";
@@ -68,7 +81,7 @@ public class AliPayUtil {
         orderInfo += "&total_fee=" + "\"" + price + "\"";
 
         // 服务器异步通知页面路径
-        orderInfo += "&notify_url=" + "\"" + "http://notify.msp.hk/notify.htm" + "\"";
+        orderInfo += "&notify_url=" + "\"" + "http://t2.damaimob.com/Home/CYAlipay/ZfbNoticeURL" + "\"";
 
         // 服务接口名称， 固定值
         orderInfo += "&service=\"mobile.securitypay.pay\"";

@@ -32,6 +32,9 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.unionpay.UPPayAssistEx;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import api.Api;
@@ -67,6 +70,8 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
     private int payPlantform;
     private String orderId;
     private String mScore;
+    private String price;
+    private String useScore;
     private String html = "<font color=\"#3c3c3c\">本次可用积分</font>" +
             "<font color=\"#ff0000\">%1$s</font>" +
             "<font color=\"#3c3c3c\">分，可抵</font>" +
@@ -189,6 +194,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
         textCarNumArray.setText(carNumArrayStr.toString());
         textInsurancePrice.setText("￥" + insurancePrice);
         textPrice.setText("￥" + data.order_price);
+        price = data.order_price;
 
         html = String.format(html, data.socre, data.socre);
         textScore.setText(Html.fromHtml(html));
@@ -211,8 +217,8 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
     private void submitOrder() {
         payProgressDialog = ProgressDialog.show(this, "", "请稍等...", true);
         String channel = Api.PayWayArray[selectPayWay];
-        String score = checkBox.isChecked() ? mScore : "0";
-        App.appAction.pay(orderId, channel, score, new ActionCallbackListener<PayChargeBean>() {
+        useScore = checkBox.isChecked() ? mScore : "0";
+        App.appAction.pay(orderId, channel, useScore, new ActionCallbackListener<PayChargeBean>() {
             @Override
             public void onSuccess(PayChargeBean data) {
                 invokeOtherWidget(selectPayWay, data);
@@ -220,7 +226,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
             @Override
             public void onFailure(String errorEvent, String message) {
-               showTipsDialog(message,false);
+                showTipsDialog(message, false);
             }
         });
     }
@@ -246,28 +252,39 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
             unionPay(chargeBean);
         } else if ((selectPayWay == 3)) {
             //现付
+            showTipsDialog("支付成功", true);
+
         }
     }
 
     private void wxPay(PayChargeBean chargeBean) {
         IWXAPI wxapi = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID);
-        PayReq req = new PayReq();
-        //req.appId = "wxf8b4f85f3a794e77";  // 测试用appId
-//        req.appId			= json.getString("appid");
-//        req.partnerId		= json.getString("partnerid");
-//        req.prepayId		= json.getString("prepayid");
-//        req.nonceStr		= json.getString("noncestr");
-//        req.timeStamp		= json.getString("timestamp");
-//        req.packageValue	= json.getString("package");
-//        req.sign			= json.getString("sign");
-//        req.extData			= "app data"; // optional
-        Toast.makeText(PayActivity.this, "正常调起支付", Toast.LENGTH_SHORT).show();
-        // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
-        wxapi.sendReq(req);
+        try {
+            JSONObject json = new JSONObject(chargeBean.tn);
+            PayReq req = new PayReq();
+            req.appId = Constant.WX_APP_ID;  // 测试用appId
+            req.appId = json.getString("appid");
+            req.partnerId = json.getString("partnerid");
+            req.prepayId = json.getString("prepayid");
+            req.nonceStr = json.getString("noncestr");
+            req.timeStamp = json.getString("timestamp");
+            req.packageValue = json.getString("package");
+            req.sign = json.getString("sign");
+            req.extData = "app data"; // optional
+            Toast.makeText(PayActivity.this, "正常调起支付", Toast.LENGTH_SHORT).show();
+            // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+            wxapi.sendReq(req);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void aliPay(PayChargeBean chargeBean) {
-        final String payInfo = AliPayUtil.getPayInfo();
+        double aliPrice = Double.parseDouble(price) - Double.parseDouble(useScore);
+        aliPrice = 0.01;
+        final String payInfo = AliPayUtil.getPayInfo("长久物流运输费用", "长久物流运输费用。", aliPrice + "", orderId);
+//      final String payInfo = chargeBean.tn;
         Runnable payRunnable = new Runnable() {
 
             @Override
@@ -291,7 +308,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
     private void unionPay(PayChargeBean chargeBean) {
         if (TextUtils.isEmpty(chargeBean.tn)) {
-            showTipsDialog("网络错误！",false);
+            showTipsDialog("网络错误！", false);
         }
         UPPayAssistEx.startPay(this, null, null, chargeBean.tn, mMode);
     }
@@ -318,7 +335,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
      */
     private void handleUnionResult(Intent data) {
         if (data == null) {
-            if(payProgressDialog!=null){
+            if (payProgressDialog != null) {
                 payProgressDialog.dismiss();
             }
             return;
@@ -329,12 +346,12 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
                 String result = data.getExtras().getString("result_data");
                 verifyUnion(result);
             } else {
-                showTipsDialog("支付成功！",true);
+                showTipsDialog("支付成功！", true);
             }
         } else if (str.equalsIgnoreCase("fail")) {
-            showTipsDialog("支付失败！",false);
+            showTipsDialog("支付失败！", false);
         } else if (str.equalsIgnoreCase("cancel")) {
-            showTipsDialog("支付取消！",false);
+            showTipsDialog("支付取消！", false);
         }
     }
 
@@ -345,19 +362,19 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
      * @param data
      */
     private void verifyUnion(String data) {
-        data = Base64.encodeToString(data.getBytes(),Base64.DEFAULT);
+        data = Base64.encodeToString(data.getBytes(), Base64.DEFAULT);
         App.appAction.verifyPay(data, new ActionCallbackListener<Void>() {
             @Override
             public void onSuccess(Void data) {
-                showTipsDialog("支付成功！",true);
+                showTipsDialog("支付成功！", true);
             }
 
             @Override
             public void onFailure(String errorEvent, String message) {
-                if(ErrorEvent.NETWORK_ERROR.equals(errorEvent)){
-                    showTipsDialog("网络出错！",false);
-                }else {
-                    showTipsDialog("支付失败！",false);
+                if (ErrorEvent.NETWORK_ERROR.equals(errorEvent)) {
+                    showTipsDialog("网络出错！", false);
+                } else {
+                    showTipsDialog("支付失败！", false);
                 }
             }
         });
@@ -369,11 +386,12 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
      * @param msg
      */
     private void showTipsDialog(String msg, final boolean paySuccess) {
-        if(payProgressDialog!=null){
+        if (payProgressDialog != null) {
             payProgressDialog.dismiss();
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("支付结果");
+        builder.setCancelable(false);
         builder.setMessage(msg);
         builder.setInverseBackgroundForced(true);
 //         builder.setCustomTitle();
@@ -392,6 +410,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
         negativeButton.setTextColor(CommonUtil.getResourceColor(R.color.blue));
 
     }
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
@@ -409,7 +428,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        showTipsDialog("支付成功！",true);
+                        showTipsDialog("支付成功！", true);
                     } else {
                         // 判断resultStatus 为非"9000"则代表可能支付失败
                         // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
@@ -417,7 +436,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
                             showTipsDialog("支付结果确认中！", true);
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            showTipsDialog("支付失败！",false);
+                            showTipsDialog("支付失败！", false);
                         }
                     }
                     break;

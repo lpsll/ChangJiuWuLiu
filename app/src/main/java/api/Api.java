@@ -23,7 +23,6 @@ public interface Api {
     String MessageDelete = Host + "Home/CYMessage/removeMessage";
     String Feedback = Host + "Home/CYFeedback/addFeedback";
     String ScoreList = Host + "Home/CYIntegral/getIntegrallist";
-    String ScoreRulerHtml = Host + "Home/CYIntegral/getIntegralhtml";
 
     String OrderList = Host + "Home/CYOrder/getOrderList";
     String OrderDetail = Host + "Home/CYOrder/getOrderinfo";
@@ -44,9 +43,12 @@ public interface Api {
     String CarNameList = Host + "Home/CYTransport/getcarclasslist";
     String TransportWay = Host + "Home/CYTransport/transportMethod";
     String CalculatePrice = Host + "Home/CYTransport/transportCalculateprice";
-    String ProtocolTransport = "http://www.youdao.com/search?q="+"运输协议"+"&keyfrom=dict.top";
-    String ProtocolRefund = "http://www.youdao.com/search?q="+"退款规则"+"&keyfrom=dict.top";
-    String ProtocolService = "http://www.youdao.com/search?q="+"服务协议"+"&keyfrom=dict.top";
+    String ProtocolTransport = Host + "Home/CYHtml/gettransportagreement";
+    String ProtocolRefund = Host + "Home/CYHtml/getrefundrule";
+    String ProtocolService = Host + "Home/CYHtml/getserviceagreement";
+    String ProtocolScoreRuler = Host + "Home/CYHtml/getintegralrule";
+    String ProtocolAbout = Host + "Home/CYHtml/getrelatedsoftware";
+    String ProtocolUser = Host + "Home/CYHtml/getuseragreement";
     String OrderCreate = Host + "Home/CYOrder/createOrder";
 
     String HomeBanner = Host + "Home/CYBanner/getBannerList";

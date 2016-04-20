@@ -49,20 +49,32 @@
                 android:hint="确认密码"
                 android:inputType="textPassword" />
         </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <CheckBox
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
             android:id="@+id/cb_checkbox"
             style="@style/CustomCheckboxStyle"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/content_size"
+            android:textColor="@color/black"
+            android:checked="true"
+            />
+        <TextView
+            android:id="@+id/textButtonProtocolUser"
             android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="同意用户协议并注册"
             android:textSize="@dimen/content_size"
             android:textColor="@color/black"
-            android:checked="true"
-
             />
+    </LinearLayout>
+
         <TextView
             android:gravity="center"
             android:id="@+id/tv_register"

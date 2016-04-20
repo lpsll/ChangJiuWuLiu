@@ -163,10 +163,10 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                 showProtocol("运输协议", Api.ProtocolTransport);
                 break;
             case R.id.textRefund:
-                showProtocol("退款规则", Api.ProtocolTransport);
+                showProtocol("退款规则", Api.ProtocolRefund);
                 break;
             case R.id.textService:
-                showProtocol("服务协议", Api.ProtocolTransport);
+                showProtocol("服务协议", Api.ProtocolService);
                 break;
             case R.id.next_step:
                 nextStep();

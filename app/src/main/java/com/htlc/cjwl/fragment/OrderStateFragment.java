@@ -113,7 +113,7 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
     @Override
     public void onStart() {
         super.onStart();
-//        refreshData();
+        refreshData();
     }
 
     public void initData() {

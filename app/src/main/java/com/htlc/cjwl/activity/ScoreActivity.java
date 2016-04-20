@@ -131,7 +131,7 @@ public class ScoreActivity extends Activity{
      */
     private void submitBill() {
         Intent intent_rute_query = new Intent(this, WebActivity.class);
-        intent_rute_query.putExtra(Constant.SERVICE_DETAIL_ID, Api.ScoreRulerHtml);
+        intent_rute_query.putExtra(Constant.SERVICE_DETAIL_ID, Api.ProtocolScoreRuler);
         intent_rute_query.putExtra(Constant.SERVICE_DETAIL_TITLE, "积分规则");
         startActivity(intent_rute_query);
     }

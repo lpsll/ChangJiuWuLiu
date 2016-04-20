@@ -19,6 +19,7 @@ import com.htlc.cjwl.util.LogUtil;
 import com.htlc.cjwl.util.MD5Util;
 import com.htlc.cjwl.util.ToastUtil;
 
+import api.Api;
 import core.ActionCallbackListener;
 
 /**
@@ -35,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText et_check_password;//确认密码输入框
     private CheckBox cb_checkbox;//注册协议选择按钮
     private TextView tv_register;//注册按钮
+    private TextView textButtonProtocolUser;
     private Handler handler = new Handler();//用于刷新倒计时的时间
     private int time = Constant.VERIFICATION_TIME;//获取验证码成功后，倒计时60s
 
@@ -53,12 +55,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         et_check_password = (EditText) findViewById(R.id.et_check_password);
 
         cb_checkbox = (CheckBox) findViewById(R.id.cb_checkbox);
+        textButtonProtocolUser = (TextView) findViewById(R.id.textButtonProtocolUser);
         tv_register = (TextView) findViewById(R.id.tv_register);
 
         tv_activity_title.setText(R.string.register);
 
         iv_back.setOnClickListener(this);
         tv_verification_code.setOnClickListener(this);
+        textButtonProtocolUser.setOnClickListener(this);
         tv_register.setOnClickListener(this);
 
     }
@@ -75,6 +79,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if(!ClickUtil.isFastDoubleClick()){
                     getVerificationCode();
                 }
+                break;
+            case R.id.textButtonProtocolUser:
+                LogUtil.i(this, "进行注册操作");
+                Intent intent_rute_query = new Intent(this, WebActivity.class);
+                intent_rute_query.putExtra(Constant.SERVICE_DETAIL_ID, Api.ProtocolUser);
+                intent_rute_query.putExtra(Constant.SERVICE_DETAIL_TITLE, "用户协议");
+                startActivity(intent_rute_query);
                 break;
             case R.id.tv_register:
                 LogUtil.i(this, "进行注册操作");

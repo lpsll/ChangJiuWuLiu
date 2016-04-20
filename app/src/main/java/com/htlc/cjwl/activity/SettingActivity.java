@@ -15,8 +15,11 @@ import android.widget.TextView;
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.util.CommonUtil;
+import com.htlc.cjwl.util.Constant;
 import com.htlc.cjwl.util.LogUtil;
 import com.htlc.cjwl.util.ToastUtil;
+
+import api.Api;
 
 /**
  * Created by sks on 2015/11/2.
@@ -73,7 +76,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.ll_about:
                 LogUtil.i(this, "关于界面");
-                startActivity(new Intent(this,AboutActivity.class));
+                Intent intent_rute_query = new Intent(this, WebActivity.class);
+                intent_rute_query.putExtra(Constant.SERVICE_DETAIL_ID, Api.ProtocolAbout);
+                intent_rute_query.putExtra(Constant.SERVICE_DETAIL_TITLE, "关于软件");
+                startActivity(intent_rute_query);
+//                startActivity(new Intent(this,AboutActivity.class));
                 break;
             case R.id.ll_version:
                 LogUtil.i(this, "当前版本界面");
