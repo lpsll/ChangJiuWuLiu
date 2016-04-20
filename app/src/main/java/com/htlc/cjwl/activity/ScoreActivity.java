@@ -16,19 +16,22 @@ import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.BillListSelectAdapter;
 import com.htlc.cjwl.adapter.ScoreAdapter;
+import com.htlc.cjwl.util.Constant;
 import com.htlc.cjwl.util.ToastUtil;
 
 import java.util.ArrayList;
 
+import api.Api;
 import core.ActionCallbackListener;
 import model.BillOrderBean;
+import model.ScoreBean;
 
 /**
  * Created by sks on 2016/4/7.
  */
 public class ScoreActivity extends Activity{
     private TextView textTitle,textRightButton;
-
+    private TextView textHeader;
     private PullToRefreshListView listView;
     private BaseAdapter adapter;
     private ArrayList billList = new ArrayList();//某种类型的订单集合
@@ -56,8 +59,13 @@ public class ScoreActivity extends Activity{
             }
         });
 
+
         listView = (PullToRefreshListView) findViewById(R.id.listView);
         listView.setMode(PullToRefreshBase.Mode.BOTH);
+        View view = View.inflate(this,R.layout.layout_score_list_view_header,null);
+        textHeader = (TextView) view.findViewById(R.id.textHeader);
+        textHeader.setText(App.app.getUser().user_socre);
+        listView.getRefreshableView().addHeaderView(view);
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -81,9 +89,9 @@ public class ScoreActivity extends Activity{
     }
 
     private void getMoreData() {
-        App.appAction.billOrderList(page, new ActionCallbackListener<ArrayList<BillOrderBean>>() {
+        App.appAction.scoreList(page, new ActionCallbackListener<ArrayList<ScoreBean>>() {
             @Override
-            public void onSuccess(ArrayList<BillOrderBean> data) {
+            public void onSuccess(ArrayList<ScoreBean> data) {
                 billList.addAll(data);
                 adapter.notifyDataSetChanged();
                 page++;
@@ -100,9 +108,9 @@ public class ScoreActivity extends Activity{
 
     private void initData() {
         page = 1;
-        App.appAction.billOrderList(page, new ActionCallbackListener<ArrayList<BillOrderBean>>() {
+        App.appAction.scoreList(page, new ActionCallbackListener<ArrayList<ScoreBean>>() {
             @Override
-            public void onSuccess(ArrayList<BillOrderBean> data) {
+            public void onSuccess(ArrayList<ScoreBean> data) {
                 billList.clear();
                 billList.addAll(data);
                 adapter.notifyDataSetChanged();
@@ -119,9 +127,12 @@ public class ScoreActivity extends Activity{
     }
 
     /**
-     * 申请发票界面
+     * 积分规则界面
      */
     private void submitBill() {
-
+        Intent intent_rute_query = new Intent(this, WebActivity.class);
+        intent_rute_query.putExtra(Constant.SERVICE_DETAIL_ID, Api.ScoreRulerHtml);
+        intent_rute_query.putExtra(Constant.SERVICE_DETAIL_TITLE, "积分规则");
+        startActivity(intent_rute_query);
     }
 }

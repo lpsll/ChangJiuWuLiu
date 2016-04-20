@@ -98,10 +98,10 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.e("OrderStateFragment", "id:" + id + ";onActivityCreated");
-//        refreshData();
+        refreshData();
     }
 
-    private void refreshData() {
+    public void refreshData() {
         if(LoginUtil.isOnline()){
             initData();
         }else {
@@ -113,7 +113,7 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
     @Override
     public void onStart() {
         super.onStart();
-        refreshData();
+//        refreshData();
     }
 
     public void initData() {

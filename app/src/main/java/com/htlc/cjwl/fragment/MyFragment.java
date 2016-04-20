@@ -207,7 +207,8 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
                 if (TextUtils.isEmpty(node)) {
                     getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
                 } else {
-                    getActivity().startActivity(new Intent(getActivity(), ScoreActivity.class));
+                    Intent intent = new Intent(getActivity(), ScoreActivity.class);
+                    getActivity().startActivity(intent);
                 }
                 break;
             case R.id.ll_message_center:

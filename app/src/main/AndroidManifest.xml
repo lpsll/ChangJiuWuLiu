@@ -159,6 +159,12 @@
         <activity
             android:name=".activity.EvaluationActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ScoreActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.TraceActivity"
+            android:screenOrientation="portrait"/>
 
         <!--微信-->
         <!--支付宝-->

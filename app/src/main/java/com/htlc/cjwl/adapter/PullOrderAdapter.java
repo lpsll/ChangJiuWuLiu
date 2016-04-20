@@ -18,6 +18,7 @@ import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.activity.EvaluationActivity;
 import com.htlc.cjwl.activity.PayActivity;
+import com.htlc.cjwl.activity.TraceActivity;
 import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.fragment.OrderStateFragment;
 import com.htlc.cjwl.util.CommonUtil;
@@ -214,7 +215,9 @@ public class PullOrderAdapter extends BaseAdapter{
     }
 
     private void showTransportInfo(int position) {
-
+        Intent intent = new Intent(context, TraceActivity.class);
+        intent.putExtra(TraceActivity.OrderId,ordersList.get(position).order_no);
+        context.startActivity(intent);
     }
 
     private void submitRefund(final int position) {
@@ -258,6 +261,7 @@ public class PullOrderAdapter extends BaseAdapter{
         Intent intent = new Intent(context, PayActivity.class);
         intent.putExtra(PayActivity.OrderID,ordersList.get(position).order_no);
         context.startActivity(intent);
+
     }
 
     private void cancelOrder(final int position) {

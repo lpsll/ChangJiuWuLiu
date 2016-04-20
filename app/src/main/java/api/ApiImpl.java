@@ -133,10 +133,11 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public void scoreList(ResultCallback<String> callback) {
+    public void scoreList(String page,ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
         String userId = App.app.getUser().node;
         params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
+        params.put("page", page);
         String url = Api.ScoreList;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
     }
@@ -224,6 +225,14 @@ public class ApiImpl implements Api {
         params.put("orderno", orderId);
         params.put("starts", grade);
         String url = Api.EvaluationOrder;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void traceOrder(String orderId, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("order_no", orderId);
+        String url = Api.TraceOrder;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
     }
 

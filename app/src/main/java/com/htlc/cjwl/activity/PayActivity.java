@@ -53,7 +53,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
     /*****************************************************************
      * mMode参数解释： "00" - 启动银联正式环境 "01" - 连接银联测试环境
      *****************************************************************/
-    private final String mMode = "01";
+    private final String mMode = "00";
 
     private TextView textTitle, textFromAddress, textToAddress,
             textFromTel, textToTel, textFromName, textToName,

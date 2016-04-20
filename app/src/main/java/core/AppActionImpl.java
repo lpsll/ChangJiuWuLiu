@@ -40,6 +40,8 @@ import model.OrderDetailBean;
 import model.PayChargeBean;
 import model.PayOrderBean;
 import model.RefundOrderBean;
+import model.ScoreBean;
+import model.TraceBean;
 import model.UserBean;
 import model.VinInfoBean;
 import util.RegExUtil;
@@ -505,8 +507,35 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void scoreList(ActionCallbackListener listener) {
+    public void scoreList(int page,final ActionCallbackListener<ArrayList<ScoreBean>> listener) {
+        api.scoreList(page+"",new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
 
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String jsonArray = jsonObject.getString("data");
+                        ArrayList<ScoreBean> array = (ArrayList<ScoreBean>) JsonUtil.parseJsonToList(jsonArray,
+                                new TypeToken<ArrayList<ScoreBean>>() {
+                                }.getType());
+                        listener.onSuccess(array);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
     }
 
     @Override
@@ -763,6 +792,38 @@ public class AppActionImpl implements AppAction {
                     String code = jsonObject.getString("code");
                     if ("1".equals(code)) {
                         listener.onSuccess(null);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void traceOrder(String orderId, final ActionCallbackListener<ArrayList<TraceBean>> listener) {
+        api.traceOrder(orderId, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String jsonArray = jsonObject.getString("data");
+                        ArrayList<TraceBean> array = (ArrayList<TraceBean>) JsonUtil.parseJsonToList(jsonArray,
+                                new TypeToken<ArrayList<TraceBean>>() {
+                                }.getType());
+                        listener.onSuccess(array);
                     } else {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);

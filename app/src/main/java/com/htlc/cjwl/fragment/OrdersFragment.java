@@ -43,6 +43,7 @@ public class OrdersFragment extends Fragment /*implements ActionBar.TabListener*
         adapter = new OrdersPagerAdaptor(getChildFragmentManager());
         viewPager.setAdapter(adapter);
         indicator.setViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(5);
         indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -53,7 +54,7 @@ public class OrdersFragment extends Fragment /*implements ActionBar.TabListener*
                 for (int i = 0; i < mTabsLinearLayout.getChildCount(); i++) {
                     TextView tv = (TextView) mTabsLinearLayout.getChildAt(i);
                     if (i == position) {
-                        adapter.getItem(position).initData();
+                        adapter.getItem(position).refreshData();
                         tv.setTextColor(getResources().getColor(R.color.blue));
                     } else {
                         tv.setEnabled(true);

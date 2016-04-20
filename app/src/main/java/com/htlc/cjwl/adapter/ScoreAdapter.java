@@ -1,6 +1,7 @@
 package com.htlc.cjwl.adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +13,23 @@ import com.htlc.cjwl.R;
 import java.util.ArrayList;
 
 import model.RefundOrderBean;
+import model.ScoreBean;
 
 /**
  * Created by Larno on 16/04/07.
  */
 public class ScoreAdapter extends BaseAdapter{
 
-    private ArrayList<RefundOrderBean> ordersList;
+    private ArrayList<ScoreBean> ordersList;
     private Context context;
+    private String TIME_STR = "<font color=\"#3c3c3c\">获取时间:  </font>" +
+            "<font color=\"#0a198c\">%1$s</font>";
+    public static final String SCORE_STR = "<font color=\"#3c3c3c\">获取值:  </font>" +
+            "<font color=\"#0a198c\">%1$s积分</font>";
+    public static final String LIMITE_STR = "<font color=\"#3c3c3c\">有效期:  </font>" +
+            "<font color=\"#0a198c\">%1$s至%2$s</font>";
 
-    public ScoreAdapter(ArrayList<RefundOrderBean> ordersList, Context context) {
+    public ScoreAdapter(ArrayList ordersList, Context context) {
         this.ordersList = ordersList;
         this.context = context;
     }
@@ -45,35 +53,33 @@ public class ScoreAdapter extends BaseAdapter{
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null ;
         if(convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.adapter_refund_list, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.adapter_score, null);
             holder = new ViewHolder();
             holder.textTime = (TextView) convertView.findViewById(R.id.textTime);
-            holder.textOrderId = (TextView) convertView.findViewById(R.id.textOrderId);
-            holder.textPrice = (TextView) convertView.findViewById(R.id.textPrice);
-            holder.textComment = (TextView) convertView.findViewById(R.id.textComment);
-            holder.textState = (TextView) convertView.findViewById(R.id.textState);
+            holder.textScore = (TextView) convertView.findViewById(R.id.textScore);
+            holder.textLimit = (TextView) convertView.findViewById(R.id.textLimit);
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder)convertView.getTag();
         }
-        RefundOrderBean bean = ordersList.get(position);
-        holder.textTime.setText(bean.order_date);
-        holder.textOrderId.setText("订单号: "+bean.order_no);
-        holder.textPrice.setText("金额: "+bean.order_price);
-        //"order_ispay": "2"//2已付款(历史订单) ｛3待退款 4已退款｝（历史退款）
-        if("3".equals(bean.order_ispay)){
-            holder.textState.setText("申请中");
+        ScoreBean bean = ordersList.get(position);
+        String timeStr = String.format(TIME_STR, bean.starttime);
+        holder.textTime.setText(Html.fromHtml(timeStr));
+        String scoreStr = String.format(SCORE_STR, bean.value);
+        holder.textScore.setText(Html.fromHtml(scoreStr));
+        if(bean.starttime.equals(bean.endtime)){
+            holder.textLimit.setVisibility(View.GONE);
         }else {
-            holder.textState.setText("已退款");
+            String limitStr = String.format(LIMITE_STR, bean.starttime.substring(0,10),bean.endtime.substring(0,10));
+            holder.textLimit.setText(Html.fromHtml(limitStr));
+            holder.textLimit.setVisibility(View.VISIBLE);
         }
-        holder.textComment.setText("备注: "+bean.order_remark);
+
         return convertView;
     }
     class ViewHolder {
-        TextView textOrderId;//订单编号
-        TextView textPrice;
-        TextView textComment;
-        TextView textState;
+        TextView textScore;
+        TextView textLimit;
         TextView textTime;//订单日期
     }
 }

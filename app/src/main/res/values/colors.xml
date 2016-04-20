@@ -7,6 +7,8 @@
     <color name="black">#3c3c3c</color>
     <color name="red">#ff0000</color>
     <color name="blue">#0a198c</color>
+    <color name="blue_light">#3d93f8</color>
+    <color name="black_light">#c1c1c1</color>
     <!--<color name="black_bg_title">#343434</color>-->
     <color name="black_bg_title">#3b93f7</color>
     <!--<color name="black_bg_tab">#0c0c0c</color>-->

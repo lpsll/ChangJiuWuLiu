@@ -2,11 +2,14 @@ package com.htlc.cjwl.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.MainActivity;
 import com.htlc.cjwl.R;
+import com.htlc.cjwl.util.CommonUtil;
 import com.htlc.cjwl.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -199,8 +203,7 @@ public class OrderConfirmActivity extends Activity {
                 if(progressDialog!=null){
                     progressDialog.dismiss();
                 }
-                ToastUtil.showToast(App.app,"订单提交成功");
-                startActivity(new Intent(OrderConfirmActivity.this, MainActivity.class));
+                showSuccessDialog();
             }
 
             @Override
@@ -212,6 +215,23 @@ public class OrderConfirmActivity extends Activity {
                 ToastUtil.showToast(App.app,message);
             }
         });
+    }
+
+    private void showSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("订单已生成");//设置对话框标题
+        builder.setMessage("请等待客服联系！");//设置显示的内容
+
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加确定按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+                startActivity(new Intent(OrderConfirmActivity.this, MainActivity.class));
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setTextColor(CommonUtil.getResourceColor(R.color.blue));
     }
 
     private void resetVinnumArray() {
