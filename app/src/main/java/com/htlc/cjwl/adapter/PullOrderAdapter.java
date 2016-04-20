@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
+import com.htlc.cjwl.activity.EvaluationActivity;
 import com.htlc.cjwl.activity.PayActivity;
 import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.fragment.OrderStateFragment;
@@ -102,8 +103,8 @@ public class PullOrderAdapter extends BaseAdapter{
                 holder.tvOrderState.setText("待确认");
                 holder.tvOrderCancel.setText("取消订单");
                 holder.tvOrderCancel.setTextColor(CommonUtil.getResourceColor(android.R.color.holo_red_light));
+                holder.tvOrderCancel.setBackgroundResource(R.drawable.rectangle_white_with_red_line_shape);
                 holder.tvOrderCancel.setVisibility(View.VISIBLE);
-                holder.tvOrderCancel_2.setBackgroundResource(R.drawable.rectangle_white_with_red_line_shape);
                 holder.tvOrderCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -207,7 +208,9 @@ public class PullOrderAdapter extends BaseAdapter{
     }
 
     private void goComment(int position) {
-
+        Intent intent = new Intent(context, EvaluationActivity.class);
+        intent.putExtra(EvaluationActivity.OrderID,ordersList.get(position).order_no);
+        context.startActivity(intent);
     }
 
     private void showTransportInfo(int position) {

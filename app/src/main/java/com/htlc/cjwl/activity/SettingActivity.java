@@ -73,6 +73,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.ll_about:
                 LogUtil.i(this, "关于界面");
+                startActivity(new Intent(this,AboutActivity.class));
                 break;
             case R.id.ll_version:
                 LogUtil.i(this, "当前版本界面");

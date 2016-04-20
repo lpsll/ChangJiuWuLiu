@@ -1,50 +1,55 @@
 package com.htlc.cjwl.activity;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.MainActivity;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.util.CommonUtil;
+import com.htlc.cjwl.util.Constant;
 import com.htlc.cjwl.util.LogUtil;
 import com.htlc.cjwl.util.ToastUtil;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.unionpay.UPPayAssistEx;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import api.Api;
 import core.ActionCallbackListener;
 import core.ErrorEvent;
-import model.CarInfoBean;
-import model.OrderDetailBean;
 import model.PayChargeBean;
 import model.PayOrderBean;
+import util.pay.AliPayUtil;
+import util.pay.PayResult;
 
 /**
  * Created by sks on 2016/4/7.
  */
 public class PayActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String OrderID = "OrderID";
+    private static final int ALI_SDK_PAY_FLAG = 1000;//支付宝
+    private static final int UNION_SDK_PAY_FLAG = 2000;//银联
+    private static final int WX_SDK_PAY_FLAG = 3000;//微信
     /*****************************************************************
      * mMode参数解释： "00" - 启动银联正式环境 "01" - 连接银联测试环境
      *****************************************************************/
@@ -59,7 +64,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
     private ArrayList<String> payArray;
     private int selectPayWay = 0;
-    private int resultPayWay;
+    private int payPlantform;
     private String orderId;
     private String mScore;
     private String html = "<font color=\"#3c3c3c\">本次可用积分</font>" +
@@ -76,6 +81,16 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
         orderId = getIntent().getStringExtra(OrderID);
         LogUtil.e(this, "orderId" + orderId);
         initView();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     private void initView() {
@@ -219,15 +234,59 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
     private void invokeOtherWidget(int selectPayWay, PayChargeBean chargeBean) {
         if (selectPayWay == 0) {
             //支付宝
+            payPlantform = ALI_SDK_PAY_FLAG;
+            aliPay(chargeBean);
         } else if ((selectPayWay == 1)) {
             //微信
+            payPlantform = WX_SDK_PAY_FLAG;
+            wxPay(chargeBean);
         } else if ((selectPayWay == 2)) {
             //银联
-            resultPayWay = selectPayWay;
+            payPlantform = UNION_SDK_PAY_FLAG;
             unionPay(chargeBean);
         } else if ((selectPayWay == 3)) {
             //现付
         }
+    }
+
+    private void wxPay(PayChargeBean chargeBean) {
+        IWXAPI wxapi = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID);
+        PayReq req = new PayReq();
+        //req.appId = "wxf8b4f85f3a794e77";  // 测试用appId
+//        req.appId			= json.getString("appid");
+//        req.partnerId		= json.getString("partnerid");
+//        req.prepayId		= json.getString("prepayid");
+//        req.nonceStr		= json.getString("noncestr");
+//        req.timeStamp		= json.getString("timestamp");
+//        req.packageValue	= json.getString("package");
+//        req.sign			= json.getString("sign");
+//        req.extData			= "app data"; // optional
+        Toast.makeText(PayActivity.this, "正常调起支付", Toast.LENGTH_SHORT).show();
+        // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+        wxapi.sendReq(req);
+    }
+
+    private void aliPay(PayChargeBean chargeBean) {
+        final String payInfo = AliPayUtil.getPayInfo();
+        Runnable payRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                // 构造PayTask 对象
+                PayTask alipay = new PayTask(PayActivity.this);
+                // 调用支付接口，获取支付结果
+                String result = alipay.pay(payInfo, true);
+
+                Message msg = new Message();
+                msg.what = ALI_SDK_PAY_FLAG;
+                msg.obj = result;
+                mHandler.sendMessage(msg);
+            }
+        };
+
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
     }
 
     private void unionPay(PayChargeBean chargeBean) {
@@ -247,7 +306,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultPayWay == 2) {
+        if (payPlantform == UNION_SDK_PAY_FLAG) {
             handleUnionResult(data);
         }
     }
@@ -328,8 +387,44 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
             }
         });
         AlertDialog alertDialog = builder.create();
+        alertDialog.show();
         Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         negativeButton.setTextColor(CommonUtil.getResourceColor(R.color.blue));
-        alertDialog.show();
+
     }
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case ALI_SDK_PAY_FLAG: {
+                    PayResult payResult = new PayResult((String) msg.obj);
+                    /**
+                     * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
+                     * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
+                     * docType=1) 建议商户依赖异步通知
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        showTipsDialog("支付成功！",true);
+                    } else {
+                        // 判断resultStatus 为非"9000"则代表可能支付失败
+                        // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+                        if (TextUtils.equals(resultStatus, "8000")) {
+                            showTipsDialog("支付结果确认中！", true);
+                        } else {
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            showTipsDialog("支付失败！",false);
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    };
 }

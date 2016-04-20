@@ -42,6 +42,7 @@ import model.PayOrderBean;
 import model.RefundOrderBean;
 import model.UserBean;
 import model.VinInfoBean;
+import util.RegExUtil;
 
 
 public class AppActionImpl implements AppAction {
@@ -61,9 +62,7 @@ public class AppActionImpl implements AppAction {
             listener.onFailure(ErrorEvent.PARAM_NULL, "手机号为空");
             return;
         }
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(username);
-        if (!matcher.matches()) {
+        if (!RegExUtil.matcherPhoneNumber(username)) {
             if (listener != null) {
                 listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
             }
@@ -104,9 +103,7 @@ public class AppActionImpl implements AppAction {
             listener.onFailure(ErrorEvent.PARAM_NULL, "手机号不能为空");
             return;
         }
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(username);
-        if (!matcher.matches()) {
+        if (!RegExUtil.matcherPhoneNumber(username)) {
             listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
             return;
         }
@@ -159,9 +156,7 @@ public class AppActionImpl implements AppAction {
             listener.onFailure(ErrorEvent.PARAM_NULL, "手机号不能为空");
             return;
         }
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(username);
-        if (!matcher.matches()) {
+        if (!RegExUtil.matcherPhoneNumber(username)) {
             listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
             return;
         }
@@ -242,9 +237,7 @@ public class AppActionImpl implements AppAction {
             listener.onFailure(ErrorEvent.PARAM_NULL, "手机号不能为空");
             return;
         }
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(username);
-        if (!matcher.matches()) {
+        if (!RegExUtil.matcherPhoneNumber(username)) {
             listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
             return;
         }
@@ -389,9 +382,7 @@ public class AppActionImpl implements AppAction {
             listener.onFailure(ErrorEvent.PARAM_NULL, "手机号不能为空");
             return;
         }
-        Pattern pattern = Pattern.compile("1\\d{10}");
-        Matcher matcher = pattern.matcher(newTel);
-        if (!matcher.matches()) {
+        if (!RegExUtil.matcherPhoneNumber(newTel)) {
             listener.onFailure(ErrorEvent.PARAM_ILLEGAL, "手机号不正确");
             return;
         }
@@ -479,6 +470,43 @@ public class AppActionImpl implements AppAction {
                 }
             }
         });
+    }
+
+    @Override
+    public void feedback(String feedbackStr, final ActionCallbackListener<Void> listener) {
+        if(TextUtils.isEmpty(feedbackStr)){
+            listener.onFailure(ErrorEvent.PARAM_NULL, "内容不能为空");
+            return;
+        }
+        api.feedback(feedbackStr, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        listener.onSuccess(null);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void scoreList(ActionCallbackListener listener) {
+
     }
 
     @Override
@@ -690,6 +718,38 @@ public class AppActionImpl implements AppAction {
             return;
         }
         api.submitBillOrder(billHeader, price, billType, address, receiverName, orderIdStr, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        listener.onSuccess(null);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void evaluationOrder(String orderId, String comment, String grade, final ActionCallbackListener<Void> listener) {
+        if(TextUtils.isEmpty(comment)){
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请填写评价内容");
+            return;
+        }
+        api.evaluationOrder(orderId, comment, grade, new ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
@@ -998,16 +1058,32 @@ public class AppActionImpl implements AppAction {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请填写发货人联系电话");
             return;
         }
+        if(!RegExUtil.matcherPhoneNumber(fromTel)){
+            listener.onFailure(ErrorEvent.PARAM_NULL, "发货人联系电话不正确");
+            return;
+        }
         if (TextUtils.isEmpty(toTel)) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请填写收货人联系电话");
+            return;
+        }
+        if(!RegExUtil.matcherPhoneNumber(toTel)){
+            listener.onFailure(ErrorEvent.PARAM_NULL, "收货人联系电话不正确");
             return;
         }
         if (TextUtils.isEmpty(fromIdCard)) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请填写发货人身份证号");
             return;
         }
+        if(!RegExUtil.matcherIdCard(fromIdCard)){
+            listener.onFailure(ErrorEvent.PARAM_NULL, "发货人身份证号不正确");
+            return;
+        }
         if (TextUtils.isEmpty(toIdCard)) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请填写收货人身份证号");
+            return;
+        }
+        if(!RegExUtil.matcherIdCard(toIdCard)){
+            listener.onFailure(ErrorEvent.PARAM_NULL, "收货人身份证号不正确");
             return;
         }
         String carsInfoStr = JsonUtil.parseObjectToJson(carsInfo);

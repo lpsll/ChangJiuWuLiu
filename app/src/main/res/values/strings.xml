@@ -35,6 +35,7 @@
     <string name="pwd">密码</string>
     <string name="forget_pwd">忘记密码?</string>
     <string name="feedback">意见反馈</string>
+    <string name="evaluation">订单评价</string>
     <string name="personal_info">个人信息</string>
     <string name="modify_tel">更换手机</string>
     <string name="modify_password">修改密码</string>

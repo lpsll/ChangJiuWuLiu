@@ -21,6 +21,8 @@ public interface Api {
     String MessageCenter = Host + "Home/CYMessage/messageList";
     String MessageHtmlDetail = Host + "Home/CYMessage/info?mID=%1$s";
     String MessageDelete = Host + "Home/CYMessage/removeMessage";
+    String Feedback = Host + "Home/CYFeedback/addFeedback";
+    String ScoreList = Host + "Home/CYIntegral/getIntegrallist";
 
     String OrderList = Host + "Home/CYOrder/getOrderList";
     String OrderDetail = Host + "Home/CYOrder/getOrderinfo";
@@ -29,6 +31,7 @@ public interface Api {
     String SubmitRefundOrder = Host + "Home/CYOrder/repayquest";
     String BillOrderList = Host + "Home/CYOrder/getbillList";
     String SubmitBillOrder = Host + "Home/CYOrder/rebillquest";
+    String EvaluationOrder = Host + "Home/CYEvaluation/setEvaluation";
 
     String PayOrderDetail = Host + "Home/CYPay/getpayinfo";
     String Pay = Host + "Home/CYPay/pay";
@@ -135,6 +138,9 @@ public interface Api {
      */
     void messageDelete(String msgID, ResultCallback<String> callback);
 
+    void feedback(String feedbackStr, ResultCallback<String> callback);
+
+    void scoreList(ResultCallback<String> callback);
     /**
      *
      * @param order_status 订单类型
@@ -154,7 +160,7 @@ public interface Api {
     void billOrderList(String page, ResultCallback<String> callback);
 
     void submitBillOrder(String billHeader, String price,String billType, String address, String receiverName, String orderIdStr, ResultCallback<String> callback);
-
+    void evaluationOrder(String orderId, String comment, String grade, ResultCallback<String> callback);
     void payOrderDetail(String orderId, ResultCallback<String> callback);
 
     void pay(String orderId, String channel, String score,ResultCallback<String> callback);

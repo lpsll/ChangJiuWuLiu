@@ -6,6 +6,10 @@
         <item android:state_checked="true" android:drawable="@drawable/home_item_bg_press" />
         <item android:state_selected="true" android:drawable="@drawable/home_item_bg_press" />
         <item android:drawable="@drawable/home_item_bg_normal" />
+        <!--<item android:state_pressed="true" android:drawable="@drawable/home_item_bg_press" />-->
+        <!--<item android:state_checked="true" android:drawable="@drawable/home_item_bg_press" />-->
+        <!--<item android:state_selected="true" android:drawable="@drawable/home_item_bg_press" />-->
+        <!--<item android:drawable="@color/black_bg_title" />-->
 
 
 </selector>

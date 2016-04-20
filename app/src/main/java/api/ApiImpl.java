@@ -123,6 +123,25 @@ public class ApiImpl implements Api {
     }
 
     @Override
+    public void feedback(String feedbackStr, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
+        params.put("feedBackContent", feedbackStr);
+        String url = Api.Feedback;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void scoreList(ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
+        String url = Api.ScoreList;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
     public void orderList(String order_status, String page, ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
         String userId = App.app.getUser().node;
@@ -193,6 +212,18 @@ public class ApiImpl implements Api {
         params.put("taker", receiverName);
         params.put("ordernostr", orderIdStr);
         String url = Api.SubmitBillOrder;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void evaluationOrder(String orderId, String comment, String grade, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
+        params.put("content", comment);
+        params.put("orderno", orderId);
+        params.put("starts", grade);
+        String url = Api.EvaluationOrder;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
     }
 

@@ -53,7 +53,7 @@ public class OrdersFragment extends Fragment /*implements ActionBar.TabListener*
                 for (int i = 0; i < mTabsLinearLayout.getChildCount(); i++) {
                     TextView tv = (TextView) mTabsLinearLayout.getChildAt(i);
                     if (i == position) {
-                        LogUtil.i("OrdersFragment", "i == position    " + position);
+                        adapter.getItem(position).initData();
                         tv.setTextColor(getResources().getColor(R.color.blue));
                     } else {
                         tv.setEnabled(true);

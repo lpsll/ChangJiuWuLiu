@@ -5,6 +5,7 @@ package com.htlc.cjwl.util;
  * 定义了  后台的接口，和，key值（常亮）
  */
 public class Constant {
+    public static final String WX_APP_ID = "";
     public static final int VERIFICATION_TIME = 11;//倒计时时间（获取验证码）
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
@@ -21,5 +22,6 @@ public class Constant {
     public static final int TYPE_FRAGMENT_CITY_LIST_MORE = 1;
     public static final int TYPE_FRAGMENT_CITY_LIST_HOT = 2;
     public static final String USER_TEL = "user_tel";
+
 
 }

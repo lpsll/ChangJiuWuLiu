@@ -51,7 +51,8 @@ public interface AppAction {
     void messageCenter(int page, ActionCallbackListener<ArrayList<MessageInfoBean>> listener);
 
     void messageDelete(String msgID, ActionCallbackListener<Void> listener);
-
+    void feedback(String feedbackStr, ActionCallbackListener<Void> listener);
+    void scoreList(ActionCallbackListener listener);
     void orderList(String order_status, int page, ActionCallbackListener<ArrayList<OrderInfoBean>> listener);
 
     void orderDetail(String orderId, ActionCallbackListener<OrderDetailBean> listener);
@@ -65,7 +66,7 @@ public interface AppAction {
     void billOrderList(int page, ActionCallbackListener<ArrayList<BillOrderBean>> listener);
 
     void submitBillOrder(String billHeader, String price, String billType, String address, String receiverName, String orderIdStr, ActionCallbackListener<Void> listener);
-
+    void evaluationOrder(String orderId, String comment, String grade,ActionCallbackListener<Void> listener);
     void payOrderDetail(String orderId, ActionCallbackListener<PayOrderBean> listener);
 
     void pay(String orderId, String channel, String score, ActionCallbackListener<PayChargeBean> listener);

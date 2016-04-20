@@ -22,6 +22,7 @@ import com.htlc.cjwl.activity.LoginActivity;
 import com.htlc.cjwl.activity.MessageCenterActivity;
 import com.htlc.cjwl.activity.PersonalInformationActivity;
 import com.htlc.cjwl.activity.RefundActivity;
+import com.htlc.cjwl.activity.ScoreActivity;
 import com.htlc.cjwl.activity.SelectRuteActivity;
 import com.htlc.cjwl.activity.SettingActivity;
 import com.htlc.cjwl.util.CommonUtil;
@@ -203,6 +204,11 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
                 break;
             case R.id.ll_socre:
                 LogUtil.i(this, "我的积分");
+                if (TextUtils.isEmpty(node)) {
+                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
+                    getActivity().startActivity(new Intent(getActivity(), ScoreActivity.class));
+                }
                 break;
             case R.id.ll_message_center:
                 LogUtil.i(this, "消息中心");
