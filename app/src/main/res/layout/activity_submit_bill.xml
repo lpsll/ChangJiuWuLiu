@@ -28,7 +28,7 @@
         android:textColor="@color/black"
         android:text="金额: 800"
         android:padding="10dp"/>
-    <EditText
+    <TextView
         android:id="@+id/editBillType"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="17dp"
@@ -39,6 +39,7 @@
         android:textSize="15sp"
         android:textColor="@color/black"
         android:hint="请输入发票科目类型"
+        android:text="发票类型:  运费"
         android:padding="10dp"/>
     <EditText
         android:id="@+id/editBillAddress"

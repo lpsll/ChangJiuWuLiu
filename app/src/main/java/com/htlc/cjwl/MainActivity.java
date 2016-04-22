@@ -1,11 +1,12 @@
 package com.htlc.cjwl;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -18,11 +19,12 @@ import com.htlc.cjwl.fragment.HomeFragment;
 import com.htlc.cjwl.fragment.MyFragment;
 import com.htlc.cjwl.fragment.OrdersFragment;
 import com.htlc.cjwl.fragment.ServiceFragment;
-import com.htlc.cjwl.util.LogUtil;
+import util.LogUtil;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final String SelectPosition = "SelectPosition";
     private ImageView iv_tab1;
     private TextView tv_tab1;
     private ImageView iv_tab2;
@@ -40,6 +42,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager viewPager;
     private ArrayList<Fragment> list;
 
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String selectPosition = intent.getStringExtra(SelectPosition);
+        if(!TextUtils.isEmpty(selectPosition) && selectPosition.equals(OrdersFragment.class.getSimpleName())){
+            if(viewPager!=null&&tv_tab2!=null&&iv_tab2!=null){
+                resetPreTab();
+                setTab(tv_tab2, iv_tab2);
+            }
+        }
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

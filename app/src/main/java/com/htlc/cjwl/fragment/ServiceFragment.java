@@ -18,7 +18,7 @@ import com.htlc.cjwl.activity.WebActivity;
 import com.htlc.cjwl.adapter.ServiceListViewAdapter;
 import com.htlc.cjwl.bean.ServiceInfoBean;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.LogUtil;
+import util.LogUtil;
 
 import java.util.ArrayList;
 

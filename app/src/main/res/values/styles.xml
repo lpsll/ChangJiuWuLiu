@@ -8,12 +8,9 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
     <style name="RatingBar" parent="@android:style/Widget.RatingBar">
-        <!--指向star_rating_bar_full.xml文件 -->
         <item name="android:progressDrawable">@drawable/rating_bar</item>
-      <!--  <item name="android:minHeight">30dip</item>
-        <item name="android:maxHeight">30dip</item>-->
-        <!-- 是否不支持用户交互，只应作为指标。 -->
-        <!--<item name="android:isIndicator">false</item>-->
+        <item name="android:minHeight">25dip</item>
+        <item name="android:maxHeight">25dip</item>
     </style>
     <style name="CustomCheckboxStyle" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkbox_style_selector</item>

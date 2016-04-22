@@ -3,14 +3,13 @@ package com.htlc.cjwl.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
-import com.htlc.cjwl.util.ToastUtil;
+import util.ToastUtil;
 
 import core.ActionCallbackListener;
 
@@ -23,7 +22,8 @@ public class SubmitBillActivity extends Activity{
     public static String orderArrayStr;
     public static String totalPrice;
     private TextView textTitle,textBillPrice;
-    private EditText editBillHeader,editBillType,editBillAddress,editBillReceiver;
+    private EditText editBillHeader,editBillAddress,editBillReceiver;
+    private TextView editBillType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +45,7 @@ public class SubmitBillActivity extends Activity{
         textBillPrice = (TextView) findViewById(R.id.textBillPrice);
         textBillPrice.setText(totalPrice+"");
         editBillHeader = (EditText) findViewById(R.id.editBillHeader);
-        editBillType = (EditText) findViewById(R.id.editBillType);
+        editBillType = (TextView) findViewById(R.id.editBillType);
         editBillAddress = (EditText) findViewById(R.id.editBillAddress);
         editBillReceiver = (EditText) findViewById(R.id.editBillReceiver);
 
@@ -59,7 +59,7 @@ public class SubmitBillActivity extends Activity{
 
     private void submit() {
         String billHeader = editBillHeader.getText().toString().trim();
-        String billType = editBillType.getText().toString().trim();
+        String billType = "运费";
         String address = editBillAddress.getText().toString().trim();
         String billReceiver = editBillReceiver.getText().toString().trim();
 

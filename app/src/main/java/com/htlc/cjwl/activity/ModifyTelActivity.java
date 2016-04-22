@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,8 +14,8 @@ import com.htlc.cjwl.R;
 import com.htlc.cjwl.util.ClickUtil;
 import com.htlc.cjwl.util.CommonUtil;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.LogUtil;
-import com.htlc.cjwl.util.ToastUtil;
+import util.LogUtil;
+import util.ToastUtil;
 
 import core.ActionCallbackListener;
 

@@ -49,7 +49,7 @@
     <string name="car_models">车型：</string>
     <string name="car_num">数量：</string>
     <string name="car_price">价格：</string>
-    <string name="insurance_amount">保单金额：</string>
+    <string name="insurance_amount">保险费用：</string>
     <string name="order_immediately">立即下单</string>
     <string name="ordinary_cars">普通轿车</string>
     <string name="car_type">车型类别</string>

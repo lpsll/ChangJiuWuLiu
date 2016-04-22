@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
-import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.ToastUtil;
+
+import util.ToastUtil;
 
 import api.Api;
 import core.ActionCallbackListener;

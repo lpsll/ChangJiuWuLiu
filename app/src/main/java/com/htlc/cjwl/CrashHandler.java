@@ -7,7 +7,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
-import com.htlc.cjwl.util.LogUtil;
+import util.LogUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;

@@ -54,7 +54,7 @@ public class App extends Application{
      * 初始化Jpush
      */
     private void initJpush() {
-        JPushInterface.setDebugMode(true);
+        JPushInterface.setDebugMode(util.Constant.isDebug);
         JPushInterface.init(this);
     }
 
@@ -69,7 +69,10 @@ public class App extends Application{
         config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
         config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
         config.tasksProcessingOrder(QueueProcessingType.LIFO);
-//        config.writeDebugLogs(); // Remove for release app
+        if(util.Constant.isDebug){
+            config.writeDebugLogs(); // Remove for release app
+        }
+
 
         ImageLoader.getInstance().init(config.build());
     }

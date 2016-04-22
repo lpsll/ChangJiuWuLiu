@@ -3,7 +3,6 @@ package com.htlc.cjwl.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AbsListView;
@@ -16,15 +15,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.BillListSelectAdapter;
-import com.htlc.cjwl.adapter.RefundListSelectAdapter;
-import com.htlc.cjwl.util.LogUtil;
-import com.htlc.cjwl.util.ToastUtil;
+
+import util.ToastUtil;
 
 import java.util.ArrayList;
 
 import core.ActionCallbackListener;
 import model.BillOrderBean;
-import model.RefundOrderBean;
 
 /**
  * Created by sks on 2016/4/7.

@@ -15,7 +15,6 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.OrdersPagerAdaptor;
 import com.htlc.cjwl.util.CommonUtil;
-import com.htlc.cjwl.util.LogUtil;
 
 
 /**

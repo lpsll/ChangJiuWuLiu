@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.htlc.cjwl.App;
-import com.htlc.cjwl.util.LogUtil;
+import util.LogUtil;
 
 import java.util.HashMap;
 import java.util.Map;

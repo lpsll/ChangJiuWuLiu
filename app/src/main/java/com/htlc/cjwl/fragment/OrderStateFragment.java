@@ -1,6 +1,5 @@
 package com.htlc.cjwl.fragment;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,9 +22,9 @@ import com.htlc.cjwl.activity.OrderInfoActivity;
 import com.htlc.cjwl.adapter.PullOrderAdapter;
 import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.util.CommonUtil;
-import com.htlc.cjwl.util.LogUtil;
+import util.LogUtil;
 import com.htlc.cjwl.util.LoginUtil;
-import com.htlc.cjwl.util.ToastUtil;
+import util.ToastUtil;
 
 import java.util.ArrayList;
 

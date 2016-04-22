@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.fragment.CityListFragment;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.LogUtil;
+import util.LogUtil;
 
 /**
  * Created by sks on 2015/11/4.

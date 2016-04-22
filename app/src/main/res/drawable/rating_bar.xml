@@ -2,12 +2,12 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 背景色 -->
     <item android:id="@android:id/background"
-          android:drawable="@drawable/service_fragment_tab_normal"
-          android:layout_height="wrap_content"  />
+          android:drawable="@drawable/start_press"
+          android:layout_height="25dp"  />
     <!-- 没选中状态 -->
     <item android:id="@android:id/secondaryProgress"
-          android:drawable="@drawable/service_fragment_tab_normal" android:layout_height="wrap_content"  />
+          android:drawable="@drawable/start_press" android:layout_height="25dp"  />
     <!-- 选中状态 -->
     <item android:id="@android:id/progress"
-          android:drawable="@drawable/service_fragment_tab_press" android:layout_height="wrap_content"  />
+          android:drawable="@drawable/start" android:layout_height="25dp"  />
 </layer-list>  

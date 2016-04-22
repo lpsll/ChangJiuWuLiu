@@ -19,6 +19,7 @@
         android:textSize="@dimen/content_size"
         android:background="@color/white"/>
     <RatingBar
+        android:layout_marginLeft="15dp"
         style="@style/RatingBar"
         android:layout_marginTop="10dp"
         android:stepSize="1.0"

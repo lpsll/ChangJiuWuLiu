@@ -1,7 +1,9 @@
-package com.htlc.cjwl.util;
+package util;
 
 import android.content.Context;
 import android.widget.Toast;
+
+import com.htlc.cjwl.util.CommonUtil;
 
 public class ToastUtil {
 	public static Toast mToast;

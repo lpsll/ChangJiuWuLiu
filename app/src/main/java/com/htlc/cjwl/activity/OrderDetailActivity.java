@@ -1,22 +1,15 @@
 package com.htlc.cjwl.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
-import com.htlc.cjwl.util.ToastUtil;
-
-import java.util.ArrayList;
+import util.ToastUtil;
 
 import core.ActionCallbackListener;
 import model.OrderDetailBean;
@@ -112,12 +105,12 @@ public class OrderDetailActivity extends Activity{
         textToName.setText(data.to_name);
         StringBuilder carTypeNameArrayStr = new StringBuilder();
         StringBuilder carNumArrayStr = new StringBuilder();
-        float insurancePrice = 0;
+        double insurancePrice = 0;
         for (int i=0; i<data.order_carfnum.size(); i++){
             OrderDetailBean.OrderCarfNum orderCarfNum = data.order_carfnum.get(i);
             carTypeNameArrayStr.append(orderCarfNum.carname+"  ");
             carNumArrayStr.append(orderCarfNum.num+"  ");
-            insurancePrice += Float.parseFloat(orderCarfNum.price);
+            insurancePrice += Double.parseDouble(orderCarfNum.insureprice);
         }
         textCarTypeNameArray.setText(carTypeNameArrayStr.toString());
         textCarNumArray.setText(carNumArrayStr.toString());

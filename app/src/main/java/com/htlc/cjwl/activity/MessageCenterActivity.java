@@ -16,7 +16,7 @@ import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.MessageCenterAdapter;
 import com.htlc.cjwl.bean.MessageInfoBean;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.ToastUtil;
+import util.ToastUtil;
 
 import java.util.ArrayList;
 

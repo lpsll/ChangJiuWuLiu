@@ -3,9 +3,7 @@ package com.htlc.cjwl.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,16 +12,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
-import com.htlc.cjwl.adapter.BillListSelectAdapter;
 import com.htlc.cjwl.adapter.ScoreAdapter;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.ToastUtil;
+import util.ToastUtil;
 
 import java.util.ArrayList;
 
 import api.Api;
 import core.ActionCallbackListener;
-import model.BillOrderBean;
 import model.ScoreBean;
 
 /**

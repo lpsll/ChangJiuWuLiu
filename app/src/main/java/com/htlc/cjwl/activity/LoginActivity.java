@@ -10,10 +10,8 @@ import android.widget.TextView;
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.util.CommonUtil;
-import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.LogUtil;
-import com.htlc.cjwl.util.SharedPreferenceUtil;
-import com.htlc.cjwl.util.ToastUtil;
+
+import util.ToastUtil;
 
 /**
  * Created by sks on 2015/10/30.
@@ -32,6 +30,12 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         tv_register_title = (TextView) findViewById(R.id.tv_register_title);
 
         et_username = (EditText) findViewById(R.id.et_username);

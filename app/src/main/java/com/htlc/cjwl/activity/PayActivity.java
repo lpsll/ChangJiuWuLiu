@@ -25,8 +25,8 @@ import com.htlc.cjwl.MainActivity;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.util.CommonUtil;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.LogUtil;
-import com.htlc.cjwl.util.ToastUtil;
+import util.LogUtil;
+import util.ToastUtil;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -183,12 +183,12 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
         textToName.setText(data.to_name);
         StringBuilder carTypeNameArrayStr = new StringBuilder();
         StringBuilder carNumArrayStr = new StringBuilder();
-        float insurancePrice = 0;
+        double insurancePrice = 0;
         for (int i = 0; i < data.order_carfnum.size(); i++) {
             PayOrderBean.OrderCarfNum orderCarfNum = data.order_carfnum.get(i);
             carTypeNameArrayStr.append(orderCarfNum.carname + "  ");
             carNumArrayStr.append(orderCarfNum.num + "  ");
-            insurancePrice += Float.parseFloat(orderCarfNum.price);
+            insurancePrice += Double.parseDouble(orderCarfNum.insureprice);
         }
         textCarTypeNameArray.setText(carTypeNameArrayStr.toString());
         textCarNumArray.setText(carNumArrayStr.toString());

@@ -15,7 +15,7 @@ import com.htlc.cjwl.adapter.HotcityAdapter;
 import com.htlc.cjwl.bean.CityInfoBean;
 import com.htlc.cjwl.fragment.CityListFragment;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.ToastUtil;
+import util.ToastUtil;
 
 import java.util.ArrayList;
 

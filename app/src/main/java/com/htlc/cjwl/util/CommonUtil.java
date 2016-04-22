@@ -14,6 +14,7 @@ import com.htlc.cjwl.App;
 
 import core.ActionCallbackListener;
 import model.UserBean;
+import util.LogUtil;
 
 
 /**
@@ -52,7 +53,7 @@ public class CommonUtil {
     public static String getVersionName() {
         try {
             String packageName = getApplication().getPackageName();
-            LogUtil.i(getApplication(),packageName);
+            LogUtil.i(getApplication(), packageName);
             PackageInfo packageInfo = getApplication().getPackageManager().getPackageInfo(packageName, 0);
             return packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {

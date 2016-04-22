@@ -23,12 +23,10 @@ import com.htlc.cjwl.activity.MessageCenterActivity;
 import com.htlc.cjwl.activity.PersonalInformationActivity;
 import com.htlc.cjwl.activity.RefundActivity;
 import com.htlc.cjwl.activity.ScoreActivity;
-import com.htlc.cjwl.activity.SelectRuteActivity;
 import com.htlc.cjwl.activity.SettingActivity;
 import com.htlc.cjwl.util.CommonUtil;
-import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.LogUtil;
-import com.htlc.cjwl.util.SharedPreferenceUtil;
+
+import util.LogUtil;
 
 import core.ActionCallbackListener;
 import model.UserBean;

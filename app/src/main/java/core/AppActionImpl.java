@@ -5,9 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.htlc.cjwl.App;
 import com.htlc.cjwl.bean.CityInfoBean;
 import com.htlc.cjwl.bean.HomeBannerInfo;
 import com.htlc.cjwl.bean.MessageInfoBean;
@@ -15,17 +13,13 @@ import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.bean.ServiceDetailInfoBean;
 import com.htlc.cjwl.bean.ServiceInfoBean;
 import com.htlc.cjwl.util.JsonUtil;
-import com.htlc.cjwl.util.LogUtil;
+import util.LogUtil;
 import com.squareup.okhttp.Request;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import api.Api;
 import api.ApiImpl;

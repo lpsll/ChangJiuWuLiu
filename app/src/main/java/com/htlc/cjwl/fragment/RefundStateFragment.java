@@ -21,10 +21,9 @@ import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.RefundListAdapter;
 import com.htlc.cjwl.adapter.RefundListSelectAdapter;
-import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.util.CommonUtil;
-import com.htlc.cjwl.util.LogUtil;
-import com.htlc.cjwl.util.ToastUtil;
+
+import util.ToastUtil;
 
 import java.util.ArrayList;
 

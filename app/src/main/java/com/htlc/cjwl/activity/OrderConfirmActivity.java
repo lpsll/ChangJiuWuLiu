@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,11 +16,11 @@ import android.widget.TextView;
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.MainActivity;
 import com.htlc.cjwl.R;
+import com.htlc.cjwl.fragment.OrdersFragment;
 import com.htlc.cjwl.util.CommonUtil;
-import com.htlc.cjwl.util.ToastUtil;
+import util.ToastUtil;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 
 import core.ActionCallbackListener;
 import model.CarInfoBean;
@@ -45,6 +44,7 @@ public class OrderConfirmActivity extends Activity {
 
     public static final String OrderPrice = "OrderPrice";
     public static final String OrderInsure = "OrderInsure";
+    public static final String OrderInsurePrice = "OrderInsurePrice";
 
     private TextView textTitle,textFromAddress,textToAddress,
             textCarTypeNameArray,textCarNumArray,textPrice,
@@ -65,6 +65,7 @@ public class OrderConfirmActivity extends Activity {
     public  String toName = "";
 
     public  String orderPrice = "";
+    public  String orderInsurePrice = "";
     public  ArrayList<InsuranceInfoBean> orderInsure;
     public  ArrayList<VinInfoBean> vinnumArray;
     @Override
@@ -84,6 +85,7 @@ public class OrderConfirmActivity extends Activity {
 
         orderPrice = getIntent().getStringExtra(OrderPrice);
         orderInsure = getIntent().getParcelableArrayListExtra(OrderInsure);
+        orderInsurePrice = getIntent().getStringExtra(OrderInsurePrice);
         initView();
     }
 
@@ -124,11 +126,11 @@ public class OrderConfirmActivity extends Activity {
         textPrice = (TextView) findViewById(R.id.textPrice);
         textInsurancePrice = (TextView) findViewById(R.id.textInsurancePrice);
         textPrice.setText("￥"+orderPrice);
-        float totalInsure = 0;
-        for(InsuranceInfoBean bean : orderInsure){
-            totalInsure += Float.parseFloat(bean.insurePrice);
-        }
-        textInsurancePrice.setText("￥"+totalInsure);
+//        double totalInsure = 0;
+//        for(InsuranceInfoBean bean : orderInsure){
+//            totalInsure += Float.parseFloat(bean.insurePrice);
+//        }
+        textInsurancePrice.setText("￥"+orderInsurePrice);
 
         editFromUsername = (EditText) findViewById(R.id.editFromUsername);
         editFromTel = (EditText) findViewById(R.id.editFromTel);
@@ -225,7 +227,9 @@ public class OrderConfirmActivity extends Activity {
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加确定按钮
             @Override
             public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
-                startActivity(new Intent(OrderConfirmActivity.this, MainActivity.class));
+                Intent intent = new Intent(OrderConfirmActivity.this, MainActivity.class);
+                intent.putExtra(MainActivity.SelectPosition, OrdersFragment.class.getSimpleName());
+                startActivity(intent);
             }
         });
         AlertDialog alertDialog = builder.create();

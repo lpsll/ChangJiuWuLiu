@@ -3,25 +3,18 @@ package com.htlc.cjwl.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
-import com.htlc.cjwl.bean.ServiceDetailBean;
 import com.htlc.cjwl.bean.ServiceDetailInfoBean;
-import com.htlc.cjwl.util.CommonUtil;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.JsonUtil;
-import com.htlc.cjwl.util.LogUtil;
+import util.LogUtil;
 import com.htlc.cjwl.util.LoginUtil;
-import com.htlc.cjwl.util.ToastUtil;
+import util.ToastUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import core.ActionCallbackListener;
 

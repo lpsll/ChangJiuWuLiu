@@ -22,8 +22,8 @@ import com.htlc.cjwl.adapter.CitysListAdapter;
 import com.htlc.cjwl.bean.CityInfoBean;
 import com.htlc.cjwl.util.Constant;
 import com.htlc.cjwl.util.JsonUtil;
-import com.htlc.cjwl.util.LogUtil;
-import com.htlc.cjwl.util.ToastUtil;
+import util.LogUtil;
+import util.ToastUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;

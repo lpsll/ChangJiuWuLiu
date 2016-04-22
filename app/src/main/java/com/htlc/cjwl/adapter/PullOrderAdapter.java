@@ -1,7 +1,6 @@
 package com.htlc.cjwl.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
@@ -22,8 +21,8 @@ import com.htlc.cjwl.activity.TraceActivity;
 import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.fragment.OrderStateFragment;
 import com.htlc.cjwl.util.CommonUtil;
-import com.htlc.cjwl.util.LogUtil;
-import com.htlc.cjwl.util.ToastUtil;
+import util.LogUtil;
+import util.ToastUtil;
 
 import java.util.ArrayList;
 

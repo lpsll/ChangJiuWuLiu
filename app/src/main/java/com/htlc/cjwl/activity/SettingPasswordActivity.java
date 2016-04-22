@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.LogUtil;
-import com.htlc.cjwl.util.ToastUtil;
+import util.LogUtil;
+import util.ToastUtil;
 
 import core.ActionCallbackListener;
 

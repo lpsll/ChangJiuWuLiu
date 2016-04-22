@@ -9,12 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.htlc.cjwl.R;
-import com.htlc.cjwl.bean.ServiceInfoBean;
-import com.htlc.cjwl.util.AnimateFirstDisplayListener;
-import com.htlc.cjwl.util.ImageLoaderCfg;
-import com.htlc.cjwl.util.LogUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 

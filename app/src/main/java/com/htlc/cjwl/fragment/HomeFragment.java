@@ -16,14 +16,13 @@ import com.htlc.cjwl.R;
 import com.htlc.cjwl.activity.CallServiceTelActivity;
 import com.htlc.cjwl.activity.NetworkQueryActivity;
 import com.htlc.cjwl.activity.OrderInfoActivity;
-import com.htlc.cjwl.activity.RuteQueryActivity;
 import com.htlc.cjwl.activity.WebActivity;
 import com.htlc.cjwl.adapter.HomeAdapter;
 import com.htlc.cjwl.bean.HomeBannerInfo;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.LogUtil;
+import util.LogUtil;
 import com.htlc.cjwl.util.LoginUtil;
-import com.htlc.cjwl.util.ToastUtil;
+import util.ToastUtil;
 
 import java.util.ArrayList;
 

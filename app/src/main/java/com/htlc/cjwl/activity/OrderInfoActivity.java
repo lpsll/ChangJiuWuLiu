@@ -2,12 +2,14 @@ package com.htlc.cjwl.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
+import android.os.IBinder;
 import android.text.TextUtils;
-import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -18,7 +20,7 @@ import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.SwipeCarAdapter;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.ToastUtil;
+import util.ToastUtil;
 
 import java.util.ArrayList;
 
@@ -49,14 +51,64 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
             textSendCarWay, textGetCarWay, textPrice;
     private CheckBox checkBox;
     private TextView textButton;
+    private EditText currentEditEnsurance;
 
     private boolean state = false;
     private String fromCityID, toCityID, fromCityDetail = "", toCityDetail = "",
             fromName = "", toName = "", fromTel = "", toTel = "",
             sendWayID = Api.TransportWayArray[1], getWayID = Api.TransportWayArray[1],
-            orderPrice = "0.0";
+            orderPrice = "0.0", orderInsurePrice;
     private ArrayList<CarInfoBean> carArray = new ArrayList<>();
     private ArrayList<InsuranceInfoBean> insuranceArray = new ArrayList<>();
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideKeyboard(v, ev)) {
+                hideKeyboard(v.getWindowToken());
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+    /**
+     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
+     *
+     * @param v
+     * @param event
+     * @return
+     */
+    private boolean isShouldHideKeyboard(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] l = {0, 0};
+            v.getLocationInWindow(l);
+            int left = l[0],
+                    top = l[1],
+                    bottom = top + v.getHeight(),
+                    right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击EditText的事件，忽略它。
+                return false;
+            } else {
+                v.clearFocus();
+                return true;
+            }
+        }
+        // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditText上，和用户用轨迹球选择其他的焦点
+        return false;
+    }
+
+    /**
+     * 获取InputMethodManager，隐藏软键盘
+     * @param token
+     */
+    private void hideKeyboard(IBinder token) {
+        if (token != null) {
+            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +221,8 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                 showProtocol("服务协议", Api.ProtocolService);
                 break;
             case R.id.next_step:
+                v.setFocusable(true);
+                v.requestFocus();
                 nextStep();
                 break;
         }
@@ -197,6 +251,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
             intent.putExtra(OrderConfirmActivity.ToName, toName);
             intent.putExtra(OrderConfirmActivity.ToTel, toTel);
             intent.putExtra(OrderConfirmActivity.OrderPrice, orderPrice);
+            intent.putExtra(OrderConfirmActivity.OrderInsurePrice, orderInsurePrice);
             intent.putParcelableArrayListExtra(OrderConfirmActivity.OrderInsure, insuranceArray);
             startActivity(intent);
         } else {
@@ -210,7 +265,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         for(int i=0; i<linearCarInsurance.getChildCount(); i++){
             EditText editInsurancePrice = (EditText) linearCarInsurance.getChildAt(i).findViewById(R.id.et_insurance_price);
             String insurancePrice = editInsurancePrice.getText().toString();
-            if(TextUtils.isEmpty(insurancePrice)){
+            if(TextUtils.isEmpty(insurancePrice) || insurancePrice.equals("0")){
                 ToastUtil.showToast(App.app,"投保价值不能为空");
                 return;
             }
@@ -222,6 +277,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
             public void onSuccess(CalculatePriceInfoBean data) {
                 textPrice.setText(data.node);
                 orderPrice = data.node;
+                orderInsurePrice = data.insure;
                 state = true;
                 textButton.setText("下一步");
                 if (progressDialog != null) {
@@ -402,7 +458,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
                 LinearLayout linearLayout = (LinearLayout) View.inflate(this,R.layout.layout_order_insure,null);
                 TextView textLabelInsurance = (TextView) linearLayout.findViewById(R.id.textLabelInsurance);
-                textLabelInsurance.setText("投保第"+(j+1)+"辆"+bean.name+"价值");
+                textLabelInsurance.setText("第"+(j+1)+"辆"+bean.name+"的车辆价值");
                 final EditText editInsurancePrice = (EditText) linearLayout.findViewById(R.id.et_insurance_price);
                 editInsurancePrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override

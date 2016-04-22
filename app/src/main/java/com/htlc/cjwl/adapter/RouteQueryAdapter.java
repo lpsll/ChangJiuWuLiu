@@ -12,7 +12,7 @@ import com.htlc.cjwl.activity.WebActivity;
 import com.htlc.cjwl.bean.RouteQueryFootInfoBean;
 import com.htlc.cjwl.util.CommonUtil;
 import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.LogUtil;
+import util.LogUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

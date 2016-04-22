@@ -3,7 +3,6 @@ package com.htlc.cjwl.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,13 +11,9 @@ import android.widget.TextView;
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.util.CommonUtil;
-import com.htlc.cjwl.util.Constant;
-import com.htlc.cjwl.util.LogUtil;
-import com.htlc.cjwl.util.SharedPreferenceUtil;
-import com.htlc.cjwl.util.ToastUtil;
+import util.LogUtil;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import util.ToastUtil;
 
 import core.ActionCallbackListener;
 

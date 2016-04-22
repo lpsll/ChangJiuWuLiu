@@ -9,10 +9,9 @@ import android.widget.TextView;
 
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
-import com.htlc.cjwl.adapter.ServiceListViewAdapter;
 import com.htlc.cjwl.adapter.TraceAdapter;
-import com.htlc.cjwl.bean.ServiceInfoBean;
-import com.htlc.cjwl.util.ToastUtil;
+
+import util.ToastUtil;
 
 import java.util.ArrayList;
 
