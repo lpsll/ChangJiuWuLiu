@@ -12,19 +12,20 @@ import com.htlc.cjwl.R;
 
 import java.util.ArrayList;
 
+import model.BillDetailBean;
 import model.RefundOrderBean;
 
 /**
  * Created by Larno on 16/04/07.
  */
-public class RefundListAdapter extends BaseAdapter{
+public class BillListAdapter extends BaseAdapter{
 
     private int id;
-    private ArrayList<RefundOrderBean> ordersList;
+    private ArrayList<BillDetailBean> ordersList;
     private Context context;
-    private final String html = "<font color=\"#3c3c3c\">备注:  </font><font color=\"#0a198c\">%1$s</font>" ;
+    private final String html = "<font color=\"#3c3c3c\">时间:  </font><font color=\"#0a198c\">%1$s</font>" ;
 
-    public RefundListAdapter(int id, ArrayList<RefundOrderBean> ordersList, Context context) {
+    public BillListAdapter(int id, ArrayList ordersList, Context context) {
         this.id = id;
         this.ordersList = ordersList;
         this.context = context;
@@ -49,35 +50,35 @@ public class RefundListAdapter extends BaseAdapter{
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null ;
         if(convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.adapter_refund_list, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.adapter_bill_list, null);
             holder = new ViewHolder();
-            holder.textTime = (TextView) convertView.findViewById(R.id.textTime);
-            holder.textOrderId = (TextView) convertView.findViewById(R.id.textOrderId);
-            holder.textPrice = (TextView) convertView.findViewById(R.id.textPrice);
-            holder.textComment = (TextView) convertView.findViewById(R.id.textComment);
+            holder.textHeader = (TextView) convertView.findViewById(R.id.textTime);
+            holder.textPrice = (TextView) convertView.findViewById(R.id.textOrderId);
+            holder.textType = (TextView) convertView.findViewById(R.id.textPrice);
+            holder.textTime = (TextView) convertView.findViewById(R.id.textComment);
             holder.textState = (TextView) convertView.findViewById(R.id.textState);
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder)convertView.getTag();
         }
-        RefundOrderBean bean = ordersList.get(position);
-        holder.textTime.setText(bean.order_date);
-        holder.textOrderId.setText("订单号: "+bean.order_no);
-        holder.textPrice.setText("金额: "+bean.order_price);
-        //"order_ispay": "2"//2已付款(历史订单) ｛3待退款 4已退款｝（历史退款）
-        if("3".equals(bean.order_ispay)){
+        BillDetailBean bean = ordersList.get(position);
+        holder.textHeader.setText("发票抬头: "+bean.invoice_buyer);
+        holder.textType.setText("发票类型: "+bean.invoice_type);
+        holder.textPrice.setText("价格: "+bean.invoice_price);
+        ////1申请中，2已打印
+        if("1".equals(bean.invoice_flag)){
             holder.textState.setText("申请中");
         }else {
-            holder.textState.setText("已退款");
+            holder.textState.setText("已打印");
         }
-        String comment = String.format(html, bean.order_remark);
-        holder.textComment.setText(Html.fromHtml(comment));
+        String comment = String.format(html, bean.invoice_date);
+        holder.textTime.setText(Html.fromHtml(comment));
         return convertView;
     }
     class ViewHolder {
-        TextView textOrderId;//订单编号
+        TextView textHeader;
         TextView textPrice;
-        TextView textComment;
+        TextView textType;
         TextView textState;
         TextView textTime;//订单日期
     }

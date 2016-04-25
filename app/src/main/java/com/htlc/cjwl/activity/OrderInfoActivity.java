@@ -155,6 +155,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         findViewById(R.id.textTransport).setOnClickListener(this);
         findViewById(R.id.textRefund).setOnClickListener(this);
         findViewById(R.id.textService).setOnClickListener(this);
+        findViewById(R.id.textInsuranceHtml).setOnClickListener(this);
 
         checkBox = (CheckBox) findViewById(R.id.cb_checkbox);
         textPrice = (TextView) findViewById(R.id.tv_calc_price);
@@ -220,6 +221,9 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
             case R.id.textService:
                 showProtocol("服务协议", Api.ProtocolService);
                 break;
+            case R.id.textInsuranceHtml:
+                showProtocol("投保说明", Api.ProtocolInsurance);
+                break;
             case R.id.next_step:
                 v.setFocusable(true);
                 v.requestFocus();
@@ -260,13 +264,17 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     }
 
     private void getPrice() {
+        if(!checkBox.isChecked()){
+            ToastUtil.showToast(App.app,"请阅读并同意相关协议！");
+            return;
+        }
         String fromCity = textFromAddress.getText().toString();
         String toCity = textToAddress.getText().toString();
         for(int i=0; i<linearCarInsurance.getChildCount(); i++){
             EditText editInsurancePrice = (EditText) linearCarInsurance.getChildAt(i).findViewById(R.id.et_insurance_price);
             String insurancePrice = editInsurancePrice.getText().toString();
             if(TextUtils.isEmpty(insurancePrice) || insurancePrice.equals("0")){
-                ToastUtil.showToast(App.app,"投保价值不能为空");
+                ToastUtil.showToast(App.app,"【请您阅读投保说明，填写相关车辆价值】");
                 return;
             }
             insuranceArray.get(i).insurePrice = insurancePrice;
@@ -279,6 +287,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                 orderPrice = data.node;
                 orderInsurePrice = data.insure;
                 state = true;
+                checkBox.setEnabled(false);
                 textButton.setText("下一步");
                 if (progressDialog != null) {
                     progressDialog.dismiss();
@@ -388,6 +397,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     //计算价格状态 设置方法
     public void stateChange() {
         if (state) {
+            checkBox.setEnabled(true);
             textButton.setText("计算价格");
             textPrice.setText("0.00");
         }
@@ -458,7 +468,8 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
                 LinearLayout linearLayout = (LinearLayout) View.inflate(this,R.layout.layout_order_insure,null);
                 TextView textLabelInsurance = (TextView) linearLayout.findViewById(R.id.textLabelInsurance);
-                textLabelInsurance.setText("第"+(j+1)+"辆"+bean.name+"的车辆价值");
+//                textLabelInsurance.setText("第"+(j+1)+"辆"+bean.name+"的车辆价值");
+                textLabelInsurance.setText(bean.name+"的车辆价值");
                 final EditText editInsurancePrice = (EditText) linearLayout.findViewById(R.id.et_insurance_price);
                 editInsurancePrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override

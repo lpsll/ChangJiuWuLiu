@@ -154,6 +154,9 @@
             android:name=".activity.SubmitBillActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".activity.BillDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activity.OrderDetailActivity"
             android:screenOrientation="portrait"/>
         <activity

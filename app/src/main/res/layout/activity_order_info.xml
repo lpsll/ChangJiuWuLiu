@@ -277,7 +277,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="17dp"
                     android:paddingRight="17dp">
@@ -296,36 +295,61 @@
                         android:textColor="@color/black"
                         android:textSize="13sp"/>
 
-                    <TextView
-                        android:id="@+id/textTransport"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="运输协议"
-                        android:textColor="@color/red"
-                        android:textSize="13sp"/>
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/textTransport"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="0dp"
+                            android:paddingBottom="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingLeft="5dp"
+                            android:text="运输协议"
+                            android:textColor="@color/red"
+                            android:textSize="13sp"/>
 
-                    <TextView
-                        android:id="@+id/textRefund"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="退款规则"
-                        android:textColor="@color/red"
-                        android:textSize="13sp"/>
+                        <TextView
+                            android:id="@+id/textRefund"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="退款规则"
+                            android:textColor="@color/red"
+                            android:textSize="13sp"/>
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/textService"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="服务协议"
-                        android:textColor="@color/red"
-                        android:textSize="13sp"/>
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/textService"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="0dp"
+                            android:paddingBottom="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingLeft="5dp"
+                            android:text="服务协议"
+                            android:textColor="@color/red"
+                            android:textSize="13sp"/>
+                        <TextView
+                            android:id="@+id/textInsuranceHtml"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="投保说明"
+                            android:textColor="@color/red"
+                            android:textSize="13sp"/>
+
+                    </LinearLayout>
 
                     <CheckBox
                         android:id="@+id/cb_checkbox"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@null"

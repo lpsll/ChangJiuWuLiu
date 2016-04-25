@@ -5,7 +5,18 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <include layout="@layout/layout_back_title2"/>
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height">
+    </com.astuetz.PagerSlidingTabStrip>
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewPager"
+        android:background="@color/light_gray">
+    </android.support.v4.view.ViewPager>
+   <!-- <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,5 +29,5 @@
         android:headerDividersEnabled="true"
         android:listSelector="@android:color/transparent"
         android:orientation="vertical"
-        app:ptrAnimationStyle="flip" />
+        app:ptrAnimationStyle="flip" />-->
 </LinearLayout>

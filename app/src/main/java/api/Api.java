@@ -30,7 +30,10 @@ public interface Api {
     String RefundOrderList = Host + "Home/CYOrder/getrepayList";
     String SubmitRefundOrder = Host + "Home/CYOrder/repayquest";
     String BillOrderList = Host + "Home/CYOrder/getbillList";
+    String BillOrderListHistory = Host + "Home/CYEvaluation/getinvoicelist";
     String SubmitBillOrder = Host + "Home/CYOrder/rebillquest";
+    String BillOrderDetail = Host + "Home/CYEvaluation/getinvoiceinfo";
+    String BillOrderModify = Host + "Home/CYEvaluation/setrebill";
     String EvaluationOrder = Host + "Home/CYEvaluation/setEvaluation";
     String TraceOrder = Host + "Home/CYLogistics/getLogistics";
 
@@ -49,6 +52,7 @@ public interface Api {
     String ProtocolScoreRuler = Host + "Home/CYHtml/getintegralrule";
     String ProtocolAbout = Host + "Home/CYHtml/getrelatedsoftware";
     String ProtocolUser = Host + "Home/CYHtml/getuseragreement";
+    String ProtocolInsurance = Host + "Home/CYHtml/getinsurance";
     String OrderCreate = Host + "Home/CYOrder/createOrder";
 
     String HomeBanner = Host + "Home/CYBanner/getBannerList";
@@ -163,7 +167,11 @@ public interface Api {
 
     void billOrderList(String page, ResultCallback<String> callback);
 
+    void billOrderListHistory(String page, ResultCallback<String> callback);
+
     void submitBillOrder(String billHeader, String price,String billType, String address, String receiverName, String orderIdStr, ResultCallback<String> callback);
+    void billOrderDetail(String billId, ResultCallback<String> callback);
+    void billOrderModify(String billId, String header, String address, String receiver, ResultCallback<String> callback);
     void evaluationOrder(String orderId, String comment, String grade, ResultCallback<String> callback);
     void traceOrder(String orderId, ResultCallback<String> callback);
     void payOrderDetail(String orderId, ResultCallback<String> callback);

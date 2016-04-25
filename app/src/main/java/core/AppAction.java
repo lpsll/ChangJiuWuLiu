@@ -15,6 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import model.AddressInfoBean;
+import model.BillDetailBean;
 import model.BillOrderBean;
 import model.CalculatePriceInfoBean;
 import model.CarInfoBean;
@@ -67,7 +68,11 @@ public interface AppAction {
 
     void billOrderList(int page, ActionCallbackListener<ArrayList<BillOrderBean>> listener);
 
+    void billOrderListHistory(int page, ActionCallbackListener<ArrayList<BillDetailBean>> listener);
+
     void submitBillOrder(String billHeader, String price, String billType, String address, String receiverName, String orderIdStr, ActionCallbackListener<Void> listener);
+    void billOrderDetail(String billId,ActionCallbackListener<BillDetailBean> listener);
+    void billOrderModify(String billId, String header, String address, String receiver, ActionCallbackListener<Void> listener);
     void evaluationOrder(String orderId, String comment, String grade,ActionCallbackListener<Void> listener);
     void traceOrder(String orderId, ActionCallbackListener<ArrayList<TraceBean>> listener);
     void payOrderDetail(String orderId, ActionCallbackListener<PayOrderBean> listener);

@@ -202,6 +202,16 @@ public class ApiImpl implements Api {
     }
 
     @Override
+    public void billOrderListHistory(String page, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
+        params.put("page", page);
+        String url = Api.BillOrderListHistory;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
     public void submitBillOrder(String billHeader, String price,String billType, String address, String receiverName, String orderIdStr, ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
         String userId = App.app.getUser().node;
@@ -213,6 +223,27 @@ public class ApiImpl implements Api {
         params.put("taker", receiverName);
         params.put("ordernostr", orderIdStr);
         String url = Api.SubmitBillOrder;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void billOrderDetail(String billId, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("id", billId);
+        String url = Api.BillOrderDetail;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void billOrderModify(String billId, String header, String address, String receiver, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
+        params.put("id", billId);
+        params.put("buyer", header);
+        params.put("address", address);
+        params.put("taker", receiver);
+        String url = Api.BillOrderModify;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
     }
 

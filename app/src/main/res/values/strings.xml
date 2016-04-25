@@ -90,6 +90,10 @@
         <item>历史订单</item>
         <item>历史退款</item>
     </string-array>
+    <string-array name="bill_state_title">
+        <item>可申请</item>
+        <item>已申请</item>
+    </string-array>
 
     <!--tips 网络请求提示信息-->
     <string name="network_error">网络出错！</string>

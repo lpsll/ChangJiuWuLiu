@@ -13,6 +13,8 @@ import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.bean.ServiceDetailInfoBean;
 import com.htlc.cjwl.bean.ServiceInfoBean;
 import com.htlc.cjwl.util.JsonUtil;
+
+import model.BillDetailBean;
 import util.LogUtil;
 import com.squareup.okhttp.Request;
 
@@ -700,13 +702,44 @@ public class AppActionImpl implements AppAction {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("billOrderList", "page" + page + ";--------" + response);
                     JSONObject jsonObject = new JSONObject(response);
                     String code = jsonObject.getString("code");
                     if ("1".equals(code)) {
                         String jsonArray = jsonObject.getString("data");
                         ArrayList<BillOrderBean> array = (ArrayList<BillOrderBean>) JsonUtil.parseJsonToList(jsonArray,
                                 new TypeToken<ArrayList<BillOrderBean>>() {
+                                }.getType());
+                        listener.onSuccess(array);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void billOrderListHistory(final int page, final ActionCallbackListener<ArrayList<BillDetailBean>> listener) {
+        api.billOrderListHistory(page + "", new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String jsonArray = jsonObject.getString("data");
+                        ArrayList<BillDetailBean> array = (ArrayList<BillDetailBean>) JsonUtil.parseJsonToList(jsonArray,
+                                new TypeToken<ArrayList<BillDetailBean>>() {
                                 }.getType());
                         listener.onSuccess(array);
                     } else {
@@ -741,6 +774,77 @@ public class AppActionImpl implements AppAction {
             return;
         }
         api.submitBillOrder(billHeader, price, billType, address, receiverName, orderIdStr, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        listener.onSuccess(null);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void billOrderDetail(String billId, final ActionCallbackListener<BillDetailBean> listener) {
+        api.billOrderDetail(billId, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        String jsonObjStr = jsonObject.getString("data");
+                        BillDetailBean bean = JsonUtil.parseJsonToBean(jsonObjStr, BillDetailBean.class);
+                        listener.onSuccess(bean);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void billOrderModify(String billId, String header, String address, String receiver, final ActionCallbackListener<Void> listener) {
+        // 参数检查
+        if (TextUtils.isEmpty(header)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "发票抬头不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(address)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请输入寄送地址");
+            return;
+        }
+        if (TextUtils.isEmpty(receiver)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请输入收票人");
+            return;
+        }
+        api.billOrderModify(billId, header, address, receiver, new ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
