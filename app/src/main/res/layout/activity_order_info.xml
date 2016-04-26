@@ -348,7 +348,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@null"
-                        android:checked="true"
+                        android:checked="false"
                         android:drawableRight="@drawable/checkbox_style_selector"
                         android:textColor="@color/black"
                         android:textSize="@dimen/content_size"
