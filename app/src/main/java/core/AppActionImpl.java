@@ -980,8 +980,9 @@ public class AppActionImpl implements AppAction {
                     JSONObject jsonObject = new JSONObject(response);
                     String code = jsonObject.getString("code");
                     if ("1".equals(code)) {
-                        String jsonObjStr = jsonObject.getString("data");
-                        PayChargeBean bean = JsonUtil.parseJsonToBean(jsonObjStr, PayChargeBean.class);
+                        JSONObject jsonObjStr = jsonObject.getJSONObject("data");
+                        PayChargeBean bean = new PayChargeBean();
+                        bean.tn = jsonObjStr.getString("tn");
                         listener.onSuccess(bean);
                     } else {
                         String msg = jsonObject.getString("msg");

@@ -2,8 +2,11 @@ package com.htlc.cjwl.activity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,8 +29,12 @@ import com.htlc.cjwl.MainActivity;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.util.CommonUtil;
 import com.htlc.cjwl.util.Constant;
+
 import util.LogUtil;
 import util.ToastUtil;
+
+import com.htlc.cjwl.util.MD5Util;
+import com.htlc.cjwl.wxapi.WXPayEntryActivity;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -86,6 +94,19 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
         orderId = getIntent().getStringExtra(OrderID);
         LogUtil.e(this, "orderId" + orderId);
         initView();
+        registerWXBroadcastReceiver();
+    }
+
+    private void registerWXBroadcastReceiver() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(getApplication().getPackageName() + ".action.WX_PAY");
+        registerReceiver(wxPayBroadcastReceiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(wxPayBroadcastReceiver);
     }
 
     @Override
@@ -258,6 +279,9 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     private void wxPay(PayChargeBean chargeBean) {
+        final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
+        // 将该app注册到微信
+        boolean b = msgApi.registerApp(Constant.WX_APP_ID);
         IWXAPI wxapi = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID);
         try {
             JSONObject json = new JSONObject(chargeBean.tn);
@@ -269,10 +293,14 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
             req.nonceStr = json.getString("noncestr");
             req.timeStamp = json.getString("timestamp");
             req.packageValue = json.getString("package");
+//            String sign = MD5Util.MD5("appid=" + req.appId
+//                    + "&noncestr=" + req.nonceStr + "&package="
+//                    + req.packageValue + "&partnerid=" + req.partnerId
+//                    + "&prepayid=" + req.prepayId + "&timestamp="
+//                    + req.timeStamp + "&key=" + Constant.WX_APP_KEY).toUpperCase();
+//            req.sign = sign;
             req.sign = json.getString("sign");
-            req.extData = "app data"; // optional
-            Toast.makeText(PayActivity.this, "正常调起支付", Toast.LENGTH_SHORT).show();
-            // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+            //req.extData = "app data";
             wxapi.sendReq(req);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -284,7 +312,6 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
         double aliPrice = Double.parseDouble(price) - Double.parseDouble(useScore);
         aliPrice = 0.01;
         final String payInfo = AliPayUtil.getPayInfo("长久物流运输费用", "长久物流运输费用。", aliPrice + "", orderId);
-//      final String payInfo = chargeBean.tn;
         Runnable payRunnable = new Runnable() {
 
             @Override
@@ -394,7 +421,6 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
         builder.setCancelable(false);
         builder.setMessage(msg);
         builder.setInverseBackgroundForced(true);
-//         builder.setCustomTitle();
         builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -411,6 +437,9 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
     }
 
+    /**
+     * 处理支付宝支付结果
+     */
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
@@ -442,6 +471,31 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
                     break;
                 }
                 default:
+                    break;
+            }
+        }
+    };
+    /**
+     * 处理微信支付结果
+     */
+    private BroadcastReceiver wxPayBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int code = intent.getIntExtra(WXPayEntryActivity.TAG, 1);
+            switch (code) {
+                case 0://支付成功后的界面
+                    showTipsDialog("支付成功！",true);
+                    break;
+                case -1:
+                    //支付错误
+                    showTipsDialog("支付失败！",false);
+                    break;
+                case -2://用户取消支付后的界面
+                    showTipsDialog("支付取消！",false);
+                    break;
+                default:
+                    //支付错误
+                    showTipsDialog("支付失败！",false);
                     break;
             }
         }
