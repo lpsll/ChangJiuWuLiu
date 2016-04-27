@@ -301,6 +301,9 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 //            req.sign = sign;
             req.sign = json.getString("sign");
             //req.extData = "app data";
+            if (payProgressDialog != null) {
+                payProgressDialog.dismiss();
+            }
             wxapi.sendReq(req);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -310,8 +313,8 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
     private void aliPay(PayChargeBean chargeBean) {
         double aliPrice = Double.parseDouble(price) - Double.parseDouble(useScore);
-        aliPrice = 0.01;
-        final String payInfo = AliPayUtil.getPayInfo("长久物流运输费用", "长久物流运输费用。", aliPrice + "", orderId);
+//        aliPrice = 0.01;
+        final String payInfo = AliPayUtil.getPayInfo("长久运车", "运车费用", aliPrice + "", orderId);
         Runnable payRunnable = new Runnable() {
 
             @Override
@@ -327,7 +330,6 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
                 mHandler.sendMessage(msg);
             }
         };
-
         // 必须异步调用
         Thread payThread = new Thread(payRunnable);
         payThread.start();
