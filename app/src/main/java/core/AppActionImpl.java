@@ -3,9 +3,11 @@ package core;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
+import com.htlc.cjwl.App;
 import com.htlc.cjwl.bean.CityInfoBean;
 import com.htlc.cjwl.bean.HomeBannerInfo;
 import com.htlc.cjwl.bean.MessageInfoBean;
@@ -15,13 +17,16 @@ import com.htlc.cjwl.bean.ServiceInfoBean;
 import com.htlc.cjwl.util.JsonUtil;
 
 import model.BillDetailBean;
+import util.DateFormatUtil;
 import util.LogUtil;
+
+import com.htlc.cjwl.util.SharedPreferenceUtil;
 import com.squareup.okhttp.Request;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import api.Api;
 import api.ApiImpl;
@@ -85,7 +90,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -139,7 +144,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -180,7 +185,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -220,7 +225,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -263,7 +268,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -293,7 +298,35 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getNewMessage(final ActionCallbackListener<Void> listener) {
+        api.getNewMessage(new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("1".equals(code)) {
+                        listener.onSuccess(null);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -325,7 +358,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -365,7 +398,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -402,7 +435,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -430,11 +463,12 @@ public class AppActionImpl implements AppAction {
                                 new TypeToken<ArrayList<MessageInfoBean>>() {
                                 }.getType());
                         listener.onSuccess(array);
+                        SharedPreferenceUtil.putString(App.app, Api.GetNewMessage, DateFormatUtil.getTimeBySecond(new Date(System.currentTimeMillis())));
                     } else {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -462,7 +496,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -494,7 +528,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -526,7 +560,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -561,7 +595,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -592,7 +626,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -620,7 +654,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -654,7 +688,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -682,7 +716,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -714,7 +748,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -746,7 +780,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -791,7 +825,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -821,7 +855,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -862,7 +896,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -894,7 +928,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -926,7 +960,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -957,7 +991,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -988,7 +1022,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -1016,7 +1050,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -1046,7 +1080,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -1077,7 +1111,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -1108,7 +1142,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -1137,7 +1171,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -1194,7 +1228,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -1270,7 +1304,7 @@ public class AppActionImpl implements AppAction {
                                 String msg = jsonObject.getString("msg");
                                 listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                             }
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                             listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                         }
@@ -1303,7 +1337,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -1335,7 +1369,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -1365,7 +1399,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -1397,7 +1431,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }
@@ -1425,7 +1459,7 @@ public class AppActionImpl implements AppAction {
                         String msg = jsonObject.getString("msg");
                         listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
                 }

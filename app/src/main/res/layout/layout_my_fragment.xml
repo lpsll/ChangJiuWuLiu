@@ -187,7 +187,13 @@
                     android:text="@string/message_center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/content_size" />
-
+                <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/image_point_new_message"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/circle_red_shape"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

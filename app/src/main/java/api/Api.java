@@ -15,6 +15,7 @@ public interface Api {
     String ResetPassword = Host + "Home/CYUser/reSetUserPwdSecond";
     String Login = Host + "Home/CYUser/user_login";
     String GetUserInfo = Host + "Home/CYUser/getUserInfo";
+    String GetNewMessage = Host + "Home/CYMessage/getmsg";
     String CheckPassword = Host + "Home/CYUser/checkUserPwd";
     String UpdatePassword = Host + "Home/CYUser/user_updatepwd";
     String ResetTel = Host + "Home/CYUser/reSetUserMobile";
@@ -110,6 +111,12 @@ public interface Api {
      * @param callback 返回说明：{"code": "1","msg": "请求成功","data": {"user_mobile": "13020017428","user_socre": "200","levelname": "2"}
      */
     void getUserInfo(ResultCallback<String> callback);
+
+    /**
+     * 个人中心是否显示红点
+     * @param callback
+     */
+    void getNewMessage(ResultCallback<String> callback);
 
     /**
      *

@@ -247,7 +247,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="5dp"
-                        android:text="网点提车"
+                        android:text="客户自提"
                         android:textColor="@color/light_dark_gray"
                         android:textSize="14sp"/>
 
@@ -308,11 +308,12 @@
                             android:textColor="@color/red"
                             android:textSize="13sp"/>
                         <TextView
-                            android:id="@+id/textInsuranceHtml"
+                            android:visibility="gone"
+                            android:id="@+id/textService"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:text="投保说明"
+                            android:text="服务协议"
                             android:textColor="@color/red"
                             android:textSize="13sp"/>
 
@@ -330,14 +331,14 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <TextView
-                            android:id="@+id/textService"
+                            android:id="@+id/textInsuranceHtml"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="5dp"
                             android:paddingBottom="5dp"
                             android:paddingRight="5dp"
                             android:paddingLeft="5dp"
-                            android:text="服务协议"
+                            android:text="投保说明"
                             android:textColor="@color/red"
                             android:textSize="13sp"/>
                     </LinearLayout>

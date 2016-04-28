@@ -44,6 +44,7 @@ public interface AppAction {
     void login(String username, String pwd, ActionCallbackListener<UserBean> listener);
 
     void getUserInfo(ActionCallbackListener<UserBean> listener);
+    void getNewMessage(ActionCallbackListener<Void> listener);
 
     void checkPassword(String pwd, ActionCallbackListener<Void> listener);
 

@@ -117,6 +117,9 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onStop() {
         super.onStop();
+        if (payProgressDialog != null) {
+            payProgressDialog.dismiss();
+        }
     }
 
     private void initView() {
@@ -301,9 +304,6 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 //            req.sign = sign;
             req.sign = json.getString("sign");
             //req.extData = "app data";
-            if (payProgressDialog != null) {
-                payProgressDialog.dismiss();
-            }
             wxapi.sendReq(req);
         } catch (JSONException e) {
             e.printStackTrace();

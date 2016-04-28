@@ -30,9 +30,9 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
     private boolean isSendWay;
 
     private String cityName,addressDetail;
-    private TextView textTitle,textHall,textAddressDetail,textSendToHall,textChangJiuGet;
+    private TextView textTitle,textHall,textAddressDetail,textCityName, textSendToHall,textChangJiuGet;
     private LinearLayout linearChangJiuGet,linearSendToHall;
-    private View textButton;
+    private TextView textButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +43,16 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
         addressDetail = intent.getStringExtra(AddressDetail);
         isSendWay = intent.getBooleanExtra(IsSendWay, true);
         textTitle = (TextView) findViewById(R.id.tv_activity_title);
+        textCityName = (TextView) findViewById(R.id.textCityName);
         textSendToHall = (TextView) findViewById(R.id.textSendToHall);
         textChangJiuGet = (TextView) findViewById(R.id.textChangJiuGet);
         if(isSendWay){
             textTitle.setText("发车方式");
+            initData();
         }else {
+            textCityName.setText(cityName);
             textTitle.setText("提车方式");
-            textSendToHall.setText("网点提车");
+            textSendToHall.setText("客户自提");
             textChangJiuGet.setText("长久送车");
         }
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
@@ -68,10 +71,11 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
         linearSendToHall.setOnClickListener(this);
         linearChangJiuGet = (LinearLayout) findViewById(R.id.ll_chang_jiu_get);
         linearChangJiuGet.setOnClickListener(this);
-        textButton = findViewById(R.id.confirm);
+        textButton = (TextView) findViewById(R.id.confirm);
+        textButton.setText("完成");
         textButton.setOnClickListener(this);
 
-        initData();
+
     }
 
     private void initData() {

@@ -184,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.iv_tab4:
                 iv_tab4.setImageResource(R.drawable.my_fragment_tab_press);
                 viewPager.setCurrentItem(3,false);
+                ((MyFragment)list.get(3)).updateView();
 //                fragmentTransaction.replace(R.id.fl_container, new MyFragment());
 //                fragmentTransaction.commit();
                 break;

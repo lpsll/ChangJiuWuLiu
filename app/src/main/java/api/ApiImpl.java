@@ -6,6 +6,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.htlc.cjwl.App;
+import com.htlc.cjwl.util.Constant;
+import com.htlc.cjwl.util.SharedPreferenceUtil;
+
 import util.LogUtil;
 
 import java.util.HashMap;
@@ -75,6 +78,15 @@ public class ApiImpl implements Api {
     }
 
     @Override
+    public void getNewMessage(ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        String time = SharedPreferenceUtil.getString(App.app, Api.GetNewMessage, "0");
+        params.put("curtime", time);
+        String url = Api.GetNewMessage;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
     public void checkPassword(String pwd, ResultCallback<String> callback) {
         pwd = EncryptUtil.makeMD5(pwd);
         Map<String, String> params = new HashMap<String, String>();
@@ -109,6 +121,8 @@ public class ApiImpl implements Api {
     @Override
     public void messageCenter(String page, ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_ID", TextUtils.isEmpty(userId) ? "" : userId);
         params.put("page", page);
         String url = Api.MessageCenter;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
@@ -117,6 +131,8 @@ public class ApiImpl implements Api {
     @Override
     public void messageDelete(String msgID, ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
+        String userId = App.app.getUser().node;
+        params.put("user_ID", TextUtils.isEmpty(userId) ? "" : userId);
         params.put("mID", msgID);
         String url = Api.MessageDelete;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);

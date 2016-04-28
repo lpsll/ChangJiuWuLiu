@@ -52,6 +52,7 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
 
     private TextView tv_login;//登录或退出按钮
     private LinearLayout ll_bill;//我的发票
+    private View image_point_new_message; //新消息红点
 
 
     @Override
@@ -82,6 +83,7 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
         ll_socre = (LinearLayout) view.findViewById(R.id.ll_socre);
         tv_score = (TextView) view.findViewById(R.id.tv_score);
         ll_message_center = (LinearLayout) view.findViewById(R.id.ll_message_center);
+        image_point_new_message = view.findViewById(R.id.image_point_new_message);
         ll_setting = (LinearLayout) view.findViewById(R.id.ll_setting);
 
         tv_login = (TextView) view.findViewById(R.id.tv_login);
@@ -111,6 +113,21 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
 
     }
 
+    private void showNewMessagePoint() {
+        image_point_new_message.setVisibility(View.INVISIBLE);
+        App.appAction.getNewMessage(new ActionCallbackListener<Void>() {
+            @Override
+            public void onSuccess(Void data) {
+                image_point_new_message.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(String errorEvent, String message) {
+                image_point_new_message.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -126,9 +143,11 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
             iv_my_head.setImageResource(R.drawable.my_head_default);
             tv_score.setText("0");
             tv_login.setText(R.string.login);
+            image_point_new_message.setVisibility(View.INVISIBLE);
         } else {
             // 登录 请求个人信息进行展示
             getMyselfInfo();
+            showNewMessagePoint();
             ll_account_tip.setVisibility(View.VISIBLE);
             ll_account_des.setVisibility(View.VISIBLE);
             iv_my_head.setImageResource(R.drawable.my_head);
@@ -211,11 +230,11 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
                 break;
             case R.id.ll_message_center:
                 LogUtil.i(this, "消息中心");
-//                if (TextUtils.isEmpty(node)) {
-//                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
-//                } else {
+                if (TextUtils.isEmpty(node)) {
+                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
                     getActivity().startActivity(new Intent(getActivity(), MessageCenterActivity.class));
-//                }
+                }
                 break;
             case R.id.ll_setting:
                 LogUtil.i(this, "设置");
