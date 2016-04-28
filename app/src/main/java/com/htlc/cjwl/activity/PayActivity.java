@@ -478,6 +478,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
         }
     };
     /**
+     *
      * 处理微信支付结果
      */
     private BroadcastReceiver wxPayBroadcastReceiver = new BroadcastReceiver() {
