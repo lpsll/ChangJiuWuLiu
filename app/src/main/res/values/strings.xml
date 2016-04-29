@@ -79,11 +79,11 @@
     <string name="no_order_hint">您当前还没有货单，请先去发货吧！</string>
     <string name="no_oder_send">现在去发货</string>
     <string-array name="order_state_title">
-        <item>全部</item>
+        <item>全部订单</item>
         <item>待确认</item>
         <item>待付款</item>
-        <item>在途跟踪</item>
-        <item>已收车</item>
+        <item>待收车</item>
+        <item>待评价</item>
     </string-array>
 
     <string-array name="refund_state_title">
