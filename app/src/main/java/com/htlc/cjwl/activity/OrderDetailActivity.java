@@ -2,6 +2,7 @@ package com.htlc.cjwl.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +31,8 @@ public class OrderDetailActivity extends Activity{
     private TextView textFromCity;
     private TextView textToCity;
     private TextView textOrderTime;
+    private TextView textComment;
+    private final String html = "<font color=\"#3c3c3c\">评价:  </font><font color=\"#acacac\">%1$s</font>" ;
 
 
     @Override
@@ -67,6 +70,8 @@ public class OrderDetailActivity extends Activity{
         textFromCity = (TextView) findViewById(R.id.order_departure);
         textToCity = (TextView) findViewById(R.id.order_destination);
         textOrderTime = (TextView) findViewById(R.id.order_date);
+
+        textComment = (TextView) findViewById(R.id.textComment);
         initData();
     }
 
@@ -120,6 +125,11 @@ public class OrderDetailActivity extends Activity{
         textOrderID.setText(data.order_no);
         textOrderTime.setText(data.order_date);
 
+        if(!TextUtils.isEmpty(data.evaluate)){
+            textComment.setVisibility(View.VISIBLE);
+            String comment = String.format(html, data.evaluate);
+            textComment.setText(Html.fromHtml(comment));
+        }
 
     }
 }

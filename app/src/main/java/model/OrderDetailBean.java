@@ -19,6 +19,8 @@ public class OrderDetailBean {
     public String to_mobile  ;
     public String from_address  ;
     public String from_cityname  ;
+    public String evaluate  ;//评价
+
     public List<OrderCarfNum> order_carfnum;
     public class OrderCarfNum  {
 
