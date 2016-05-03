@@ -789,7 +789,7 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void submitBillOrder(String billHeader, String price, String billType, String address, String receiverName, String orderIdStr, final ActionCallbackListener<Void> listener) {
+    public void submitBillOrder(String billHeader, String price, String billType, String address, String receiverName, String orderIdStr,String phone,  final ActionCallbackListener<Void> listener) {
         // 参数检查
         if (TextUtils.isEmpty(billHeader)) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "发票抬头不能为空");
@@ -807,7 +807,11 @@ public class AppActionImpl implements AppAction {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请输入收票人");
             return;
         }
-        api.submitBillOrder(billHeader, price, billType, address, receiverName, orderIdStr, new ResultCallback<String>() {
+        if (TextUtils.isEmpty(phone)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请输入收票人联系电话");
+            return;
+        }
+        api.submitBillOrder(billHeader, price, billType, address, receiverName, orderIdStr, phone, new ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
@@ -864,7 +868,7 @@ public class AppActionImpl implements AppAction {
     }
 
     @Override
-    public void billOrderModify(String billId, String header, String address, String receiver, final ActionCallbackListener<Void> listener) {
+    public void billOrderModify(String billId, String header, String address, String receiver,String phone, final ActionCallbackListener<Void> listener) {
         // 参数检查
         if (TextUtils.isEmpty(header)) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "发票抬头不能为空");
@@ -878,7 +882,11 @@ public class AppActionImpl implements AppAction {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请输入收票人");
             return;
         }
-        api.billOrderModify(billId, header, address, receiver, new ResultCallback<String>() {
+        if (TextUtils.isEmpty(phone)) {
+            listener.onFailure(ErrorEvent.PARAM_NULL, "请输入收票人联系电话");
+            return;
+        }
+        api.billOrderModify(billId, header, address, receiver,phone, new ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();

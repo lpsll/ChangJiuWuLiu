@@ -22,7 +22,7 @@ public class SubmitBillActivity extends Activity{
     public static String orderArrayStr;
     public static String totalPrice;
     private TextView textTitle,textBillPrice;
-    private EditText editBillHeader,editBillAddress,editBillReceiver;
+    private EditText editBillHeader,editBillAddress,editBillReceiver,editBillReceiverTel;
     private TextView editBillType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,7 @@ public class SubmitBillActivity extends Activity{
         editBillType = (TextView) findViewById(R.id.editBillType);
         editBillAddress = (EditText) findViewById(R.id.editBillAddress);
         editBillReceiver = (EditText) findViewById(R.id.editBillReceiver);
+        editBillReceiverTel = (EditText) findViewById(R.id.editBillReceiverTel);
 
         findViewById(R.id.tv_sure).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,8 +63,9 @@ public class SubmitBillActivity extends Activity{
         String billType = "运费";
         String address = editBillAddress.getText().toString().trim();
         String billReceiver = editBillReceiver.getText().toString().trim();
+        String phone = editBillReceiverTel.getText().toString().trim();
 
-        App.appAction.submitBillOrder(billHeader, totalPrice + "", billType, address, billReceiver, orderArrayStr, new ActionCallbackListener<Void>() {
+        App.appAction.submitBillOrder(billHeader, totalPrice + "", billType, address, billReceiver, orderArrayStr, phone, new ActionCallbackListener<Void>() {
             @Override
             public void onSuccess(Void data) {
                 ToastUtil.showToast(App.app,"申请发票成功！");

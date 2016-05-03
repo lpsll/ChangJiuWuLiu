@@ -39,7 +39,7 @@
         android:textSize="15sp"
         android:textColor="@color/black"
         android:hint="请输入发票科目类型"
-        android:text="发票类型:  运费"
+        android:text="发票项目:  运费"
         android:padding="10dp"/>
     <EditText
         android:id="@+id/editBillAddress"
@@ -64,6 +64,19 @@
         android:textSize="15sp"
         android:textColor="@color/black"
         android:hint="请输入收票人"
+        android:padding="10dp"/>
+    <EditText
+        android:id="@+id/editBillReceiverTel"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_white_with_gray_line_shape"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:inputType="phone"
+        android:hint="请输入收票人联系电话"
         android:padding="10dp"/>
     <TextView
         android:id="@+id/tv_sure"

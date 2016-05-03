@@ -175,7 +175,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
         payArray.add("支付宝");
         payArray.add("微信");
         payArray.add("银联");
-        payArray.add("现付");
+//        payArray.add("现付");
         for (int i = 0; i < payArray.size(); i++) {
             LinearLayout linearLayout = (LinearLayout) View.inflate(this, R.layout.layout_pay, null);
             linearLayout.setTag(i);

@@ -21,7 +21,7 @@ public class BillDetailActivity extends Activity{
     public static final String BillId = "BillId";
     public static final String BillStatus = "BillStatus";
     private TextView textTitle,textBillPrice;
-    private EditText editBillHeader,editBillAddress,editBillReceiver;
+    private EditText editBillHeader,editBillAddress,editBillReceiver,editBillReceiverTel;
     private TextView editBillType;
 
     private String billId;
@@ -31,7 +31,7 @@ public class BillDetailActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_detail);
         billId = getIntent().getStringExtra(BillId);
-        billStatus = getIntent().getBooleanExtra(BillStatus,false);
+        billStatus = getIntent().getBooleanExtra(BillStatus, false);
 
 
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
@@ -48,6 +48,7 @@ public class BillDetailActivity extends Activity{
         editBillType = (TextView) findViewById(R.id.editBillType);
         editBillAddress = (EditText) findViewById(R.id.editBillAddress);
         editBillReceiver = (EditText) findViewById(R.id.editBillReceiver);
+        editBillReceiverTel = (EditText) findViewById(R.id.editBillReceiverTel);
 
         View button = findViewById(R.id.tv_sure);
         button.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +59,13 @@ public class BillDetailActivity extends Activity{
         });
         if(billStatus){
             button.setVisibility(View.VISIBLE);
+        }else {
+            textBillPrice.setEnabled(false);
+            editBillHeader.setEnabled(false);
+            editBillType.setEnabled(false);
+            editBillAddress.setEnabled(false);
+            editBillReceiver.setEnabled(false);
+            editBillReceiverTel.setEnabled(false);
         }
 
         initData();
@@ -71,6 +79,8 @@ public class BillDetailActivity extends Activity{
                 editBillHeader.setText(data.invoice_buyer);
                 editBillAddress.setText(data.invoice_address);
                 editBillReceiver.setText(data.invoice_taker);
+                editBillReceiverTel.setText(data.invoice_taker);
+                editBillReceiverTel.setText(data.invoice_phone);
             }
 
             @Override
@@ -84,8 +94,9 @@ public class BillDetailActivity extends Activity{
         String billHeader = editBillHeader.getText().toString().trim();
         String address = editBillAddress.getText().toString().trim();
         String billReceiver = editBillReceiver.getText().toString().trim();
+        String phone = editBillReceiverTel.getText().toString().trim();
 
-        App.appAction.billOrderModify(billId,billHeader,address,billReceiver, new ActionCallbackListener<Void>() {
+        App.appAction.billOrderModify(billId,billHeader,address,billReceiver, phone, new ActionCallbackListener<Void>() {
             @Override
             public void onSuccess(Void data) {
                 ToastUtil.showToast(App.app,"申请发票成功！");

@@ -63,13 +63,13 @@ public class BillListAdapter extends BaseAdapter{
         }
         BillDetailBean bean = ordersList.get(position);
         holder.textHeader.setText("发票抬头: "+bean.invoice_buyer);
-        holder.textType.setText("发票类型: "+bean.invoice_type);
+        holder.textType.setText("发票项目: "+bean.invoice_type);
         holder.textPrice.setText("价格: "+bean.invoice_price);
         ////1申请中，2已打印
         if("1".equals(bean.invoice_flag)){
             holder.textState.setText("申请中");
         }else {
-            holder.textState.setText("已打印");
+            holder.textState.setText("已邮寄");
         }
         String comment = String.format(html, bean.invoice_date);
         holder.textTime.setText(Html.fromHtml(comment));

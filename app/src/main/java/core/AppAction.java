@@ -71,9 +71,9 @@ public interface AppAction {
 
     void billOrderListHistory(int page, ActionCallbackListener<ArrayList<BillDetailBean>> listener);
 
-    void submitBillOrder(String billHeader, String price, String billType, String address, String receiverName, String orderIdStr, ActionCallbackListener<Void> listener);
+    void submitBillOrder(String billHeader, String price, String billType, String address, String receiverName, String orderIdStr, String phone, ActionCallbackListener<Void> listener);
     void billOrderDetail(String billId,ActionCallbackListener<BillDetailBean> listener);
-    void billOrderModify(String billId, String header, String address, String receiver, ActionCallbackListener<Void> listener);
+    void billOrderModify(String billId, String header, String address, String receiver,String phone, ActionCallbackListener<Void> listener);
     void evaluationOrder(String orderId, String comment, String grade,ActionCallbackListener<Void> listener);
     void traceOrder(String orderId, ActionCallbackListener<ArrayList<TraceBean>> listener);
     void payOrderDetail(String orderId, ActionCallbackListener<PayOrderBean> listener);

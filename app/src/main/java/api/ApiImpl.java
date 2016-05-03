@@ -228,7 +228,7 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public void submitBillOrder(String billHeader, String price,String billType, String address, String receiverName, String orderIdStr, ResultCallback<String> callback) {
+    public void submitBillOrder(String billHeader, String price,String billType, String address, String receiverName, String orderIdStr,String phone, ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
         String userId = App.app.getUser().node;
         params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
@@ -238,6 +238,7 @@ public class ApiImpl implements Api {
         params.put("address", address);
         params.put("taker", receiverName);
         params.put("ordernostr", orderIdStr);
+        params.put("invoice_phone", phone);
         String url = Api.SubmitBillOrder;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
     }
@@ -251,7 +252,7 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public void billOrderModify(String billId, String header, String address, String receiver, ResultCallback<String> callback) {
+    public void billOrderModify(String billId, String header, String address, String receiver, String phone, ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
         String userId = App.app.getUser().node;
         params.put("user_loginID", TextUtils.isEmpty(userId) ? "" : userId);
@@ -259,6 +260,7 @@ public class ApiImpl implements Api {
         params.put("buyer", header);
         params.put("address", address);
         params.put("taker", receiver);
+        params.put("invoice_phone", phone);
         String url = Api.BillOrderModify;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
     }

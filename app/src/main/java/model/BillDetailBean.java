@@ -11,4 +11,5 @@ public String invoice_orderno  ;
 public String invoice_price  ;
 public String invoice_flag  ;
 public String invoice_date  ;
+public String invoice_phone  ;
 }

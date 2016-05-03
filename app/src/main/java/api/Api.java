@@ -176,9 +176,9 @@ public interface Api {
 
     void billOrderListHistory(String page, ResultCallback<String> callback);
 
-    void submitBillOrder(String billHeader, String price,String billType, String address, String receiverName, String orderIdStr, ResultCallback<String> callback);
+    void submitBillOrder(String billHeader, String price,String billType, String address, String receiverName, String orderIdStr, String phone, ResultCallback<String> callback);
     void billOrderDetail(String billId, ResultCallback<String> callback);
-    void billOrderModify(String billId, String header, String address, String receiver, ResultCallback<String> callback);
+    void billOrderModify(String billId, String header, String address, String receiver, String phone, ResultCallback<String> callback);
     void evaluationOrder(String orderId, String comment, String grade, ResultCallback<String> callback);
     void traceOrder(String orderId, ResultCallback<String> callback);
     void payOrderDetail(String orderId, ResultCallback<String> callback);

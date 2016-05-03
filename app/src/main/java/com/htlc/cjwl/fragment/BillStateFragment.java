@@ -135,6 +135,7 @@ public class BillStateFragment extends Fragment {
                 flag = true;
             }
         }
+        ordersArray.deleteCharAt(ordersArray.lastIndexOf(","));
         String ordersArrayStr = ordersArray.toString();
         for (int i = 0; i < listView.getRefreshableView().getCount(); i++) {
             listView.getRefreshableView().setItemChecked(i, false);
