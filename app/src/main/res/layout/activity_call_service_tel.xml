@@ -20,7 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="14sp"
+        android:visibility="invisible"
         android:gravity="center_horizontal"
         android:text="客服邮件：service@长久运车.com"/>
     <TextView
@@ -28,20 +29,23 @@
         android:padding="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textColor="@color/gray"
+        android:textSize="14sp"
         android:gravity="center_horizontal"
-        android:text="如果在使用本软件时遇到问题，请联系客服人员"/>
+        android:text="如果在使用本软件时遇到问题，请联系\n客服人员"/>
     <TextView
         android:layout_gravity="center_horizontal"
         android:id="@+id/tv_call_tel"
         android:layout_marginTop="50dp"
-        android:padding="10dp"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/blue"
-        android:textSize="20sp"
-        android:text="客服电话：400-606060"
+        android:textSize="16sp"
+        android:text="客服电话：400-8185959"
         android:background="@drawable/call_service_tel_shape"/>
         </LinearLayout>
     </ScrollView>

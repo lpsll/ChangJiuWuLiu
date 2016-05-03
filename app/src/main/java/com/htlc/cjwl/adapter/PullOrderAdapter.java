@@ -165,7 +165,7 @@ public class PullOrderAdapter extends BaseAdapter{
                 holder.tvOrderCancel_2.setVisibility(View.INVISIBLE);
                 break;
             case "5":
-                holder.tvOrderState.setText("已支付");
+                holder.tvOrderState.setText("已收车");
                 holder.tvOrderCancel.setText("    评价    ");
                 holder.tvOrderCancel.setTextColor(CommonUtil.getResourceColor(android.R.color.holo_green_light));
                 holder.tvOrderCancel.setVisibility(View.VISIBLE);
@@ -179,7 +179,7 @@ public class PullOrderAdapter extends BaseAdapter{
                 holder.tvOrderCancel_2.setVisibility(View.INVISIBLE);
                 break;
             case "6":
-                holder.tvOrderState.setText("已评价");
+                holder.tvOrderState.setText("已完成");
                 holder.tvOrderCancel.setVisibility(View.INVISIBLE);
                 holder.tvOrderCancel_2.setVisibility(View.INVISIBLE);
                 break;
