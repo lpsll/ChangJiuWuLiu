@@ -154,7 +154,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
         findViewById(R.id.textTransport).setOnClickListener(this);
         findViewById(R.id.textRefund).setOnClickListener(this);
-        findViewById(R.id.textService).setOnClickListener(this);
+//        findViewById(R.id.textService).setOnClickListener(this);
         findViewById(R.id.textInsuranceHtml).setOnClickListener(this);
 
         checkBox = (CheckBox) findViewById(R.id.cb_checkbox);
@@ -218,9 +218,9 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
             case R.id.textRefund:
                 showProtocol("退款规则", Api.ProtocolRefund);
                 break;
-            case R.id.textService:
-                showProtocol("服务协议", Api.ProtocolService);
-                break;
+//            case R.id.textService:
+//                showProtocol("服务协议", Api.ProtocolService);
+//                break;
             case R.id.textInsuranceHtml:
                 showProtocol("投保说明", Api.ProtocolInsurance);
                 break;
