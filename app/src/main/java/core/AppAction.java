@@ -106,4 +106,6 @@ public interface AppAction {
     void hotCity(ActionCallbackListener<ArrayList<CityInfoBean>> listener);
 
     void cityList(ActionCallbackListener<String> listener);
+
+    void cityListForAddress( boolean isFrom, ActionCallbackListener<String> listener);
 }

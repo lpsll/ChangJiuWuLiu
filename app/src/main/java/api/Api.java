@@ -63,6 +63,7 @@ public interface Api {
     String HotCity = Host + "Home/CYCitys/hotCitysList";
     String CityList = Host + "Home/CYCitys/moreHotCitysList";
     String CityHtmlDetail = Host + "Home/CYCitys/cityInfo?id=%1$s";
+    String CityListForAddress = Host + "Home/CYCitys/getStartCitys";
 
 
 
@@ -261,4 +262,6 @@ public interface Api {
     void hotCity(ResultCallback<String> callback);
 
     void cityList(ResultCallback<String> callback);
+
+    void cityListForAddress(String flag, ResultCallback<String> callback);
 }

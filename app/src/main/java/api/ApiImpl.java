@@ -422,4 +422,12 @@ public class ApiImpl implements Api {
         String url = Api.CityList;
         new OkHttpRequest.Builder().url(url).get(callback);
     }
+
+    @Override
+    public void cityListForAddress(String flag, ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("flag", flag);
+        String url = Api.CityListForAddress;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
 }

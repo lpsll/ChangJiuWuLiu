@@ -6,7 +6,7 @@
 
     <ListView
         android:listSelector="@android:color/transparent"
-        android:paddingTop="15dp"
+        android:paddingTop="0dp"
         android:paddingBottom="15dp"
         android:paddingLeft="15dp"
         android:id="@+id/lv_city_list"

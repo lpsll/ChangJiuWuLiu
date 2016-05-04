@@ -66,6 +66,7 @@ public class CitysListAdapter extends BaseAdapter{
             }
         }else{
             holder.tv_group_title.setText(cityInfoBean.group);
+            holder.ll_group_title.setVisibility(View.VISIBLE);
         }
         holder.tv_city_name.setText(cityInfoBean.name);
 

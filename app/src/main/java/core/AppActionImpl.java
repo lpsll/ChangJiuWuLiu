@@ -1474,4 +1474,37 @@ public class AppActionImpl implements AppAction {
             }
         });
     }
+
+    @Override
+    public void cityListForAddress(boolean isFrom, final ActionCallbackListener<String> listener) {
+        String flag = "1";//出发城市
+        if(!isFrom){
+            flag = "2";//目的城市
+        }
+        api.cityListForAddress(flag, new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    String data = jsonObject.getString("data");
+                    if ("1".equals(code)) {
+                        listener.onSuccess(data);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+            }
+        });
+    }
 }
