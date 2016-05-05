@@ -1,15 +1,22 @@
 package com.htlc.cjwl.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -19,6 +26,7 @@ import android.widget.TextView;
 import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.SwipeCarAdapter;
+import com.htlc.cjwl.util.CommonUtil;
 import com.htlc.cjwl.util.Constant;
 import util.ToastUtil;
 
@@ -265,7 +273,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
     private void getPrice() {
         if(!checkBox.isChecked()){
-            ToastUtil.showToast(App.app,"请阅读并同意相关协议！");
+            ToastUtil.showToast(App.app, "请阅读并同意相关协议！");
             return;
         }
         String fromCity = textFromAddress.getText().toString();
@@ -296,10 +304,14 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
             @Override
             public void onFailure(String errorEvent, String message) {
-                ToastUtil.showToast(App.app, message);
                 if (progressDialog != null) {
                     progressDialog.dismiss();
                 }
+                if("当前路线未开通价格计算失败".equals(message)){
+                    showTipsDialog();
+                    return;
+                }
+                ToastUtil.showToast(App.app, message);
             }
         });
 
@@ -493,5 +505,46 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         }
         textCarNum.setText(totalNum + "");
         stateChange();
+    }
+
+    /**
+     *路线为开通，提示拨打电话
+     */
+    private void showTipsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setMessage("未开通路线，请联系客服！\n400-8185959");
+        builder.setInverseBackgroundForced(true);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:400-8185959"));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for Activity#requestPermissions for more details.
+                        return;
+                    }
+                }
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        negativeButton.setTextColor(CommonUtil.getResourceColor(R.color.blue));
+        Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setTextColor(CommonUtil.getResourceColor(R.color.blue));
     }
 }

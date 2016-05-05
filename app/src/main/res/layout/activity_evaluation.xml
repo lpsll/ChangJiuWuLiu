@@ -18,10 +18,18 @@
         android:gravity="start"
         android:textSize="@dimen/content_size"
         android:background="@color/white"/>
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="请选择评分"
+        android:textColor="@android:color/darker_gray"/>
     <RatingBar
-        android:layout_marginLeft="15dp"
+        android:layout_gravity="center_horizontal"
         style="@style/RatingBar"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:stepSize="1.0"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -34,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/no_order_btn"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"

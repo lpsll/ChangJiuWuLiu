@@ -1,15 +1,18 @@
 package com.htlc.cjwl;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +22,8 @@ import com.htlc.cjwl.fragment.HomeFragment;
 import com.htlc.cjwl.fragment.MyFragment;
 import com.htlc.cjwl.fragment.OrdersFragment;
 import com.htlc.cjwl.fragment.ServiceFragment;
+import com.htlc.cjwl.util.CommonUtil;
+
 import util.LogUtil;
 
 import java.util.ArrayList;

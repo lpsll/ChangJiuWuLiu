@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">长久物流</string>
     <string name="home_fragment_title">长久运车</string>
-    <string name="home_fragment_name">运车</string>
+    <string name="home_fragment_name">首页</string>
     <string name="orders_fragment_title">我的订单</string>
     <string name="orders_fragment_name">我的订单</string>
     <string name="service_fragment_title">产品推介</string>
@@ -48,7 +48,7 @@
     <string name="hot_city">热门城市</string>
     <string name="car_models">车型：</string>
     <string name="car_num">数量：</string>
-    <string name="car_price">价格：</string>
+    <string name="car_price">价格(含保险)：</string>
     <string name="insurance_amount">保险费用：</string>
     <string name="order_immediately">立即下单</string>
     <string name="ordinary_cars">普通轿车</string>
@@ -76,8 +76,8 @@
     <string name="detail">详情</string>
 
     <!--order-->
-    <string name="no_order_hint">您当前还没有货单，请先去发货吧！</string>
-    <string name="no_oder_send">现在去发货</string>
+    <string name="no_order_hint">您当前还没有订单</string>
+    <string name="no_oder_send">现在去发车</string>
     <string-array name="order_state_title">
         <item>全部订单</item>
         <item>待确认</item>
