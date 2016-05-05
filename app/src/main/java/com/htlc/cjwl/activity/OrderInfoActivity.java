@@ -12,7 +12,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.TextAppearanceSpan;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -480,8 +483,12 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
                 LinearLayout linearLayout = (LinearLayout) View.inflate(this,R.layout.layout_order_insure,null);
                 TextView textLabelInsurance = (TextView) linearLayout.findViewById(R.id.textLabelInsurance);
-//                textLabelInsurance.setText("第"+(j+1)+"辆"+bean.name+"的车辆价值");
-                textLabelInsurance.setText(bean.name+"的车辆价值");
+
+                SpannableString styledText = new SpannableString(bean.name+"的车辆价值(用于车辆运输保险)");
+                styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelInsurance), 0, styledText.length()-10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelInsuranceTips), styledText.length()-10, styledText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                textLabelInsurance.setText(styledText, TextView.BufferType.SPANNABLE);
+
                 final EditText editInsurancePrice = (EditText) linearLayout.findViewById(R.id.et_insurance_price);
                 editInsurancePrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
