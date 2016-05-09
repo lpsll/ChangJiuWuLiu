@@ -93,6 +93,7 @@ public class RefundStateFragment extends Fragment {
         SparseBooleanArray checkedItemPositions = listView.getRefreshableView().getCheckedItemPositions();
         StringBuilder ordersArray = new StringBuilder();
         if (checkedItemPositions.size() < 1) {
+            ToastUtil.showToast(App.app,"请选择要申请的订单！");
             return;
         }
         boolean flag = false;

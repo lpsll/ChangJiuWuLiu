@@ -581,8 +581,6 @@ public class AppActionImpl implements AppAction {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("orderList", "page:" + page + "------order_status:" + order_status);
-                    Log.e("orderList", response);
                     JSONObject jsonObject = new JSONObject(response);
                     String code = jsonObject.getString("code");
                     if ("1".equals(code)) {

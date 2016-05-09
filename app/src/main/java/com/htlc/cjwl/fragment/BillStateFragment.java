@@ -120,6 +120,7 @@ public class BillStateFragment extends Fragment {
         StringBuilder ordersArray = new StringBuilder();
         double priceTotal = 0;
         if (checkedItemPositions.size() < 1) {
+            ToastUtil.showToast(App.app,"请选择要申请的订单！");
             return;
         }
         boolean flag = false;
@@ -145,6 +146,8 @@ public class BillStateFragment extends Fragment {
             intent.putExtra(SubmitBillActivity.TotalPrice, priceTotal + "");
             intent.putExtra(SubmitBillActivity.OrderArrayStr, ordersArrayStr);
             startActivity(intent);
+        }else{
+
         }
     }
 
