@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:text="北京市昌平区北清路珠江摩尔"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="14sp"/>
             <LinearLayout
@@ -40,14 +40,14 @@
                     android:id="@+id/tv_from_tel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="18911069265"
+                    android:text=""
                     android:textSize="14sp"/>
                 <TextView
                     android:id="@+id/tv_from_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
-                    android:text="xxxx"
+                    android:text=""
                     android:textSize="12sp"/>
             </LinearLayout>
         </LinearLayout>
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:text="重庆市合川区狮滩镇"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="14sp"/>
             <LinearLayout
@@ -92,14 +92,14 @@
                     android:id="@+id/tv_to_tel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="18911069265"
+                    android:text=""
                     android:textSize="14sp"/>
                 <TextView
                     android:id="@+id/tv_to_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
-                    android:text="xxxx"
+                    android:text=""
                     android:textSize="12sp"/>
             </LinearLayout>
         </LinearLayout>

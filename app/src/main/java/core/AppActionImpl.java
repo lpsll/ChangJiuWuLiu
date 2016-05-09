@@ -570,7 +570,6 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void orderList(final String order_status, final int page, final ActionCallbackListener<ArrayList<OrderInfoBean>> listener) {
-        LogUtil.e(this, "page:" + page + "------order_status:" + order_status);
         api.orderList(order_status, page + "", new ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
@@ -580,6 +579,7 @@ public class AppActionImpl implements AppAction {
 
             @Override
             public void onResponse(String response) {
+                LogUtil.e(this, "page:" + page + "------order_status:" + order_status);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String code = jsonObject.getString("code");

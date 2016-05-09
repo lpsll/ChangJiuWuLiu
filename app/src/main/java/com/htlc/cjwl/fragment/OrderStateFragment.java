@@ -130,7 +130,9 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
 
             @Override
             public void onFailure(String errorEvent, String message) {
-                ToastUtil.showToast(App.app, message);
+//                ToastUtil.showToast(App.app, message);
+                ordersList.clear();
+                adapter.notifyDataSetChanged();
                 refreshView();
                 listView.onRefreshComplete();
             }
