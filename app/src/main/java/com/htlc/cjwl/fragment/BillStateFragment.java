@@ -186,6 +186,8 @@ public class BillStateFragment extends Fragment {
 
             @Override
             public void onFailure(String errorEvent, String message) {
+                billList.clear();
+                adapter.notifyDataSetChanged();
                 ToastUtil.showToast(App.app, message);
                 listView.onRefreshComplete();
             }
@@ -206,6 +208,8 @@ public class BillStateFragment extends Fragment {
 
             @Override
             public void onFailure(String errorEvent, String message) {
+                billList.clear();
+                adapter.notifyDataSetChanged();
                 ToastUtil.showToast(App.app, message);
                 listView.onRefreshComplete();
             }

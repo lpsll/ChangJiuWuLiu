@@ -174,6 +174,7 @@ public class RefundStateFragment extends Fragment {
             public void onFailure(String errorEvent, String message) {
                 ToastUtil.showToast(App.app, message);
                 refundsList.clear();
+                adapter.notifyDataSetChanged();
                 refreshView();
                 listView.onRefreshComplete();
             }
