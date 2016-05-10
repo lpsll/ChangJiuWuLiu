@@ -17,7 +17,7 @@ public class BillPagerAdaptor extends FragmentStatePagerAdapter {
     private String[] titles;
     public BillPagerAdaptor(FragmentManager fm) {
         super(fm);
-        titles = CommonUtil.getStringArray(R.array.refund_state_title);
+        titles = CommonUtil.getStringArray(R.array.bill_state_title);
     }
     private Fragment[] fragments = new Fragment[2];
 

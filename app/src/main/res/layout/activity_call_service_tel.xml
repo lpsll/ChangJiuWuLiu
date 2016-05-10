@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/blue"
         android:textSize="16sp"
-        android:text="客服电话：400-8185959"
+        android:text="客服电话：400-818-5959"
         android:background="@drawable/call_service_tel_shape"/>
         </LinearLayout>
     </ScrollView>

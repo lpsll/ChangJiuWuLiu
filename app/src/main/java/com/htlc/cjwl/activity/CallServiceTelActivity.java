@@ -49,7 +49,7 @@ public class CallServiceTelActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.tv_call_tel:
                 LogUtil.i(this, "呼叫客服");
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:400-8185959"));
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:400-818-5959"));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
