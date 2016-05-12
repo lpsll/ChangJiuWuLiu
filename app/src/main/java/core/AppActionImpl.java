@@ -1245,7 +1245,7 @@ public class AppActionImpl implements AppAction {
     @Override
     public void orderCreate(String fromCity, String toCity, String fromCityDetail, String toCityDetail, String fromName, String toName,
                             String fromTel, String toTel, String fromIdCard, String toIdCard,
-                            ArrayList<VinInfoBean> vinnum, ArrayList<CarInfoBean> carsInfo, String price, ArrayList<InsuranceInfoBean> insure, final ActionCallbackListener<Void> listener) {
+                            ArrayList<VinInfoBean> vinnum, ArrayList<CarInfoBean> carsInfo, String price,ArrayList<InsuranceInfoBean> insure,String orderId,  final ActionCallbackListener<String> listener) {
         if (TextUtils.isEmpty(fromName)) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请填写发货人");
             return;
@@ -1292,7 +1292,7 @@ public class AppActionImpl implements AppAction {
         Log.e("AppAction", carsInfoStr + "\n" + vinnumStr + "\n" + insureStr);
         api.orderCreate(fromCity, toCity, fromCityDetail, toCityDetail, fromName, toName,
                 fromTel, toTel, fromIdCard, toIdCard,
-                vinnumStr, carsInfoStr, price, insureStr, new ResultCallback<String>() {
+                vinnumStr, carsInfoStr, price, insureStr,orderId, new ResultCallback<String>() {
                     @Override
                     public void onError(Request request, Exception e) {
                         e.printStackTrace();
@@ -1305,7 +1305,8 @@ public class AppActionImpl implements AppAction {
                             JSONObject jsonObject = new JSONObject(response);
                             String code = jsonObject.getString("code");
                             if ("1".equals(code)) {
-                                listener.onSuccess(null);
+                                String orderId = jsonObject.getJSONObject("data").getString("order_no");
+                                listener.onSuccess(orderId);
                             } else {
                                 String msg = jsonObject.getString("msg");
                                 listener.onFailure(ErrorEvent.RESULT_ILLEGAL, msg);

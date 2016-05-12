@@ -68,6 +68,8 @@ public class OrderConfirmActivity extends Activity {
     public  String orderInsurePrice = "";
     public  ArrayList<InsuranceInfoBean> orderInsure;
     public  ArrayList<VinInfoBean> vinnumArray;
+    private String orderId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -199,12 +201,13 @@ public class OrderConfirmActivity extends Activity {
         }
         final ProgressDialog progressDialog = ProgressDialog.show(this, "", "请稍等...", true);
         App.appAction.orderCreate(fromCity,toCity, fromCityDetail, toCityDetail, fromName, toName, fromTel, toTel, fromIdCard, toIdCard,
-                vinnumArray, carArray, orderPrice, orderInsure, new ActionCallbackListener<Void>() {
+                vinnumArray, carArray, orderPrice, orderInsure, orderId, new ActionCallbackListener<String>() {
             @Override
-            public void onSuccess(Void data) {
+            public void onSuccess(String data) {
                 if(progressDialog!=null){
                     progressDialog.dismiss();
                 }
+                orderId = data;
                 showSuccessDialog();
             }
 
@@ -221,8 +224,8 @@ public class OrderConfirmActivity extends Activity {
 
     private void showSuccessDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("订单已生成");//设置对话框标题
-        builder.setMessage("请等待客服联系！");//设置显示的内容
+        builder.setTitle("温馨提示");//设置对话框标题
+        builder.setMessage("您的订单已生成，请确认相关信息");//设置显示的内容
 
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加确定按钮
             @Override
@@ -232,10 +235,18 @@ public class OrderConfirmActivity extends Activity {
                 startActivity(intent);
             }
         });
+        builder.setNegativeButton("返回", new DialogInterface.OnClickListener() {//添加确定按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+
+            }
+        });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
         positiveButton.setTextColor(CommonUtil.getResourceColor(R.color.blue));
+        Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        negativeButton.setTextColor(CommonUtil.getResourceColor(R.color.blue));
     }
 
     private void resetVinnumArray() {

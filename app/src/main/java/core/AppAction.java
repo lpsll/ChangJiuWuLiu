@@ -95,7 +95,7 @@ public interface AppAction {
 
     void orderCreate(String fromCity, String toCity, String fromCityDetail, String toCityDetail,
                      String fromName, String toName, String fromTel, String toTel, String fromIdCard, String toIdCard,
-                     ArrayList<VinInfoBean> vinnum, ArrayList<CarInfoBean> carsInfo, String price, ArrayList<InsuranceInfoBean> insure, ActionCallbackListener<Void> listener);
+                     ArrayList<VinInfoBean> vinnum, ArrayList<CarInfoBean> carsInfo, String price, ArrayList<InsuranceInfoBean> insure,String orderId, ActionCallbackListener<String> listener);
 
     void homeBanner(ActionCallbackListener<ArrayList<HomeBannerInfo>> listener);
 

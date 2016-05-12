@@ -17,62 +17,96 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <!--地址选择-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="90dp"
                 android:layout_marginTop="12dp"
-                android:background="@color/white"
                 android:orientation="vertical">
-                <!--发货地址-->
+                <!--出发城市-->
                 <LinearLayout
+                    android:id="@+id/ll_from_address"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="45dp"
+                    android:background="@drawable/my_item_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <ImageView
+                        android:visibility="gone"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginLeft="17dp"
                         android:src="@drawable/location"/>
+                    <TextView
+                        android:layout_marginLeft="17dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="始发地:"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/textFromAddress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="18dp"
+                        android:layout_weight="1"
+                        android:hint="请选择出发城市"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="12dp"
-                        android:text=""
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"/>
+                        android:layout_marginRight="17dp"
+                        android:src="@drawable/right_arrow"/>
                 </LinearLayout>
-                <!--收货地址-->
+                <!--目的城市-->
                 <LinearLayout
+                    android:id="@+id/ll_to_address"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="45dp"
+                    android:background="@drawable/my_item_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <ImageView
+                        android:visibility="gone"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginLeft="17dp"
                         android:src="@drawable/adress2"/>
-
+                    <TextView
+                        android:layout_marginLeft="17dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="目的地:"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"/>
                     <TextView
                         android:id="@+id/textToAddress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="18dp"
+                        android:layout_weight="1"
+                        android:hint="请选择目的城市"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="12dp"
-                        android:text=""
-                        android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"/>
+                        android:layout_marginRight="17dp"
+                        android:src="@drawable/right_arrow"/>
                 </LinearLayout>
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

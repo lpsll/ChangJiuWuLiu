@@ -365,7 +365,7 @@ public class ApiImpl implements Api {
     @Override
     public void orderCreate(String fromCity, String toCity, String fromCityDetail, String toCityDetail,
                             String fromName, String toName, String fromTel, String toTel, String fromIdCard, String toIdCard,
-                            String vinnum, String carsInfo, String price, String insure, ResultCallback<String> callback) {
+                            String vinnum, String carsInfo, String price, String insure,String orderId, ResultCallback<String> callback) {
         Map<String, String> params = new HashMap<String, String>();
         String userId = App.app.getUser().node;
         params.put("user_ID", TextUtils.isEmpty(userId) ? "" : userId);
@@ -385,6 +385,9 @@ public class ApiImpl implements Api {
         params.put("carsinfo", carsInfo);
         params.put("price", price);
         params.put("insure", insure);
+        if(!TextUtils.isEmpty(orderId)){
+            params.put("order_no",orderId);
+        }
         Log.e("OrderDetail", params.toString());
         String url = Api.OrderCreate;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
