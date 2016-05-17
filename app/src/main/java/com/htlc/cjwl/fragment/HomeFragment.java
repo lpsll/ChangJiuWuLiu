@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.htlc.cjwl.App;
+import com.htlc.cjwl.MainActivity;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.activity.CallServiceTelActivity;
 import com.htlc.cjwl.activity.NetworkQueryActivity;
@@ -109,8 +110,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 if (!LoginUtil.isOnline()) {
                     LoginUtil.goLogin(getActivity());
                 } else {
-                    Intent intent = new Intent(getActivity(), OrderInfoActivity.class);
-                    startActivity(intent);
+                    ((MainActivity)getActivity()).goOrderInfo();
                 }
                 break;
             case R.id.ib_home_network_query:

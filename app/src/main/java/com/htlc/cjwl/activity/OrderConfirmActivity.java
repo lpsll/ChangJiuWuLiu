@@ -18,6 +18,7 @@ import com.htlc.cjwl.MainActivity;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.fragment.OrdersFragment;
 import com.htlc.cjwl.util.CommonUtil;
+
 import util.ToastUtil;
 
 import java.util.ArrayList;
@@ -46,28 +47,28 @@ public class OrderConfirmActivity extends Activity {
     public static final String OrderInsure = "OrderInsure";
     public static final String OrderInsurePrice = "OrderInsurePrice";
 
-    private TextView textTitle,textFromAddress,textToAddress,
-            textCarTypeNameArray,textCarNumArray,textPrice,
+    private TextView textTitle, textFromAddress, textToAddress,
+            textCarTypeNameArray, textCarNumArray, textPrice,
             textInsurancePrice;
-    private EditText editFromUsername,editFromTel,editFromUserCard,
-            editToUsername,editToTel,editToUserCard;
+    private EditText editFromUsername, editFromTel, editFromUserCard,
+            editToUsername, editToTel, editToUserCard;
     private LinearLayout linearCarCardContainer;
 
 
     private ArrayList<CarInfoBean> carArray;
-    public  String fromCity = "";
-    public  String toCity = "";
-    public  String fromCityDetail = "";
-    public  String toCityDetail = "";
-    public  String fromTel = "";
-    public  String toTel = "";
-    public  String fromName = "";
-    public  String toName = "";
+    public String fromCity = "";
+    public String toCity = "";
+    public String fromCityDetail = "";
+    public String toCityDetail = "";
+    public String fromTel = "";
+    public String toTel = "";
+    public String fromName = "";
+    public String toName = "";
 
-    public  String orderPrice = "";
-    public  String orderInsurePrice = "";
-    public  ArrayList<InsuranceInfoBean> orderInsure;
-    public  ArrayList<VinInfoBean> vinnumArray;
+    public String orderPrice = "";
+    public String orderInsurePrice = "";
+    public ArrayList<InsuranceInfoBean> orderInsure;
+    public ArrayList<VinInfoBean> vinnumArray;
     private String orderId;
 
     @Override
@@ -102,37 +103,37 @@ public class OrderConfirmActivity extends Activity {
         textTitle.setText("订单确认");
 
         textFromAddress = (TextView) findViewById(R.id.textFromAddress);
-        if(TextUtils.isEmpty(fromCityDetail)){
+        if (TextUtils.isEmpty(fromCityDetail)) {
             textFromAddress.setText(fromCity);
-        }else {
+        } else {
             textFromAddress.setText(fromCityDetail);
         }
         textToAddress = (TextView) findViewById(R.id.textToAddress);
-        if(TextUtils.isEmpty(toCityDetail)){
+        if (TextUtils.isEmpty(toCityDetail)) {
             textToAddress.setText(toCity);
-        }else {
+        } else {
             textToAddress.setText(toCityDetail);
         }
         textCarTypeNameArray = (TextView) findViewById(R.id.textCarTypeNameArray);
         textCarNumArray = (TextView) findViewById(R.id.textCarNumArray);
         StringBuilder carName = new StringBuilder();
         StringBuilder carNum = new StringBuilder();
-        for(int i=0; i<carArray.size(); i++){
+        for (int i = 0; i < carArray.size(); i++) {
             CarInfoBean bean = carArray.get(i);
-            carName.append(bean.name+"  ");
-            carNum.append(bean.num+"辆  ");
+            carName.append(bean.name + "  ");
+            carNum.append(bean.num + "辆  ");
         }
         textCarTypeNameArray.setText(carName.toString());
         textCarNumArray.setText(carNum.toString());
 
         textPrice = (TextView) findViewById(R.id.textPrice);
         textInsurancePrice = (TextView) findViewById(R.id.textInsurancePrice);
-        textPrice.setText("￥"+orderPrice);
+        textPrice.setText("￥" + orderPrice);
 //        double totalInsure = 0;
 //        for(InsuranceInfoBean bean : orderInsure){
 //            totalInsure += Float.parseFloat(bean.insurePrice);
 //        }
-        textInsurancePrice.setText("￥"+orderInsurePrice);
+        textInsurancePrice.setText("￥" + orderInsurePrice);
 
         editFromUsername = (EditText) findViewById(R.id.editFromUsername);
         editFromTel = (EditText) findViewById(R.id.editFromTel);
@@ -161,10 +162,10 @@ public class OrderConfirmActivity extends Activity {
         for (int i = 0; i < carArray.size(); i++) {
             CarInfoBean bean = carArray.get(i);
             String num = bean.num;
-            for(int j=0; j<Integer.parseInt(num); j++){
-                LinearLayout linearLayout = (LinearLayout) View.inflate(this,R.layout.layout_car_card,null);
+            for (int j = 0; j < Integer.parseInt(num); j++) {
+                LinearLayout linearLayout = (LinearLayout) View.inflate(this, R.layout.layout_car_card, null);
                 EditText editCarCard = (EditText) linearLayout.findViewById(R.id.editCarCard);
-                editCarCard.setHint("请输入第"+(j+1)+"辆"+bean.name+"车架号");
+                editCarCard.setHint("请输入第" + (j + 1) + "辆" + bean.name + "车架号");
                 linearCarCardContainer.addView(linearLayout);
 
                 VinInfoBean vinInfoBean = new VinInfoBean();
@@ -184,43 +185,43 @@ public class OrderConfirmActivity extends Activity {
         toName = editToUsername.getText().toString().trim();
         fromTel = editFromTel.getText().toString().trim();
         toTel = editToTel.getText().toString().trim();
-        for(int i=0; i<linearCarCardContainer.getChildCount(); i++){
+        for (int i = 0; i < linearCarCardContainer.getChildCount(); i++) {
             EditText editCarCard = (EditText) linearCarCardContainer.getChildAt(i).findViewById(R.id.editCarCard);
             String vinnum = editCarCard.getText().toString().trim();
-            if(TextUtils.isEmpty(vinnum)){
-                ToastUtil.showToast(App.app,"请输入车架号");
+            if (TextUtils.isEmpty(vinnum)) {
+                ToastUtil.showToast(App.app, "请输入车架号");
                 resetVinnumArray();
                 return;
             }
-            if(vinnumArray.contains(new VinInfoBean(vinnum))){
-                ToastUtil.showToast(App.app,"车架号不能重复");
+            if (vinnumArray.contains(new VinInfoBean(vinnum))) {
+                ToastUtil.showToast(App.app, "车架号不能重复");
                 resetVinnumArray();
                 return;
             }
             vinnumArray.get(i).vinnumId = vinnum;
         }
         final ProgressDialog progressDialog = ProgressDialog.show(this, "", "请稍等...", true);
-        App.appAction.orderCreate(fromCity,toCity, fromCityDetail, toCityDetail, fromName, toName, fromTel, toTel, fromIdCard, toIdCard,
+        App.appAction.orderCreate(fromCity, toCity, fromCityDetail, toCityDetail, fromName, toName, fromTel, toTel, fromIdCard, toIdCard,
                 vinnumArray, carArray, orderPrice, orderInsure, orderId, new ActionCallbackListener<String>() {
-            @Override
-            public void onSuccess(String data) {
-                if(progressDialog!=null){
-                    progressDialog.dismiss();
-                }
-                orderId = data;
-                resetVinnumArray();
-                showSuccessDialog();
-            }
+                    @Override
+                    public void onSuccess(String data) {
+                        if (progressDialog != null) {
+                            progressDialog.dismiss();
+                        }
+                        orderId = data;
+                        resetVinnumArray();
+                        showSuccessDialog();
+                    }
 
-            @Override
-            public void onFailure(String errorEvent, String message) {
-                if(progressDialog!=null){
-                    progressDialog.dismiss();
-                }
-                resetVinnumArray();
-                ToastUtil.showToast(App.app,message);
-            }
-        });
+                    @Override
+                    public void onFailure(String errorEvent, String message) {
+                        if (progressDialog != null) {
+                            progressDialog.dismiss();
+                        }
+                        resetVinnumArray();
+                        ToastUtil.showToast(App.app, message);
+                    }
+                });
     }
 
     private void showSuccessDialog() {
@@ -231,9 +232,12 @@ public class OrderConfirmActivity extends Activity {
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加确定按钮
             @Override
             public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
-                Intent intent = new Intent(OrderConfirmActivity.this, MainActivity.class);
+                Intent intent = new Intent();
+//              Intent intent = new Intent(OrderConfirmActivity.this, MainActivity.class);
+//              startActivity(intent);
                 intent.putExtra(MainActivity.SelectPosition, OrdersFragment.class.getSimpleName());
-                startActivity(intent);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
         });
         builder.setNegativeButton("返回", new DialogInterface.OnClickListener() {//添加确定按钮
@@ -251,7 +255,7 @@ public class OrderConfirmActivity extends Activity {
     }
 
     private void resetVinnumArray() {
-        for(int i=0; i<vinnumArray.size(); i++){
+        for (int i = 0; i < vinnumArray.size(); i++) {
             vinnumArray.get(i).vinnumId = null;
         }
     }

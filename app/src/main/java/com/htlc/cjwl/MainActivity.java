@@ -1,35 +1,33 @@
 package com.htlc.cjwl;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.htlc.cjwl.activity.OrderInfoActivity;
 import com.htlc.cjwl.adapter.MainPagerAdapter;
 import com.htlc.cjwl.fragment.HomeFragment;
 import com.htlc.cjwl.fragment.MyFragment;
 import com.htlc.cjwl.fragment.OrdersFragment;
 import com.htlc.cjwl.fragment.ServiceFragment;
-import com.htlc.cjwl.util.CommonUtil;
-
-import util.LogUtil;
 
 import java.util.ArrayList;
 
+import util.LogUtil;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String SelectPosition = "SelectPosition";
+    public static final int RequestCode = 1000;
     private ImageView iv_tab1;
     private TextView tv_tab1;
     private ImageView iv_tab2;
@@ -47,15 +45,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager viewPager;
     private ArrayList<Fragment> list;
 
-
+    public void goOrderInfo(){
+        Intent intent = new Intent(this, OrderInfoActivity.class);
+        startActivityForResult(intent, MainActivity.RequestCode);
+    }
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        String selectPosition = intent.getStringExtra(SelectPosition);
-        if(!TextUtils.isEmpty(selectPosition) && selectPosition.equals(OrdersFragment.class.getSimpleName())){
-            if(viewPager!=null&&tv_tab2!=null&&iv_tab2!=null){
+//        String selectPosition = intent.getStringExtra(SelectPosition);
+//        if (!TextUtils.isEmpty(selectPosition) && selectPosition.equals(OrdersFragment.class.getSimpleName())) {
+//            if (viewPager != null && tv_tab2 != null && iv_tab2 != null) {
+//                resetPreTab();
+//                setTab(tv_tab2, iv_tab2);
+//            }
+//        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String selectPosition = data.getStringExtra(SelectPosition);
+        if (requestCode == RequestCode && !TextUtils.isEmpty(selectPosition) && selectPosition.equals(OrdersFragment.class.getSimpleName())) {
+            if (viewPager != null && tv_tab2 != null && iv_tab2 != null) {
                 resetPreTab();
                 setTab(tv_tab2, iv_tab2);
+
             }
         }
     }
@@ -170,26 +184,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (id) {
             case R.id.iv_tab1:
                 iv_tab1.setImageResource(R.drawable.home_fragment_tab_press);
-                viewPager.setCurrentItem(0,false);
+                viewPager.setCurrentItem(0, false);
 //                fragmentTransaction.replace(R.id.fl_container, new HomeFragment());
 //                fragmentTransaction.commit();
                 break;
             case R.id.iv_tab2:
                 iv_tab2.setImageResource(R.drawable.orders_fragment_tab_press);
-                viewPager.setCurrentItem(1,false);
+                viewPager.setCurrentItem(1, false);
 //                fragmentTransaction.replace(R.id.fl_container, new OrdersFragment());
 //                fragmentTransaction.commit();
                 break;
             case R.id.iv_tab3:
                 iv_tab3.setImageResource(R.drawable.service_fragment_tab_press);
-                viewPager.setCurrentItem(2,false);
+                viewPager.setCurrentItem(2, false);
 //                fragmentTransaction.replace(R.id.fl_container, new ServiceFragment());
 //                fragmentTransaction.commit();
                 break;
             case R.id.iv_tab4:
                 iv_tab4.setImageResource(R.drawable.my_fragment_tab_press);
-                viewPager.setCurrentItem(3,false);
-                ((MyFragment)list.get(3)).updateView();
+                viewPager.setCurrentItem(3, false);
+                ((MyFragment) list.get(3)).updateView();
 //                fragmentTransaction.replace(R.id.fl_container, new MyFragment());
 //                fragmentTransaction.commit();
                 break;

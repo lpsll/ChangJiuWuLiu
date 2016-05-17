@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.htlc.cjwl.App;
+import com.htlc.cjwl.MainActivity;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.SwipeCarAdapter;
 import com.htlc.cjwl.util.CommonUtil;
@@ -278,7 +279,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
             intent.putExtra(OrderConfirmActivity.OrderPrice, orderPrice);
             intent.putExtra(OrderConfirmActivity.OrderInsurePrice, orderInsurePrice);
             intent.putParcelableArrayListExtra(OrderConfirmActivity.OrderInsure, insuranceArray);
-            startActivity(intent);
+            startActivityForResult(intent, MainActivity.RequestCode);
         } else {
             getPrice();
         }
@@ -488,6 +489,12 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                     swipeCarAdapter.notifyDataSetChanged();
                     refreshInsuranceLinearLayout();
                     refreshTextCarNum();
+                }
+                break;
+            case MainActivity.RequestCode:
+                if (resultCode == Activity.RESULT_OK) {
+                    setResult(Activity.RESULT_OK,data);
+                    finish();
                 }
                 break;
         }
