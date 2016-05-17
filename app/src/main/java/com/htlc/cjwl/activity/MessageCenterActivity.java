@@ -109,7 +109,7 @@ public class MessageCenterActivity extends AppCompatActivity implements View.OnC
         String url = String.format(Api.MessageHtmlDetail,itemId);
         Intent intent = new Intent(this, WebActivity.class);
         intent.putExtra(Constant.SERVICE_DETAIL_ID, url);
-        intent.putExtra(Constant.SERVICE_DETAIL_TITLE, itemTitle);
+        intent.putExtra(Constant.SERVICE_DETAIL_TITLE, "消息详情");
         startActivity(intent);
     }
 

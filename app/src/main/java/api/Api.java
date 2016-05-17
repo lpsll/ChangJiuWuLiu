@@ -65,6 +65,9 @@ public interface Api {
     String CityHtmlDetail = Host + "Home/CYCitys/cityInfo?id=%1$s";
     String CityListForAddress = Host + "Home/CYCitys/getStartCitys";
 
+    String CheckUpdate = "http://www.pgyer.com/apiv1/app/getAppKeyByShortcut";
+    String DownloadApk = "http://www.pgyer.com/apiv1/app/install?aId=%1$s&_api_key=%2$s";
+
 
 
     /**
@@ -264,4 +267,7 @@ public interface Api {
     void cityList(ResultCallback<String> callback);
 
     void cityListForAddress(String flag, ResultCallback<String> callback);
+
+    void checkUpdate(ResultCallback<String> callback);
+    void downloadApk(String url, String dir, String fileName, ResultCallback<String> callback);
 }

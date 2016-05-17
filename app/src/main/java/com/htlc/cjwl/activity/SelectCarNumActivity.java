@@ -89,6 +89,7 @@ public class SelectCarNumActivity extends Activity implements View.OnClickListen
         popWindow();
     }
 
+
     private void popWindow() {
         View view = View.inflate(SelectCarNumActivity.this, R.layout.pop_number_selector, null);
         TextView ok = (TextView) view.findViewById(R.id.tv_ok);
@@ -113,7 +114,8 @@ public class SelectCarNumActivity extends Activity implements View.OnClickListen
         final PickerView pvNum = (PickerView) view.findViewById(R.id.pv_num);
         List<String> data = new ArrayList<String>();
 
-        for (int i = 1; i < 20; i++) {
+        data.add("99");
+        for (int i = 1; i < 99; i++) {
             data.add("" + i);
         }
         pvNum.setData(data);
@@ -124,7 +126,9 @@ public class SelectCarNumActivity extends Activity implements View.OnClickListen
             }
         });
         currentNum = carArray.get(currentPosition).num;
-        pvNum.setSelected(Integer.parseInt( carArray.get(currentPosition).num)-1);
+//        pvNum.setSelected(data.indexOf(currentNum));
+        pvNum.setSelected(1);
+        currentNum = "1";
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

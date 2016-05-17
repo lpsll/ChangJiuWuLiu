@@ -75,7 +75,7 @@ public class SettingPasswordActivity extends AppCompatActivity implements View.O
 
             @Override
             public void onFailure(String errorEvent, String message) {
-
+                ToastUtil.showToast(App.app,message);
             }
         });
     }

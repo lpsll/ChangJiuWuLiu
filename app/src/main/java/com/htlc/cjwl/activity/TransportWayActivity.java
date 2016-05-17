@@ -3,7 +3,10 @@ package com.htlc.cjwl.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,15 +49,30 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
         textCityName = (TextView) findViewById(R.id.textCityName);
         textSendToHall = (TextView) findViewById(R.id.textSendToHall);
         textChangJiuGet = (TextView) findViewById(R.id.textChangJiuGet);
+        String yes,no;
         if(isSendWay){
             textTitle.setText("发车方式");
+            yes = getString(R.string.send_way_name_yes);
+            no = getString(R.string.send_way_name_no);
             initData();
         }else {
             textCityName.setText(cityName);
             textTitle.setText("提车方式");
-            textSendToHall.setText("客户自提");
-            textChangJiuGet.setText("长久送车");
+            yes = getString(R.string.get_way_name_yes);
+            no = getString(R.string.get_way_name_no);
         }
+        SpannableString styledText = new SpannableString(no);
+        styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelWay), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelWayTips), 1, styledText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        textSendToHall.setText(styledText, TextView.BufferType.SPANNABLE);
+
+        SpannableString styledTextGet = new SpannableString(yes);
+        styledTextGet.setSpan(new TextAppearanceSpan(this, R.style.TextLabelWay), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        styledTextGet.setSpan(new TextAppearanceSpan(this, R.style.TextLabelWayTips), 1, styledTextGet.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        textChangJiuGet.setText(styledTextGet, TextView.BufferType.SPANNABLE);
+
+
+
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

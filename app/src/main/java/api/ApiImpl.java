@@ -433,4 +433,18 @@ public class ApiImpl implements Api {
         String url = Api.CityListForAddress;
         new OkHttpRequest.Builder().url(url).params(params).post(callback);
     }
+
+    @Override
+    public void checkUpdate(ResultCallback<String> callback) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("shortcut", Constant.PGY_SHORT_URL);
+        params.put("_api_key", Constant.PGY_API_KEY);
+        String url = Api.CheckUpdate;
+        new OkHttpRequest.Builder().url(url).params(params).post(callback);
+    }
+
+    @Override
+    public void downloadApk(String url, String dir, String fileName, ResultCallback<String> callback) {
+        new OkHttpRequest.Builder().url(url).destFileDir(dir).destFileName(fileName).download(callback);
+    }
 }

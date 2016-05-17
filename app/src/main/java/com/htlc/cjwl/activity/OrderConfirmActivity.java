@@ -208,6 +208,7 @@ public class OrderConfirmActivity extends Activity {
                     progressDialog.dismiss();
                 }
                 orderId = data;
+                resetVinnumArray();
                 showSuccessDialog();
             }
 

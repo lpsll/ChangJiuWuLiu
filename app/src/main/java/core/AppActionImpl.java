@@ -2,6 +2,7 @@
 package core;
 
 import android.content.Context;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -14,8 +15,10 @@ import com.htlc.cjwl.bean.MessageInfoBean;
 import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.bean.ServiceDetailInfoBean;
 import com.htlc.cjwl.bean.ServiceInfoBean;
+import com.htlc.cjwl.util.CommonUtil;
 import com.htlc.cjwl.util.JsonUtil;
 
+import model.AppVersionBean;
 import model.BillDetailBean;
 import util.DateFormatUtil;
 import util.LogUtil;
@@ -538,7 +541,7 @@ public class AppActionImpl implements AppAction {
 
     @Override
     public void scoreList(int page,final ActionCallbackListener<ArrayList<ScoreBean>> listener) {
-        api.scoreList(page+"",new ResultCallback<String>() {
+        api.scoreList(page + "", new ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
@@ -884,7 +887,7 @@ public class AppActionImpl implements AppAction {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请输入收票人联系电话");
             return;
         }
-        api.billOrderModify(billId, header, address, receiver,phone, new ResultCallback<String>() {
+        api.billOrderModify(billId, header, address, receiver, phone, new ResultCallback<String>() {
             @Override
             public void onError(Request request, Exception e) {
                 e.printStackTrace();
@@ -1505,5 +1508,38 @@ public class AppActionImpl implements AppAction {
                 }
             }
         });
+    }
+
+    @Override
+    public void checkUpdate(final ActionCallbackListener<AppVersionBean> listener) {
+        api.checkUpdate(new ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                e.printStackTrace();
+                listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if ("0".equals(code)) {
+                        String data = jsonObject.getString("data");
+                        AppVersionBean appVersionBean = JsonUtil.parseJsonToBean(data, AppVersionBean.class);
+                        listener.onSuccess(appVersionBean);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    listener.onFailure(ErrorEvent.NETWORK_ERROR, "网络出错！");
+                }
+
+            }
+        });
+    }
+
+    @Override
+    public void downloadApk(String url, String fileName, ResultCallback<String> callback) {
+        api.downloadApk(url, Environment.getExternalStorageDirectory().getAbsolutePath(), fileName, callback);
     }
 }

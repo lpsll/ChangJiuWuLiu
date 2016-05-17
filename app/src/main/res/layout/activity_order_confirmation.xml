@@ -134,7 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
-                        android:gravity="center"
+                        android:gravity="start"
                         android:text=""
                         android:textColor="@color/order"
                         android:textSize="14sp"/>
@@ -160,7 +160,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
-                        android:gravity="center"
+                        android:gravity="start"
                         android:text=""
                         android:textColor="@color/order"
                         android:textSize="14sp"/>
@@ -224,10 +224,10 @@
                 android:layout_marginBottom="12dp"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="12dp"
-                android:text="发货人信息"
+                android:text="发车人信息"
                 android:textColor="@color/black"
                 android:textSize="14sp"/>
-            <!--发货人-->
+            <!--发车人-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -249,10 +249,10 @@
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:background="@color/white"
-                    android:hint="请输入发货人姓名"
+                    android:hint="请输入发车人姓名"
                     android:textSize="14sp"/>
             </LinearLayout>
-            <!--发货人手机-->
+            <!--发车人手机-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -278,7 +278,7 @@
                     android:phoneNumber="true"
                     android:textSize="14sp"/>
             </LinearLayout>
-            <!--发货人身份证-->
+            <!--发车人身份证-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -318,10 +318,10 @@
                 android:layout_marginBottom="12dp"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="12dp"
-                android:text="收货人信息"
+                android:text="收车人信息"
                 android:textColor="@color/black"
                 android:textSize="14sp"/>
-            <!--收货人-->
+            <!--收车人-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -343,10 +343,10 @@
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
                     android:background="@color/white"
-                    android:hint="请输入收货人姓名"
+                    android:hint="请输入收车人姓名"
                     android:textSize="14sp"/>
             </LinearLayout>
-            <!--收货人手机-->
+            <!--收车人手机-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -372,7 +372,7 @@
                     android:phoneNumber="true"
                     android:textSize="14sp"/>
             </LinearLayout>
-            <!--收货人身份证-->
+            <!--收车人身份证-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"

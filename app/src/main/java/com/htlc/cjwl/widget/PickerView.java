@@ -1,5 +1,10 @@
 package com.htlc.cjwl.widget;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,11 +16,6 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by luochuan on 15/11/10.
@@ -140,7 +140,7 @@ public class PickerView extends View
         mViewHeight = getMeasuredHeight();
         mViewWidth = getMeasuredWidth();
         // 按照View的高度计算字体大小
-        mMaxTextSize = mViewHeight / 4.0f;
+        mMaxTextSize = mViewHeight / 5.0f;
         mMinTextSize = mMaxTextSize / 2f;
         isInit = true;
         invalidate();

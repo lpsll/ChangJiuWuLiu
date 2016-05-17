@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import api.net.okhttp.callback.ResultCallback;
 import model.AddressInfoBean;
+import model.AppVersionBean;
 import model.BillDetailBean;
 import model.BillOrderBean;
 import model.CalculatePriceInfoBean;
@@ -108,4 +110,8 @@ public interface AppAction {
     void cityList(ActionCallbackListener<String> listener);
 
     void cityListForAddress( boolean isFrom, ActionCallbackListener<String> listener);
+
+
+    void checkUpdate(ActionCallbackListener<AppVersionBean> listener);
+    void downloadApk(String url, String fileName, ResultCallback<String> callback);
 }

@@ -20,6 +20,7 @@ public class OrderDetailBean {
     public String from_address  ;
     public String from_cityname  ;
     public String evaluate  ;//评价
+    public String cityaddress;//发车网点地址
 
     public List<OrderCarfNum> order_carfnum;
     public class OrderCarfNum  {

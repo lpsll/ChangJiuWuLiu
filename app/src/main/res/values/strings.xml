@@ -61,8 +61,12 @@
     <string name="car_msg">品牌/车型</string>
     <string name="insurance">投保车辆价值</string>
     <string name="number">数量</string>
-    <string name="send_way">发车方式</string>
-    <string name="get_way">提车方式</string>
+    <string name="send_way">是否上门取车</string>
+    <string name="get_way">是否送车上门</string>
+    <string name="send_way_name_yes">是(长久上门取车)</string>
+    <string name="send_way_name_no">否(送车到网点)</string>
+    <string name="get_way_name_yes">是(长久送车上门)</string>
+    <string name="get_way_name_no">否(客户自提)</string>
     <string name="ok">确认</string>
     <string name="confirm">确定</string>
     <string name="pay">支付</string>

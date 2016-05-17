@@ -129,10 +129,10 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
         public void run() {
             if(time>0) {
                 time--;
-                tv_verification_code.setText("(" + time+"s)后重新获取");
+                tv_verification_code.setText("(" + time+"s)");
                 handler.postDelayed(this, 1000);
             }else{
-                tv_verification_code.setText("重新获取验证码");
+                tv_verification_code.setText("获取验证码");
                 tv_verification_code.setEnabled(true);
                 time = Constant.VERIFICATION_TIME;
             }

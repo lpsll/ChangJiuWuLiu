@@ -16,6 +16,8 @@ import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.util.CommonUtil;
 import com.htlc.cjwl.util.Constant;
+import com.htlc.cjwl.util.UpdateUtil;
+
 import util.LogUtil;
 import util.ToastUtil;
 
@@ -87,6 +89,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.ll_version_update:
                 LogUtil.i(this, "检测更新界面");
+                new UpdateUtil(this).canUpdate(true);
                 break;
             case R.id.ll_feedback:
                 LogUtil.i(this, "意见反馈界面");

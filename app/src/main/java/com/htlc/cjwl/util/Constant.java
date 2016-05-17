@@ -7,6 +7,12 @@ package com.htlc.cjwl.util;
 public class Constant {
     public static final String WX_APP_ID = "wxa84d5acd2505b506";
     public static final String WX_APP_KEY = "wxa84d5acd2505d506wxa84d5acd2505";
+    public static final String PGY_SHORT_URL = "lCIh";
+    public static final String PGY_API_KEY = "65307684b7ea4a80b21ac37bf218009d";
+    public static final String PGY_APP_ID= "bdf0d489a12196cbaf69b7154eef05ae";
+    /*Ignore version*/
+    public static final String IGNORE_VERSION_CODE = "IGNORE_VERSION_CODE";
+
     public static final int VERIFICATION_TIME = 60;//倒计时时间（获取验证码）
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";

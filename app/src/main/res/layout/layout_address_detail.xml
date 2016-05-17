@@ -12,10 +12,18 @@
         android:layout_marginBottom="5dp"
         android:gravity="center_vertical">
         <ImageView
+            android:visibility="gone"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginLeft="17dp"
             android:src="@drawable/location"/>
+        <TextView
+            android:layout_marginLeft="17dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="始发地:"
+            android:textColor="@color/black"
+            android:textSize="14sp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,10 +71,18 @@
         android:layout_marginTop="5dp"
         android:gravity="center_vertical">
         <ImageView
+            android:visibility="gone"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginLeft="17dp"
             android:src="@drawable/adress2"/>
+        <TextView
+            android:layout_marginLeft="17dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="目的地:"
+            android:textColor="@color/black"
+            android:textSize="14sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"

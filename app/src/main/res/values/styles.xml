@@ -20,13 +20,20 @@
     </style>
     <style name="TextLabelInsurance">
         <item name="android:textSize">14dip</item>
-        <item name="android:textColor">@color/black</item>
     </style>
-
     <style name="TextLabelInsuranceTips">
         <item name="android:textSize">11dip</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
     </style>
+
+    <style name="TextLabelWay">
+        <item name="android:textSize">14dip</item>
+    </style>
+    <style name="TextLabelWayTips">
+        <item name="android:textSize">11dip</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
     <style name="LinearLayoutItemStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>

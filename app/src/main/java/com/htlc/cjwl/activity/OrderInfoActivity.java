@@ -174,6 +174,16 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         textButton = (TextView) findViewById(R.id.next_step);
         textButton.setOnClickListener(this);
 
+        SpannableString styledText = new SpannableString(getString(R.string.send_way_name_no));
+        styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelWay), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelWayTips), 1, styledText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        textSendCarWay.setText(styledText, TextView.BufferType.SPANNABLE);
+
+        SpannableString styledTextGet = new SpannableString(getString(R.string.get_way_name_no));
+        styledTextGet.setSpan(new TextAppearanceSpan(this, R.style.TextLabelWay), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        styledTextGet.setSpan(new TextAppearanceSpan(this, R.style.TextLabelWayTips), 1, styledTextGet.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        textGetCarWay.setText(styledTextGet, TextView.BufferType.SPANNABLE);
+
         initData();
     }
 
@@ -438,14 +448,26 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
             case RequestCode_SendWay:
                 if (resultCode == Activity.RESULT_OK) {
                     sendWayID = data.getStringExtra(TransportWayActivity.WayID);
-                    textSendCarWay.setText(data.getStringExtra(TransportWayActivity.WayName));
+
+                    SpannableString styledText = new SpannableString(data.getStringExtra(TransportWayActivity.WayName));
+                    styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelWay), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelWayTips), 1, styledText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    textSendCarWay.setText(styledText, TextView.BufferType.SPANNABLE);
+
+//                    textSendCarWay.setText(data.getStringExtra(TransportWayActivity.WayName));
                     fromCityDetail = data.getStringExtra(TransportWayActivity.AddressDetail);
                 }
                 break;
             case RequestCode_GetWay:
                 if (resultCode == Activity.RESULT_OK) {
                     getWayID = data.getStringExtra(TransportWayActivity.WayID);
-                    textGetCarWay.setText(data.getStringExtra(TransportWayActivity.WayName));
+
+                    SpannableString styledText = new SpannableString(data.getStringExtra(TransportWayActivity.WayName));
+                    styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelWay), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelWayTips), 1, styledText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    textGetCarWay.setText(styledText, TextView.BufferType.SPANNABLE);
+
+//                    textGetCarWay.setText(data.getStringExtra(TransportWayActivity.WayName));
                     toCityDetail = data.getStringExtra(TransportWayActivity.AddressDetail);
                 }
                 break;
