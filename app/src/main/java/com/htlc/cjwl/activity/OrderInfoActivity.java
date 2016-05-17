@@ -32,6 +32,7 @@ import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.SwipeCarAdapter;
 import com.htlc.cjwl.util.CommonUtil;
 import com.htlc.cjwl.util.Constant;
+
 import util.ToastUtil;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     private TextView textTitle;
     private LinearLayout linearFromAddress, linearToAddress,
             linearSelectCarType, linearCarNum, linearSendCarWay,
-            linearGetCarWay,linearCarInsurance;
+            linearGetCarWay, linearCarInsurance;
     private ListView swipeListViewCarContainer;
     private SwipeCarAdapter swipeCarAdapter;
     private TextView textFromAddress, textToAddress, textCarNum,
@@ -83,6 +84,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         }
         return super.dispatchTouchEvent(ev);
     }
+
     /**
      * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
      *
@@ -113,6 +115,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
     /**
      * 获取InputMethodManager，隐藏软键盘
+     *
      * @param token
      */
     private void hideKeyboard(IBinder token) {
@@ -130,6 +133,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(Activity.RESULT_CANCELED, new Intent());
                 finish();
             }
         });
@@ -259,10 +263,10 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
      */
     private void nextStep() {
         if (state) {
-            if(sendWayID.equals(Api.TransportWayArray[1])){
+            if (sendWayID.equals(Api.TransportWayArray[1])) {
                 fromCityDetail = "";
             }
-            if(getWayID.equals(Api.TransportWayArray[1])){
+            if (getWayID.equals(Api.TransportWayArray[1])) {
                 toCityDetail = "";
             }
             Intent intent = new Intent(this, OrderConfirmActivity.class);
@@ -286,17 +290,17 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     }
 
     private void getPrice() {
-        if(!checkBox.isChecked()){
+        if (!checkBox.isChecked()) {
             ToastUtil.showToast(App.app, "请阅读并同意相关协议！");
             return;
         }
         String fromCity = textFromAddress.getText().toString();
         String toCity = textToAddress.getText().toString();
-        for(int i=0; i<linearCarInsurance.getChildCount(); i++){
+        for (int i = 0; i < linearCarInsurance.getChildCount(); i++) {
             EditText editInsurancePrice = (EditText) linearCarInsurance.getChildAt(i).findViewById(R.id.et_insurance_price);
             String insurancePrice = editInsurancePrice.getText().toString();
-            if(TextUtils.isEmpty(insurancePrice) || insurancePrice.equals("0")){
-                ToastUtil.showToast(App.app,"【请您阅读投保说明，填写相关车辆价值】");
+            if (TextUtils.isEmpty(insurancePrice) || insurancePrice.equals("0")) {
+                ToastUtil.showToast(App.app, "【请您阅读投保说明，填写相关车辆价值】");
                 return;
             }
             insuranceArray.get(i).insurePrice = insurancePrice;
@@ -321,7 +325,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                 if (progressDialog != null) {
                     progressDialog.dismiss();
                 }
-                if("当前路线未开通价格计算失败".equals(message)){
+                if ("当前路线未开通价格计算失败".equals(message)) {
                     showTipsDialog();
                     return;
                 }
@@ -492,8 +496,8 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                 }
                 break;
             case MainActivity.RequestCode:
-                if (resultCode == Activity.RESULT_OK) {
-                    setResult(Activity.RESULT_OK,data);
+                if(resultCode == Activity.RESULT_OK){
+                    setResult(resultCode, data);
                     finish();
                 }
                 break;
@@ -503,26 +507,26 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     public void refreshInsuranceLinearLayout() {
         linearCarInsurance.removeAllViews();
         insuranceArray.clear();
-        for(int i=0; i<carArray.size(); i++){
+        for (int i = 0; i < carArray.size(); i++) {
             CarInfoBean bean = carArray.get(i);
-            for(int j=0; j<Integer.parseInt(bean.num); j++){
+            for (int j = 0; j < Integer.parseInt(bean.num); j++) {
                 InsuranceInfoBean insuranceInfoBean = new InsuranceInfoBean();
                 insuranceInfoBean.id = bean.id;
                 insuranceArray.add(insuranceInfoBean);
 
-                LinearLayout linearLayout = (LinearLayout) View.inflate(this,R.layout.layout_order_insure,null);
+                LinearLayout linearLayout = (LinearLayout) View.inflate(this, R.layout.layout_order_insure, null);
                 TextView textLabelInsurance = (TextView) linearLayout.findViewById(R.id.textLabelInsurance);
 
-                SpannableString styledText = new SpannableString(bean.name+"的车辆价值(用于车辆运输保险)");
-                styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelInsurance), 0, styledText.length()-10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelInsuranceTips), styledText.length()-10, styledText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                SpannableString styledText = new SpannableString(bean.name + "的车辆价值(用于车辆运输保险)");
+                styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelInsurance), 0, styledText.length() - 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                styledText.setSpan(new TextAppearanceSpan(this, R.style.TextLabelInsuranceTips), styledText.length() - 10, styledText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 textLabelInsurance.setText(styledText, TextView.BufferType.SPANNABLE);
 
                 final EditText editInsurancePrice = (EditText) linearLayout.findViewById(R.id.et_insurance_price);
                 editInsurancePrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
-                        if(hasFocus){
+                        if (hasFocus) {
                             editInsurancePrice.setText("");
                             stateChange();
                         }
@@ -544,7 +548,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     }
 
     /**
-     *路线为开通，提示拨打电话
+     * 路线为开通，提示拨打电话
      */
     private void showTipsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -96,6 +96,7 @@ public class OrderConfirmActivity extends Activity {
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(Activity.RESULT_CANCELED,new Intent());
                 finish();
             }
         });

@@ -1,5 +1,6 @@
 package com.htlc.cjwl;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -64,14 +65,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String selectPosition = data.getStringExtra(SelectPosition);
-        if (requestCode == RequestCode && !TextUtils.isEmpty(selectPosition) && selectPosition.equals(OrdersFragment.class.getSimpleName())) {
-            if (viewPager != null && tv_tab2 != null && iv_tab2 != null) {
-                resetPreTab();
-                setTab(tv_tab2, iv_tab2);
+        if(resultCode == Activity.RESULT_OK){
+            String selectPosition = data.getStringExtra(SelectPosition);
+            if (requestCode == RequestCode && !TextUtils.isEmpty(selectPosition) && selectPosition.equals(OrdersFragment.class.getSimpleName())) {
+                if (viewPager != null && tv_tab2 != null && iv_tab2 != null) {
+                    resetPreTab();
+                    setTab(tv_tab2, iv_tab2);
 
+                }
             }
         }
+
     }
 
     public void onCreate(Bundle savedInstanceState) {
