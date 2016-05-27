@@ -442,12 +442,14 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                 if (resultCode == Activity.RESULT_OK) {
                     fromCityID = data.getStringExtra(SelectCityForAddressActivity.SelectCityID);
                     textFromAddress.setText(data.getStringExtra(SelectCityForAddressActivity.SelectCityName));
+                    fromCityDetail = "";
                 }
                 break;
             case RequestCode_SelectToAddress:
                 if (resultCode == Activity.RESULT_OK) {
                     toCityID = data.getStringExtra(SelectCityForAddressActivity.SelectCityID);
                     textToAddress.setText(data.getStringExtra(SelectCityForAddressActivity.SelectCityName));
+                    toCityDetail = "";
                 }
                 break;
             case RequestCode_SendWay:

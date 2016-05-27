@@ -144,9 +144,13 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
     private void setAddressDetail() {
         if(isSendWay){
             Intent intent = new Intent(this, SetDetailWithLocationActivity.class);
+            intent.putExtra(AddressDetail,addressDetail);
+            intent.putExtra(CityName,cityName);
             startActivityForResult(intent, RequestCode_LocationAddressDetail);
         }else {
             Intent intent = new Intent(this, SetDetailWithNoLocationActivity.class);
+            intent.putExtra(AddressDetail,addressDetail);
+            intent.putExtra(CityName,cityName);
             startActivityForResult(intent, RequestCode_LocationAddressDetail);
         }
     }

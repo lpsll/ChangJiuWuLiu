@@ -11,8 +11,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import util.LogUtil;
+import util.ToastUtil;
 
 /**
  * Created by sks on 2015/11/4.
@@ -59,6 +61,7 @@ public class CallServiceTelActivity extends AppCompatActivity implements View.On
                         //                                          int[] grantResults)
                         // to handle the case where the user grants the permission. See the documentation
                         // for Activity#requestPermissions for more details.
+                        ToastUtil.showToast(App.app, "请授权拨打电话权限");
                         return;
                     }
                 }

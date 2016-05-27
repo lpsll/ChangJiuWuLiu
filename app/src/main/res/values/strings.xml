@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">长久物流</string>
-    <string name="home_fragment_title">长久运车</string>
+    <string name="app_name">运汽车</string>
+    <string name="home_fragment_title">运汽车</string>
     <string name="home_fragment_name">首页</string>
     <string name="orders_fragment_title">我的订单</string>
     <string name="orders_fragment_name">我的订单</string>

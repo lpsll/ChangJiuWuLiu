@@ -19,6 +19,7 @@ import com.htlc.cjwl.R;
 public class SetDetailWithNoLocationActivity extends Activity implements View.OnClickListener {
     TextView textTitle;
     EditText editLocation;
+    private String cityName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,12 @@ public class SetDetailWithNoLocationActivity extends Activity implements View.On
         editLocation = (EditText) findViewById(R.id.edt_location);
         findViewById(R.id.tv_get_comfir).setOnClickListener(this);
         findViewById(R.id.iv_clean).setOnClickListener(this);
+
+        String addressDetail = getIntent().getStringExtra(TransportWayActivity.AddressDetail);
+        cityName = getIntent().getStringExtra(TransportWayActivity.CityName);
+        if(!TextUtils.isEmpty(addressDetail)){
+            editLocation.setText(addressDetail);
+        }
     }
 
 
@@ -49,6 +56,10 @@ public class SetDetailWithNoLocationActivity extends Activity implements View.On
                     Toast.makeText(this, "输入地址不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (!TextUtils.isEmpty(address)) {
+                    if(!address.contains(cityName+"市")){
+                        Toast.makeText(this, "地址必须包含"+cityName+"市", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Intent intent = new Intent();
                     intent.putExtra(SetDetailWithLocationActivity.LocationAddress, address);
                     setResult(RESULT_OK, intent);

@@ -33,6 +33,7 @@ public class SetDetailWithLocationActivity extends Activity implements AMapLocat
     private LocationManagerProxy mLocationManagerProxy;
     private String detail_address;// 详细地址信息
     private boolean isLoacOk = false;//是否定位成功
+    private String cityName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,12 @@ public class SetDetailWithLocationActivity extends Activity implements AMapLocat
         findViewById(R.id.tv_get_comfir).setOnClickListener(this);
         findViewById(R.id.iv_clean).setOnClickListener(this);
         init();
+
+        String addressDetail = getIntent().getStringExtra(TransportWayActivity.AddressDetail);
+        cityName = getIntent().getStringExtra(TransportWayActivity.CityName);
+        if(!TextUtils.isEmpty(addressDetail)){
+            editLocation.setText(addressDetail);
+        }
     }
 
     @Override
@@ -73,6 +80,10 @@ public class SetDetailWithLocationActivity extends Activity implements AMapLocat
                     Toast.makeText(this, "输入地址不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 } else if(!TextUtils.isEmpty(address)){
+                    if(!address.contains(cityName+"市")){
+                        Toast.makeText(this, "地址必须包含"+cityName+"市", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Intent intent = new Intent();
                     intent.putExtra(LocationAddress, address);
                     setResult(RESULT_OK, intent);
@@ -85,6 +96,10 @@ public class SetDetailWithLocationActivity extends Activity implements AMapLocat
     }
 
     public void next() {
+        if(!detail_address.contains(cityName+"市")){
+            Toast.makeText(this, "请手动输入地址，必须包含"+cityName+"市", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Intent intent = new Intent();
         intent.putExtra(LocationAddress, detail_address);
         setResult(RESULT_OK, intent);

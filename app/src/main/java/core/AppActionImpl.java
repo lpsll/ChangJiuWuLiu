@@ -1205,7 +1205,7 @@ public class AppActionImpl implements AppAction {
         } else if (!Api.TransportWayArray[0].equals(sendWay)) {
             fromCityDetail = "";
         }
-        if (Api.TransportWayArray[0].equals(getWay) && TextUtils.isEmpty(fromCityDetail)) {
+        if (Api.TransportWayArray[0].equals(getWay) && TextUtils.isEmpty(toCityDetail)) {
             listener.onFailure(ErrorEvent.PARAM_NULL, "请输入详细目的地址");
             return;
         } else if (!Api.TransportWayArray[0].equals(getWay)) {
