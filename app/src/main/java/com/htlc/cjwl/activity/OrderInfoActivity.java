@@ -73,6 +73,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
             orderPrice = "0.0", orderInsurePrice;
     private ArrayList<CarInfoBean> carArray = new ArrayList<>();
     private ArrayList<InsuranceInfoBean> insuranceArray = new ArrayList<>();
+    private TextView textNeedTime;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -175,6 +176,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
         checkBox = (CheckBox) findViewById(R.id.cb_checkbox);
         textPrice = (TextView) findViewById(R.id.tv_calc_price);
+        textNeedTime = (TextView) findViewById(R.id.textNeedTime);
 
         textButton = (TextView) findViewById(R.id.next_step);
         textButton.setOnClickListener(this);
@@ -310,6 +312,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
             @Override
             public void onSuccess(CalculatePriceInfoBean data) {
                 textPrice.setText(data.node);
+                textNeedTime.setText(getString(R.string.need_time,data.days));
                 orderPrice = data.node;
                 orderInsurePrice = data.insure;
                 state = true;
@@ -430,6 +433,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
             checkBox.setEnabled(true);
             textButton.setText("计算价格");
             textPrice.setText("0.00");
+            textNeedTime.setText("");
         }
         state = false;
     }

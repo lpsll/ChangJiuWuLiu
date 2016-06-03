@@ -6,4 +6,5 @@ package model;
 public class CalculatePriceInfoBean {
     public String node;
     public String insure;
+    public String days;
 }

@@ -72,6 +72,7 @@
     <string name="pay">支付</string>
     <string name="input_phone">请输入联系电话</string>
     <string name="address_detail">请输入详细地址</string>
+    <string name="need_time">预计%1$s天送达</string>
 
 
 

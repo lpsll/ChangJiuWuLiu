@@ -386,6 +386,14 @@
             </LinearLayout>
 
             <TextView
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/textNeedTime"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
                 android:id="@+id/next_step"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -393,7 +401,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_marginLeft="17dp"
                 android:layout_marginRight="17dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/no_order_btn"
                 android:gravity="center"
                 android:text="计算价格"
