@@ -35,6 +35,7 @@ public class OrderDetailActivity extends Activity{
     private TextView textHall;
     private final String html = "<font color=\"#3c3c3c\">评价:  </font><font color=\"#acacac\">%1$s</font>" ;
     private final String htmlHall = "<font color=\"#acacac\">网点地址:  </font><font color=\"#acacac\">%1$s</font>" ;
+    private TextView textDaoDaTime;
 
 
     @Override
@@ -74,6 +75,7 @@ public class OrderDetailActivity extends Activity{
         textOrderTime = (TextView) findViewById(R.id.order_date);
 
         textComment = (TextView) findViewById(R.id.textComment);
+        textDaoDaTime = (TextView) findViewById(R.id.textDaoDaTime);
         textHall = (TextView) findViewById(R.id.textHall);
         initData();
     }
@@ -133,6 +135,7 @@ public class OrderDetailActivity extends Activity{
             String comment = String.format(html, data.evaluate);
             textComment.setText(Html.fromHtml(comment));
         }
+        textDaoDaTime.setText(getString(R.string.arrival_time, data.daodadate));
         if(!TextUtils.isEmpty(data.cityaddress)){
             textHall.setVisibility(View.VISIBLE);
             String comment = String.format(htmlHall, data.cityaddress);
