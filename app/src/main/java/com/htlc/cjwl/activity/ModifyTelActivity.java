@@ -21,15 +21,16 @@ import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/3.
+ * 修改手机号
  */
 public class ModifyTelActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView iv_back;
     private TextView tv_activity_title;
-    private TextView tv_tips;
-    private EditText et_tel;
-    private TextView tv_verification_code;
-    private EditText et_verification_code;
-    private TextView tv_next;
+    private TextView tv_tips;//提示当前手机号
+    private EditText et_tel;//输入手机号
+    private TextView tv_verification_code;//获取验证码
+    private EditText et_verification_code;//输入验证码
+    private TextView tv_next;//下一步
     private Handler handler = new Handler();//用于刷新倒计时的时间
     private int time = Constant.VERIFICATION_TIME;//获取验证码成功后，倒计时60s
 
@@ -75,6 +76,7 @@ public class ModifyTelActivity extends AppCompatActivity implements View.OnClick
 
         }
     }
+    /*验证验证码*/
     private void next() {
         String username = et_tel.getText().toString().trim();
         String smsCode = et_verification_code.getText().toString().trim();
@@ -90,10 +92,12 @@ public class ModifyTelActivity extends AppCompatActivity implements View.OnClick
             }
         });
     }
+    /*下一步*/
     private void nextStep(){
         startActivity(new Intent(this, SettingTelActivity.class));
         finish();
     }
+    /*获取验证码*/
     private void getVerificationCode() {
         String username = et_tel.getText().toString().trim();
         tv_verification_code.setEnabled(false);
@@ -113,6 +117,7 @@ public class ModifyTelActivity extends AppCompatActivity implements View.OnClick
 
 
 
+    /*开始倒计时*/
     private void showTimer() {
         tv_verification_code.setEnabled(false);//不允许再次获取验证码
         handler.postDelayed(runnable,1000);

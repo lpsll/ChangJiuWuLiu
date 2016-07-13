@@ -28,8 +28,8 @@ import core.ActionCallbackListener;
 public class NetworkQueryActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private ImageView iv_back;
     private TextView tv_activity_title;
-    private GridView gv_grid_view;
-    private TextView tv_show_more;
+    private GridView gv_grid_view;//热门城市列表
+    private TextView tv_show_more;//查看更多按钮
 
     private ArrayList<CityInfoBean> list = new ArrayList<>();
     private HotCitysAdapter adapter;
@@ -56,6 +56,7 @@ public class NetworkQueryActivity extends AppCompatActivity implements View.OnCl
         initData();
     }
 
+    /*获取热门城市*/
     private void initData() {
         App.appAction.hotCity(new ActionCallbackListener<ArrayList<CityInfoBean>>() {
             @Override

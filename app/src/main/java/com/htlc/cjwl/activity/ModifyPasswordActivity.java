@@ -19,13 +19,14 @@ import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/3.
+ * 修改密码Activity
  */
 public class ModifyPasswordActivity  extends AppCompatActivity implements View.OnClickListener {
     private ImageView iv_back;
     private TextView tv_activity_title;
-    private TextView tv_confirm;
-    private EditText et_password;
-    private EditText et_check_password;
+    private TextView tv_confirm;//提交按钮
+    private EditText et_password;//密码编辑
+    private EditText et_check_password;//密码确认
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class ModifyPasswordActivity  extends AppCompatActivity implements View.O
         }
     }
 
+    /*提交密码*/
     private void commitPassword() {
         String pwd = et_password.getText().toString().trim();
         String confirmPwd = et_check_password.getText().toString().trim();
@@ -76,6 +78,7 @@ public class ModifyPasswordActivity  extends AppCompatActivity implements View.O
         });
     }
 
+    /*去登录*/
     private void goLogin() {
         startActivity(new Intent(ModifyPasswordActivity.this, LoginActivity.class));
         finish();

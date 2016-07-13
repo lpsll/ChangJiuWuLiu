@@ -25,7 +25,9 @@ import com.htlc.cjwl.fragment.ServiceFragment;
 import java.util.ArrayList;
 
 import util.LogUtil;
-
+/**
+ * 主界面
+ * */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String SelectPosition = "SelectPosition";
     public static final int RequestCode = 1000;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager viewPager;
     private ArrayList<Fragment> list;
 
+    /*去生成订单信息界面*/
     public void goOrderInfo(){
         Intent intent = new Intent(this, OrderInfoActivity.class);
         startActivityForResult(intent, MainActivity.RequestCode);
@@ -62,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        }
     }
 
+    /*生成订单信息界面返回结果的处理*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -184,32 +188,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         iv_tab.setEnabled(false);
         tv_tab.setEnabled(false);
         int id = iv_tab.getId();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         switch (id) {
             case R.id.iv_tab1:
                 iv_tab1.setImageResource(R.drawable.home_fragment_tab_press);
                 viewPager.setCurrentItem(0, false);
-//                fragmentTransaction.replace(R.id.fl_container, new HomeFragment());
-//                fragmentTransaction.commit();
                 break;
             case R.id.iv_tab2:
                 iv_tab2.setImageResource(R.drawable.orders_fragment_tab_press);
                 viewPager.setCurrentItem(1, false);
-//                fragmentTransaction.replace(R.id.fl_container, new OrdersFragment());
-//                fragmentTransaction.commit();
                 break;
             case R.id.iv_tab3:
                 iv_tab3.setImageResource(R.drawable.service_fragment_tab_press);
                 viewPager.setCurrentItem(2, false);
-//                fragmentTransaction.replace(R.id.fl_container, new ServiceFragment());
-//                fragmentTransaction.commit();
                 break;
             case R.id.iv_tab4:
                 iv_tab4.setImageResource(R.drawable.my_fragment_tab_press);
                 viewPager.setCurrentItem(3, false);
                 ((MyFragment) list.get(3)).updateView();
-//                fragmentTransaction.replace(R.id.fl_container, new MyFragment());
-//                fragmentTransaction.commit();
                 break;
         }
         ScaleAnimation sa = new ScaleAnimation(1f, 1.5f, 1f, 1.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1.0f);

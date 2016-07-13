@@ -17,25 +17,27 @@ import model.OrderDetailBean;
 
 /**
  * Created by sks on 2016/4/7.
+ * 订单详情
  */
 public class OrderDetailActivity extends Activity{
     public static final String OrderId = "OrderId";
 
-    private String orderId;
+    private String orderId;//订单id
 
+    //标题，出发地，目的地，发货人电话，收货人电话，发货人姓名，收货人姓名，汽车型号数组，汽车数量数组，总价，投保价
     private TextView textTitle, textFromAddress, textToAddress,
             textFromTel,textToTel,textFromName,textToName,
             textCarTypeNameArray, textCarNumArray, textPrice,
             textInsurancePrice;
-    private TextView textOrderID;
-    private TextView textFromCity;
-    private TextView textToCity;
-    private TextView textOrderTime;
-    private TextView textComment;
-    private TextView textHall;
+    private TextView textOrderID;//订单id
+    private TextView textFromCity;//出发地
+    private TextView textToCity;//目的地
+    private TextView textOrderTime;//订单创建时间
+    private TextView textComment;//评论
+    private TextView textHall;//网点地址
     private final String html = "<font color=\"#3c3c3c\">评价:  </font><font color=\"#acacac\">%1$s</font>" ;
     private final String htmlHall = "<font color=\"#acacac\">网点地址:  </font><font color=\"#acacac\">%1$s</font>" ;
-    private TextView textDaoDaTime;
+    private TextView textDaoDaTime;//预计到达时间
 
 
     @Override
@@ -80,6 +82,7 @@ public class OrderDetailActivity extends Activity{
         initData();
     }
 
+    /*获取订单详细数据*/
     private void initData() {
         App.appAction.orderDetail(orderId, new ActionCallbackListener<OrderDetailBean>() {
             @Override
@@ -94,6 +97,7 @@ public class OrderDetailActivity extends Activity{
         });
     }
 
+    /*刷新界面*/
     private void refreshView(OrderDetailBean data) {
         if(TextUtils.isEmpty(data.from_address)){
             textFromAddress.setText(data.from_cityname);

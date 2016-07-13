@@ -15,6 +15,7 @@ import util.LogUtil;
 /**
  * Created by sks on 2015/11/4.
  * 该Activity有：一个标题，一个fragment
+ * 网点查询------网点列表Activity
  */
 public class CityListActivity  extends AppCompatActivity implements View.OnClickListener {
     private ImageView iv_back;

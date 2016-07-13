@@ -18,11 +18,12 @@ import util.ToastUtil;
 
 /**
  * Created by sks on 2015/11/4.
+ * 首页---一键客服Activity
  */
 public class CallServiceTelActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView iv_back;
     private TextView tv_activity_title;
-    private TextView tv_call_tel;
+    private TextView tv_call_tel;//拨打电话按钮
 
 
     @Override

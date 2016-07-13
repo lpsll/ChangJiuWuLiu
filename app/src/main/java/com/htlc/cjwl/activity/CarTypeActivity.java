@@ -12,6 +12,7 @@ import com.htlc.cjwl.App;
 import com.htlc.cjwl.R;
 import com.htlc.cjwl.adapter.CarTypeLeftAdapter;
 import com.htlc.cjwl.adapter.CarTypeRightAdapter;
+
 import util.ToastUtil;
 
 import java.util.ArrayList;
@@ -22,16 +23,18 @@ import model.CarTypeInfoBean;
 
 /**
  * Created by sks on 2016/4/6.
+ * 汽车品牌型号Acitivity
  */
 public class CarTypeActivity extends Activity {
     public static final String SelectCar = "SelectCar";
 
     private TextView textTitle;
-    private ListView listViewLeft,listViewRight;
-    private CarTypeLeftAdapter leftAdapter;
-    private CarTypeRightAdapter rightAdapter;
-    private ArrayList leftList = new ArrayList(),rightList = new ArrayList();
-    private ArrayList<CarInfoBean> carArray;
+    private ListView listViewLeft, listViewRight;//品牌ListView和型号ListView
+    private CarTypeLeftAdapter leftAdapter;//品牌Adapter
+    private CarTypeRightAdapter rightAdapter;//型号Adapter
+    private ArrayList leftList = new ArrayList(), rightList = new ArrayList();//品牌数据集合
+    private ArrayList<CarInfoBean> carArray;//选择的汽车数组
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +71,7 @@ public class CarTypeActivity extends Activity {
         initData();
     }
 
+    /*品牌列表的点击事件，点击后加载对应的型号列表*/
     private void leftSelected(int position) {
         leftAdapter.setCheckPosition(position);
         leftAdapter.notifyDataSetChanged();
@@ -75,6 +79,8 @@ public class CarTypeActivity extends Activity {
         getRightData(position);
 
     }
+
+    /*型号列表的点击事件，点击后返回选择的汽车数组*/
     private void setResultData(int position) {
         int checkPosition = leftAdapter.getCheckPosition();
         CarTypeInfoBean carTypeInfoBean = (CarTypeInfoBean) rightList.get(position);
@@ -83,8 +89,8 @@ public class CarTypeActivity extends Activity {
         bean.id = carTypeInfoBean.id;
         bean.price = carTypeInfoBean.car_price;
         bean.type = carTypeInfoBean.car_type;
-        for(int i=0;i<carArray.size();i++){
-            if(bean.id.equals(carArray.get(i).id)){
+        for (int i = 0; i < carArray.size(); i++) {
+            if (bean.id.equals(carArray.get(i).id)) {
                 finish();
                 return;
             }
@@ -95,6 +101,7 @@ public class CarTypeActivity extends Activity {
         finish();
     }
 
+    /*获取品牌列表*/
     private void initData() {
         App.appAction.carTypeList(new ActionCallbackListener<ArrayList<CarTypeInfoBean>>() {
             @Override
@@ -112,6 +119,8 @@ public class CarTypeActivity extends Activity {
         });
 
     }
+
+    /*根据品牌获取，车型列表*/
     private void getRightData(int position) {
         rightList.clear();
         rightAdapter.notifyDataSetChanged();

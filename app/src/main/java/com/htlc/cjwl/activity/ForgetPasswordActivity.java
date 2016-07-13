@@ -79,6 +79,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
         }
     }
 
+    /*判断验证码是否正确，正确执行下一步*/
     private void next() {
         String username = et_tel.getText().toString().trim();
         tel = username;
@@ -95,12 +96,15 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
             }
         });
     }
+    /*进行下一步操作，设置密码*/
     private void nextStep() {
         finish();
         Intent intent = new Intent(this, SettingPasswordActivity.class);
         intent.putExtra(Constant.USER_TEL,tel);
         startActivity(intent);
     }
+
+    /*获取验证码*/
     private void getVerificationCode() {
         String username = et_tel.getText().toString().trim();
         tv_verification_code.setEnabled(false);

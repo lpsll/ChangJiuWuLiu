@@ -25,6 +25,7 @@ import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/2.
+ * 消息中心
  */
 public class MessageCenterActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener<ListView> {
     private TextView tv_activity_title;

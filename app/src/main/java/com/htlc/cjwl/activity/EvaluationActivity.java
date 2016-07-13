@@ -17,16 +17,17 @@ import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/3.
+ * 订单列表---订单评价Activity
  */
 public class EvaluationActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String OrderID = "OrderID";
-    public  String orderId;
-    private ImageView iv_back;
-    private TextView tv_activity_title;
-    private EditText et_feedback;
-    private TextView tv_commit;
+    public  String orderId;//订单id
+    private ImageView iv_back;//返回按钮
+    private TextView tv_activity_title;//标题
+    private EditText et_feedback;//评论编辑框
+    private TextView tv_commit;//提交评论按钮
     private String mFeedback;
-    private RatingBar ratingBar;
+    private RatingBar ratingBar;//评分按钮
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

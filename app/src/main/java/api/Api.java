@@ -4,11 +4,14 @@ package api;
 import api.net.okhttp.callback.ResultCallback;
 import core.ActionCallbackListener;
 
+/**
+ * 接口层，用于服务端Api的交互
+ */
 public interface Api {
     String[] TransportWayArray = {"0","2"};//index=0 为 长久送车
     String[] PayWayArray = {"1","2","3","4"};//支付宝，微信，银联，现付
 
-    String Host = "http://t2.damaimob.com/";
+    String Host = "http://escvx.changjiu56.com/";
     String SendSmsCode = Host + "Home/CYUser/getMobileCode";
     String Register = Host + "Home/CYUser/user_register";
     String CheckSmsCode = Host + "Home/CYUser/reSetUserPwd";

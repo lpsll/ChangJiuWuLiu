@@ -16,16 +16,18 @@ import util.ToastUtil;
 
 /**
  * Created by sks on 2016/4/7.
+ * 发票详情（申请发票）
  */
-public class BillDetailActivity extends Activity{
+public class BillDetailActivity extends Activity {
     public static final String BillId = "BillId";
     public static final String BillStatus = "BillStatus";
-    private TextView textTitle,textBillPrice;
-    private EditText editBillHeader,editBillAddress,editBillReceiver,editBillReceiverTel;
-    private TextView editBillType;
+    private TextView textTitle, textBillPrice;//标题，发票总额
+    private EditText editBillHeader, editBillAddress, editBillReceiver, editBillReceiverTel;//发票抬头，发票地址，发票收获人，发票收货人电话；
+    private TextView editBillType;//发票类型
 
-    private String billId;
+    private String billId;//发票id
     private boolean billStatus;//是否可修改
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +59,9 @@ public class BillDetailActivity extends Activity{
                 submit();
             }
         });
-        if(billStatus){
+        if (billStatus) {
             button.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             textBillPrice.setEnabled(false);
             editBillHeader.setEnabled(false);
             editBillType.setEnabled(false);
@@ -71,6 +73,7 @@ public class BillDetailActivity extends Activity{
         initData();
     }
 
+    /*获取发票信息*/
     private void initData() {
         App.appAction.billOrderDetail(billId, new ActionCallbackListener<BillDetailBean>() {
             @Override
@@ -90,22 +93,23 @@ public class BillDetailActivity extends Activity{
         });
     }
 
+    /*提交发票信息*/
     private void submit() {
         String billHeader = editBillHeader.getText().toString().trim();
         String address = editBillAddress.getText().toString().trim();
         String billReceiver = editBillReceiver.getText().toString().trim();
         String phone = editBillReceiverTel.getText().toString().trim();
 
-        App.appAction.billOrderModify(billId,billHeader,address,billReceiver, phone, new ActionCallbackListener<Void>() {
+        App.appAction.billOrderModify(billId, billHeader, address, billReceiver, phone, new ActionCallbackListener<Void>() {
             @Override
             public void onSuccess(Void data) {
-                ToastUtil.showToast(App.app,"申请发票成功！");
+                ToastUtil.showToast(App.app, "申请发票成功！");
                 finish();
             }
 
             @Override
             public void onFailure(String errorEvent, String message) {
-                ToastUtil.showToast(App.app,message);
+                ToastUtil.showToast(App.app, message);
             }
         });
     }

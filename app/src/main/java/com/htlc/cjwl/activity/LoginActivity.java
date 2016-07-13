@@ -68,6 +68,7 @@ public class LoginActivity  extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    /*登录操作*/
     private void login() {
         String username = et_username.getText().toString().trim();
         String pwd = et_password.getText().toString().trim();

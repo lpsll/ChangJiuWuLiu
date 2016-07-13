@@ -30,6 +30,7 @@ import model.VinInfoBean;
 
 /**
  * Created by Larno on 16/04/07.
+ * 创建订单Activity
  */
 public class OrderConfirmActivity extends Activity {
     public static final String CarArray = "CarArray";
@@ -47,29 +48,31 @@ public class OrderConfirmActivity extends Activity {
     public static final String OrderInsure = "OrderInsure";
     public static final String OrderInsurePrice = "OrderInsurePrice";
 
+    //标题，出发地，目的地，车辆型号数组，车辆数量数组，总价，投保价
     private TextView textTitle, textFromAddress, textToAddress,
             textCarTypeNameArray, textCarNumArray, textPrice,
             textInsurancePrice;
+    //发货人，发货人电话，发货人身份证，收货人，收货人电话，收货人身份证
     private EditText editFromUsername, editFromTel, editFromUserCard,
             editToUsername, editToTel, editToUserCard;
-    private LinearLayout linearCarCardContainer;
+    private LinearLayout linearCarCardContainer;//车架号的容器
 
 
-    private ArrayList<CarInfoBean> carArray;
-    public String fromCity = "";
-    public String toCity = "";
-    public String fromCityDetail = "";
-    public String toCityDetail = "";
-    public String fromTel = "";
-    public String toTel = "";
-    public String fromName = "";
-    public String toName = "";
+    private ArrayList<CarInfoBean> carArray;//要运输的汽车数组
+    public String fromCity = "";//出发地
+    public String toCity = "";//目的地
+    public String fromCityDetail = "";//出发地详情地址
+    public String toCityDetail = "";//目的地详情地址
+    public String fromTel = "";//发货人电话
+    public String toTel = "";//收货人电话
+    public String fromName = "";//发货人姓名
+    public String toName = "";//收货人姓名
 
-    public String orderPrice = "";
-    public String orderInsurePrice = "";
-    public ArrayList<InsuranceInfoBean> orderInsure;
-    public ArrayList<VinInfoBean> vinnumArray;
-    private String orderId;
+    public String orderPrice = "";//订单总价
+    public String orderInsurePrice = "";//订单投保价
+    public ArrayList<InsuranceInfoBean> orderInsure;//每辆车投保的价格数组
+    public ArrayList<VinInfoBean> vinnumArray;//车架号数组
+    private String orderId;//订单id
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +161,7 @@ public class OrderConfirmActivity extends Activity {
         });
     }
 
+    /*初始化车架号列表*/
     private void initLinearCarCardContainer() {
         vinnumArray = new ArrayList<>();
         for (int i = 0; i < carArray.size(); i++) {
@@ -225,6 +229,7 @@ public class OrderConfirmActivity extends Activity {
                 });
     }
 
+    /*弹出生成订单成功，提示是否修改*/
     private void showSuccessDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("温馨提示");//设置对话框标题
@@ -255,6 +260,7 @@ public class OrderConfirmActivity extends Activity {
         negativeButton.setTextColor(CommonUtil.getResourceColor(R.color.blue));
     }
 
+    /*重置数组*/
     private void resetVinnumArray() {
         for (int i = 0; i < vinnumArray.size(); i++) {
             vinnumArray.get(i).vinnumId = null;

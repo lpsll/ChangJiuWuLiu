@@ -32,7 +32,9 @@ import model.TraceBean;
 import model.UserBean;
 import model.VinInfoBean;
 
-
+/**
+ * 业务逻辑层，用于度数据的处理（与Api层数据交互的业务处理）
+ * */
 public interface AppAction {
 
     void sendSmsCode(String username, ActionCallbackListener<Void> listener);

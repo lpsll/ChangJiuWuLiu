@@ -16,12 +16,13 @@ import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/3.
+ * 意见反馈Activity
  */
 public class FeedbackActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView iv_back;
     private TextView tv_activity_title;
-    private EditText et_feedback;
-    private TextView tv_commit;
+    private EditText et_feedback;//意见编辑
+    private TextView tv_commit;//提交按钮
     private String mFeedback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

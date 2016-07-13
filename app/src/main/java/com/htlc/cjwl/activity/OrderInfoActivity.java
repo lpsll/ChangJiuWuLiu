@@ -46,6 +46,7 @@ import model.InsuranceInfoBean;
 
 /**
  * Created by Larno on 16/04/05.
+ * 预生成订单（我要运车Activity）
  */
 public class OrderInfoActivity extends Activity implements View.OnClickListener {
     public static final int RequestCode_SelectFromAddress = 100;
