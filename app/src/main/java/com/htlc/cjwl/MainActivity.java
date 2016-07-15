@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager viewPager;
     private ArrayList<Fragment> list;
 
-    /*去生成订单信息界面*/
+    /*去生成预生成订单信息界面*/
     public void goOrderInfo(){
         Intent intent = new Intent(this, OrderInfoActivity.class);
         startActivityForResult(intent, MainActivity.RequestCode);

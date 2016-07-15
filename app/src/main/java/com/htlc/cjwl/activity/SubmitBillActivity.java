@@ -15,6 +15,7 @@ import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2016/4/7.
+ * 申请，修改发票界面
  */
 public class SubmitBillActivity extends Activity{
     public static final String TotalPrice = "TotalPrice";

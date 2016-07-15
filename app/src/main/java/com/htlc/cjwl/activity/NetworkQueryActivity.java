@@ -87,6 +87,7 @@ public class NetworkQueryActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+    /*网点详情HTML界面*/
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CityInfoBean cityInfoBean = list.get(position);

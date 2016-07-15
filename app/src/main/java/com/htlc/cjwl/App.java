@@ -85,6 +85,7 @@ public class App extends Application{
         return mHandler;
     }
 
+    /*设置用户信息*/
     public UserBean getUser() {
         UserBean bean = new UserBean();
         bean.node = SharedPreferenceUtil.getString(app,Constant.USER_NODE,"");
@@ -94,6 +95,7 @@ public class App extends Application{
         bean.levelname = SharedPreferenceUtil.getString(app,Constant.USER_LEVEL,"");
         return bean;
     }
+    /*获取用户信息*/
     public void setUser(UserBean bean){
         if(!TextUtils.isEmpty(bean.node)){
             SharedPreferenceUtil.putString(app,Constant.USER_NODE,bean.node);
@@ -111,6 +113,7 @@ public class App extends Application{
             SharedPreferenceUtil.putString(app,Constant.USER_LEVEL,bean.levelname);
         }
     }
+    /*清除用户信息*/
     public void clearUser(){
         SharedPreferenceUtil.remove(app,Constant.USER_NODE);
         SharedPreferenceUtil.remove(app,Constant.USERNAME);
@@ -118,9 +121,11 @@ public class App extends Application{
         SharedPreferenceUtil.remove(app,Constant.USER_SCORE);
         SharedPreferenceUtil.remove(app,Constant.USER_LEVEL);
     }
+    /*获取用户id*/
     public String getNode() {
         return node;
     }
+    /*设置用户id*/
     public void setNode(String node,@NonNull String msg) {
         this.node = node;
         if(TextUtils.isEmpty(node)){

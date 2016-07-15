@@ -95,6 +95,7 @@ public class OrderConfirmActivity extends Activity {
         initView();
     }
 
+    /*初始化view*/
     private void initView() {
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override

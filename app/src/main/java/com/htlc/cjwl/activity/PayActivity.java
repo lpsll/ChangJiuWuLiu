@@ -66,6 +66,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
      *****************************************************************/
     private final String mMode = "00";
 
+    //标题，订单信息
     private TextView textTitle, textFromAddress, textToAddress,
             textFromTel, textToTel, textFromName, textToName,
             textCarTypeNameArray, textCarNumArray, textPrice,

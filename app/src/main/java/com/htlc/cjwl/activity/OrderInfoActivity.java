@@ -55,26 +55,29 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     public static final int RequestCode_GetWay = 400;
     public static final int RequestCode_SelectCarType = 500;
     public static final int RequestCode_SelectCarNum = 600;
-    private TextView textTitle;
+    private TextView textTitle;//标题
+    //出发城市，目的城市，选择汽车品牌车型，选择汽车数量，选择发车方式，选择收车方式，投保列表
     private LinearLayout linearFromAddress, linearToAddress,
             linearSelectCarType, linearCarNum, linearSendCarWay,
             linearGetCarWay, linearCarInsurance;
+    //选择的汽车品牌列表
     private ListView swipeListViewCarContainer;
     private SwipeCarAdapter swipeCarAdapter;
+    //出发城市，目的城市，汽车总数量, 发车方式，收车方式，价格
     private TextView textFromAddress, textToAddress, textCarNum,
             textSendCarWay, textGetCarWay, textPrice;
-    private CheckBox checkBox;
-    private TextView textButton;
+    private CheckBox checkBox;//同意协议按钮
+    private TextView textButton;//计算价格或下一步，按钮
     private EditText currentEditEnsurance;
 
-    private boolean state = false;
+    private boolean state = false;//是否已经计算了价格，没计算false
     private String fromCityID, toCityID, fromCityDetail = "", toCityDetail = "",
             fromName = "", toName = "", fromTel = "", toTel = "",
             sendWayID = Api.TransportWayArray[1], getWayID = Api.TransportWayArray[1],
             orderPrice = "0.0", orderInsurePrice;
     private ArrayList<CarInfoBean> carArray = new ArrayList<>();
     private ArrayList<InsuranceInfoBean> insuranceArray = new ArrayList<>();
-    private TextView textNeedTime;
+    private TextView textNeedTime;//预估需要的运输时间
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -195,6 +198,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         initData();
     }
 
+    /*获取最近订单的收货地址信息*/
     private void initData() {
         App.appAction.lastOrderDetail(new ActionCallbackListener<AddressInfoBean>() {
             @Override
@@ -209,6 +213,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         });
     }
 
+    /*刷新地址信息*/
     private void refreshAddressView(AddressInfoBean data) {
         textFromAddress.setText(data.from_cityname);
         textToAddress.setText(data.to_cityname);
@@ -265,6 +270,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
      * 进行下一步，获取价格或下单操作
      */
     private void nextStep() {
+        //如果已计算价格，去下单界面
         if (state) {
             if (sendWayID.equals(Api.TransportWayArray[1])) {
                 fromCityDetail = "";
@@ -287,11 +293,12 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
             intent.putExtra(OrderConfirmActivity.OrderInsurePrice, orderInsurePrice);
             intent.putParcelableArrayListExtra(OrderConfirmActivity.OrderInsure, insuranceArray);
             startActivityForResult(intent, MainActivity.RequestCode);
-        } else {
+        } else {//计算价格
             getPrice();
         }
     }
 
+    /*根据出发地，目的地等信息，计算运费*/
     private void getPrice() {
         if (!checkBox.isChecked()) {
             ToastUtil.showToast(App.app, "请阅读并同意相关协议！");
@@ -443,6 +450,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
+            //选择出发城市的返回结果
             case RequestCode_SelectFromAddress:
                 if (resultCode == Activity.RESULT_OK) {
                     fromCityID = data.getStringExtra(SelectCityForAddressActivity.SelectCityID);
@@ -450,6 +458,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                     fromCityDetail = "";
                 }
                 break;
+            //选择目的城市的返回结果
             case RequestCode_SelectToAddress:
                 if (resultCode == Activity.RESULT_OK) {
                     toCityID = data.getStringExtra(SelectCityForAddressActivity.SelectCityID);
@@ -457,6 +466,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                     toCityDetail = "";
                 }
                 break;
+            //选择发货方式的返回结果
             case RequestCode_SendWay:
                 if (resultCode == Activity.RESULT_OK) {
                     sendWayID = data.getStringExtra(TransportWayActivity.WayID);
@@ -470,6 +480,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                     fromCityDetail = data.getStringExtra(TransportWayActivity.AddressDetail);
                 }
                 break;
+            //选择收货方式的返回结果
             case RequestCode_GetWay:
                 if (resultCode == Activity.RESULT_OK) {
                     getWayID = data.getStringExtra(TransportWayActivity.WayID);
@@ -483,6 +494,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                     toCityDetail = data.getStringExtra(TransportWayActivity.AddressDetail);
                 }
                 break;
+            //选择汽车种类（品牌车型）的返回结果
             case RequestCode_SelectCarType:
                 if (resultCode == Activity.RESULT_OK) {
                     CarInfoBean temp = data.getParcelableExtra(CarTypeActivity.SelectCar);
@@ -492,6 +504,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                     refreshTextCarNum();
                 }
                 break;
+            //选择汽车数量的返回结果
             case RequestCode_SelectCarNum:
                 if (resultCode == Activity.RESULT_OK) {
                     ArrayList<CarInfoBean> temp = data.getParcelableArrayListExtra(SelectCarNumActivity.SelectCarNumWithType);
@@ -502,6 +515,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                     refreshTextCarNum();
                 }
                 break;
+            //创建订单界面的返回结果
             case MainActivity.RequestCode:
                 if(resultCode == Activity.RESULT_OK){
                     setResult(resultCode, data);
@@ -511,6 +525,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         }
     }
 
+    /*刷新投保列表*/
     public void refreshInsuranceLinearLayout() {
         linearCarInsurance.removeAllViews();
         insuranceArray.clear();
@@ -544,6 +559,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         }
     }
 
+    /*刷新汽车总数量*/
     public void refreshTextCarNum() {
         int totalNum = 0;
         for (int i = 0; i < carArray.size(); i++) {
@@ -575,6 +591,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                         //                                          int[] grantResults)
                         // to handle the case where the user grants the permission. See the documentation
                         // for Activity#requestPermissions for more details.
+                        ToastUtil.showToast(App.app, "请授予拨打电话权限");
                         return;
                     }
                 }

@@ -20,6 +20,7 @@ import model.TraceBean;
 
 /**
  * Created by sks on 2016/4/19.
+ * 物流信息界面
  */
 public class TraceActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String OrderId = "OrderId";

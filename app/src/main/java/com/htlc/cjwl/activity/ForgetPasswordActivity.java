@@ -63,12 +63,12 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.tv_verification_code:
-                if(!ClickUtil.isFastDoubleClick()){
+                if (!ClickUtil.isFastDoubleClick()) {
                     getVerificationCode();
                 }
                 break;
@@ -92,15 +92,16 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
 
             @Override
             public void onFailure(String errorEvent, String message) {
-                ToastUtil.showToast(App.app,message);
+                ToastUtil.showToast(App.app, message);
             }
         });
     }
+
     /*进行下一步操作，设置密码*/
     private void nextStep() {
         finish();
         Intent intent = new Intent(this, SettingPasswordActivity.class);
-        intent.putExtra(Constant.USER_TEL,tel);
+        intent.putExtra(Constant.USER_TEL, tel);
         startActivity(intent);
     }
 
@@ -116,26 +117,28 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
 
             @Override
             public void onFailure(String errorEvent, String message) {
-                ToastUtil.showToast(App.app,message);
+                ToastUtil.showToast(App.app, message);
                 tv_verification_code.setEnabled(true);
             }
         });
     }
 
-
+    /*开始倒计时*/
     private void showTimer() {
         tv_verification_code.setEnabled(false);//不允许再次获取验证码
-        handler.postDelayed(runnable,1000);
+        handler.postDelayed(runnable, 1000);
 
     }
+
+    /*延时刷新操作*/
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            if(time>0) {
+            if (time > 0) {
                 time--;
-                tv_verification_code.setText("(" + time+"s)");
+                tv_verification_code.setText("(" + time + "s)");
                 handler.postDelayed(this, 1000);
-            }else{
+            } else {
                 tv_verification_code.setText("获取验证码");
                 tv_verification_code.setEnabled(true);
                 time = Constant.VERIFICATION_TIME;
