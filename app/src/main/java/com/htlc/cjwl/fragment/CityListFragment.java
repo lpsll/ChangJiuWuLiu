@@ -38,7 +38,7 @@ import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/5.
- * 城市列表的fragment
+ * 城市列表的fragment,在网点查询中使用
  */
 public class CityListFragment extends Fragment implements View.OnClickListener,AdapterView.OnItemClickListener{
 

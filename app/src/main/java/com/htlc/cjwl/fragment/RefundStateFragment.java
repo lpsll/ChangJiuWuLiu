@@ -32,6 +32,7 @@ import model.RefundOrderBean;
 
 /**
  * Created by Larno 2016/04/01;
+ * 我的退款Fragment id为0为可申请退款的；1为历史退款
  */
 public class RefundStateFragment extends Fragment {
     private static final String[] RefundFragmentStatus = {"1", "2"};

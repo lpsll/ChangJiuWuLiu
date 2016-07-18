@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         TextView tv_consign = (TextView) view.findViewById(R.id.tv_consign);
         //网点查询
         ImageButton ib_home_network_query = (ImageButton) view.findViewById(R.id.ib_home_network_query);
-        //路线查询
+        //托运须知
         ImageButton ib_home_rute_query = (ImageButton) view.findViewById(R.id.ib_home_rute_query);
         //一键客服
         ImageButton ib_home_phone = (ImageButton) view.findViewById(R.id.ib_home_phone);
@@ -64,7 +64,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         ib_home_rute_query.setOnClickListener(this);
         ib_home_phone.setOnClickListener(this);
 
-//        list.add(new HomeBannerInfo());
         adapter = new HomeAdapter(getActivity(), list);
         vp_home.setAdapter(adapter);
 
@@ -107,6 +106,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_consign:
+                //我要运车
                 if (!LoginUtil.isOnline()) {
                     LoginUtil.goLogin(getActivity());
                 } else {
@@ -114,13 +114,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.ib_home_network_query:
-                LogUtil.i(this, "ib_home_network_query");
+                //网点查询
                 Intent intent_network_query = new Intent(getActivity(), NetworkQueryActivity.class);
                 startActivity(intent_network_query);
                 break;
             case R.id.ib_home_rute_query:
-                LogUtil.i(this, "ib_home_rute_query");
-//                Intent intent_rute_query = new Intent(getActivity(), RuteQueryActivity.class);
+                //托运须知
                 Intent intent_rute_query = new Intent(getActivity(), WebActivity.class);
                 String serviceID = String.format(Api.ServiceHtmlDetail,"20");
                 intent_rute_query.putExtra(Constant.SERVICE_DETAIL_ID, serviceID);
@@ -128,7 +127,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent_rute_query);
                 break;
             case R.id.ib_home_phone:
-                LogUtil.i(this, "ib_home_phone");
+                //一键客服
                 Intent intent_phone = new Intent(getActivity(), CallServiceTelActivity.class);
                 startActivity(intent_phone);
                 break;

@@ -30,7 +30,7 @@ public class ScoreActivity extends Activity{
     private TextView textHeader;
     private PullToRefreshListView listView;
     private BaseAdapter adapter;
-    private ArrayList billList = new ArrayList();//某种类型的订单集合
+    private ArrayList billList = new ArrayList();//积分列表数组
 
     private int page = 1;
     @Override
@@ -102,6 +102,7 @@ public class ScoreActivity extends Activity{
         });
     }
 
+    /*获取积分列表*/
     private void initData() {
         page = 1;
         App.appAction.scoreList(page, new ActionCallbackListener<ArrayList<ScoreBean>>() {

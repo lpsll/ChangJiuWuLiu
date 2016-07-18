@@ -82,7 +82,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 intent_rute_query.putExtra(Constant.SERVICE_DETAIL_ID, Api.ProtocolAbout);
                 intent_rute_query.putExtra(Constant.SERVICE_DETAIL_TITLE, "关于软件");
                 startActivity(intent_rute_query);
-//                startActivity(new Intent(this,AboutActivity.class));
                 break;
             case R.id.ll_version:
                 LogUtil.i(this, "当前版本界面");
@@ -106,13 +105,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     /**
-     * 弹出确认对话框
+     * 清除缓存对话框
      */
     public void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        View view = View.inflate(getActivity(),R.layout.layout_dialog_confirm,null);
-//        builder.setView(view);
-//        builder.show();
         builder.setTitle("清除缓存");//设置对话框标题
         builder.setMessage("您确认清除缓存吗？");//设置显示的内容
 

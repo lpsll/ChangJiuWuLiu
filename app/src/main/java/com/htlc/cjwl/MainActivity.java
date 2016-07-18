@@ -31,24 +31,30 @@ import util.LogUtil;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String SelectPosition = "SelectPosition";
     public static final int RequestCode = 1000;
+    //首页tab
     private ImageView iv_tab1;
     private TextView tv_tab1;
+    //订单列表tab
     private ImageView iv_tab2;
     private TextView tv_tab2;
+    //产品推介tab
     private ImageView iv_tab3;
     private TextView tv_tab3;
+    //个人中心tab
     private ImageView iv_tab4;
     private TextView tv_tab4;
-    //当前选中的fragment的图标和文本
+
+    //当前选中的fragment的tab
     private ImageView m_iv_tab;
     private TextView m_tv_tab;
+
     //屏幕宽度
     private int mWidth;
     private FragmentManager fragmentManager;
     private ViewPager viewPager;
     private ArrayList<Fragment> list;
 
-    /*去生成预生成订单信息界面*/
+    /*去生成预生成订单信息界面（我要运车）*/
     public void goOrderInfo(){
         Intent intent = new Intent(this, OrderInfoActivity.class);
         startActivityForResult(intent, MainActivity.RequestCode);
@@ -56,16 +62,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-//        String selectPosition = intent.getStringExtra(SelectPosition);
-//        if (!TextUtils.isEmpty(selectPosition) && selectPosition.equals(OrdersFragment.class.getSimpleName())) {
-//            if (viewPager != null && tv_tab2 != null && iv_tab2 != null) {
-//                resetPreTab();
-//                setTab(tv_tab2, iv_tab2);
-//            }
-//        }
     }
 
-    /*生成订单信息界面返回结果的处理*/
+    /*（我要运车）界面返回结果的处理(下单成功，则跳转到我的订单Tab)*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (viewPager != null && tv_tab2 != null && iv_tab2 != null) {
                     resetPreTab();
                     setTab(tv_tab2, iv_tab2);
-
                 }
             }
         }
@@ -85,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //获取屏幕宽度
         mWidth = getWindowManager().getDefaultDisplay().getWidth();
         fragmentManager = getSupportFragmentManager();
         initView();
@@ -127,7 +126,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_tab4 = (TextView) findViewById(R.id.tv_tab4);
         iv_tab4.setOnClickListener(this);
         tv_tab4.setOnClickListener(this);
-        //默认选中第一个标签，即选中home fragment
+
+        //初始化4个Fragment
         list = new ArrayList<>();
         list.add(new HomeFragment());
         list.add(new OrdersFragment());
@@ -136,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new MainPagerAdapter(fragmentManager, list));
         viewPager.setOffscreenPageLimit(4);
+
+        //默认选中第一个标签，即选中home fragment
         setTab(tv_tab1, iv_tab1);
     }
 

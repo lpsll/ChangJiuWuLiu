@@ -22,6 +22,7 @@ import core.ActionCallbackListener;
 
 /**
  * Created by Larno on 2016/04/05.
+ * 设置发车或收车方式
  */
 public class TransportWayActivity extends Activity implements View.OnClickListener {
     public static final String IsSendWay = "IsSendWay";
@@ -30,7 +31,7 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
     public static final String WayID = "WayID";
     public static final String WayName = "WayName";
     public static final int RequestCode_LocationAddressDetail = 100;
-    private boolean isSendWay;
+    private boolean isSendWay;//是发车方式 true
 
     private String cityName,addressDetail;
     private TextView textTitle,textHall,textAddressDetail,textCityName, textSendToHall,textChangJiuGet;
@@ -42,13 +43,14 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
         setContentView(R.layout.activity_send_way);
 
         Intent intent = getIntent();
-        cityName = intent.getStringExtra(CityName);
-        addressDetail = intent.getStringExtra(AddressDetail);
-        isSendWay = intent.getBooleanExtra(IsSendWay, true);
-        textTitle = (TextView) findViewById(R.id.tv_activity_title);
-        textCityName = (TextView) findViewById(R.id.textCityName);
-        textSendToHall = (TextView) findViewById(R.id.textSendToHall);
-        textChangJiuGet = (TextView) findViewById(R.id.textChangJiuGet);
+        cityName = intent.getStringExtra(CityName);//发车或收车城市名字
+        addressDetail = intent.getStringExtra(AddressDetail);//详细地址
+        isSendWay = intent.getBooleanExtra(IsSendWay, true);//是发车方式true
+
+        textTitle = (TextView) findViewById(R.id.tv_activity_title);//标题
+        textCityName = (TextView) findViewById(R.id.textCityName);//城市text view(显示 当前城市名 或 “网点地址”)
+        textSendToHall = (TextView) findViewById(R.id.textSendToHall);//送车到网点（网点取车）TextView
+        textChangJiuGet = (TextView) findViewById(R.id.textChangJiuGet);//长久取车（长久送车）TextView
         String yes,no;
         if(isSendWay){
             textTitle.setText("发车方式");
@@ -82,9 +84,10 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
 
 
 
-        textAddressDetail = (TextView) findViewById(R.id.textAddressDetail);
+        textAddressDetail = (TextView) findViewById(R.id.textAddressDetail);//发车（收车）详情地址
         textAddressDetail.setText(TextUtils.isEmpty(addressDetail)?"":addressDetail);
-        textHall = (TextView) findViewById(R.id.textHall);
+
+        textHall = (TextView) findViewById(R.id.textHall);//当前城市网点地址TextView
         linearSendToHall = (LinearLayout) findViewById(R.id.ll_send_to_hall);
         linearSendToHall.setOnClickListener(this);
         linearChangJiuGet = (LinearLayout) findViewById(R.id.ll_chang_jiu_get);
@@ -125,6 +128,7 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
         }
     }
 
+    /*设置发车（取车）方式*/
     private void setTransportWay() {
         if(TextUtils.isEmpty(addressDetail)){
             setSendToHall();
@@ -139,9 +143,10 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
     }
 
     /**
-     * 长久取车
+     * 长久取车,去设置详细地址界面
      */
     private void setAddressDetail() {
+        //如果是发车，去带定位的设置详细地址界面
         if(isSendWay){
             Intent intent = new Intent(this, SetDetailWithLocationActivity.class);
             intent.putExtra(AddressDetail,addressDetail);
@@ -167,6 +172,7 @@ public class TransportWayActivity extends Activity implements View.OnClickListen
         finish();
     }
 
+    /*设置详情地址，返回的结果*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

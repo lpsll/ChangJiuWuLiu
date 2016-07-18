@@ -19,6 +19,7 @@ import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/3.
+ * 设置新手机号
  */
 public class SettingTelActivity  extends AppCompatActivity implements View.OnClickListener {
     private ImageView iv_back;

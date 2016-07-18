@@ -17,6 +17,7 @@ import com.htlc.cjwl.util.CommonUtil;
 
 /**
  * Created by sks on 2016/4/7.
+ * 个人中心---我的退款
  */
 public class RefundActivity extends AppCompatActivity {
     private LinearLayout mTabsLinearLayout;
@@ -96,6 +97,7 @@ public class RefundActivity extends AppCompatActivity {
     private void submitRefund() {
         ((RefundStateFragment)adapter.getItem(0)).submitRefund();
     }
+
     public void initTab() {
         //tab 宽度均分
         indicator.setShouldExpand(true);

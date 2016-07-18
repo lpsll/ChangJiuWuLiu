@@ -22,18 +22,19 @@ import model.CarInfoBean;
 
 
 /**
- * Created by luochuan on 15/11/3.
+ * Created by larno on 15/11/3.
+ * 设置每种车型的数量
  */
 public class SelectCarNumActivity extends Activity implements View.OnClickListener {
     public static final String SelectCarNumWithType = "SelectCarNumWithType";
 
     private View rootView;
-    private TextView textTitle;
-    private LinearLayout linearCarNumContainer;
-    private ArrayList<CarInfoBean> carArray;
+    private TextView textTitle;//标题
+    private LinearLayout linearCarNumContainer;//汽车列表的容器
+    private ArrayList<CarInfoBean> carArray;//汽车数组
 
-    private int currentPosition;
-    private String currentNum;
+    private int currentPosition;//当前选择的位置
+    private String currentNum;//当前选择的数量
 
 
     @Override
@@ -61,6 +62,7 @@ public class SelectCarNumActivity extends Activity implements View.OnClickListen
         initView();
     }
 
+    /*返回设置汽车数量后的汽车数组*/
     private void setResultData() {
         Intent data = new Intent();
         data.putParcelableArrayListExtra(SelectCarNumWithType,carArray);
@@ -68,6 +70,7 @@ public class SelectCarNumActivity extends Activity implements View.OnClickListen
         finish();
     }
 
+    /*初始化汽车列表*/
     private void initView() {
         for (int i = 0; i < carArray.size(); i++) {
             Log.e("Car",carArray.get(i).name +";num="+carArray.get(i).num);
@@ -90,6 +93,7 @@ public class SelectCarNumActivity extends Activity implements View.OnClickListen
     }
 
 
+    /*选择汽车数量对话框*/
     private void popWindow() {
         View view = View.inflate(SelectCarNumActivity.this, R.layout.pop_number_selector, null);
         TextView ok = (TextView) view.findViewById(R.id.tv_ok);

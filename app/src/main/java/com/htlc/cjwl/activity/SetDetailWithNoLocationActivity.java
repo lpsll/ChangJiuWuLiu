@@ -15,6 +15,7 @@ import com.htlc.cjwl.R;
 
 /**
  * Created by Larno on 16/04/07.
+ * 编辑详情地址界面
  */
 public class SetDetailWithNoLocationActivity extends Activity implements View.OnClickListener {
     TextView textTitle;

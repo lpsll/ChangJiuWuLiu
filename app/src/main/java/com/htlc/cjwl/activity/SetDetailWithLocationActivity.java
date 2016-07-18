@@ -21,12 +21,13 @@ import com.htlc.cjwl.R;
 
 /**
  * Created by Larno on 15/11/5.
+ * 带定位的编辑详情地址界面
  */
 public class SetDetailWithLocationActivity extends Activity implements AMapLocationListener, View.OnClickListener {
     public static final String LocationAddress = "LocationAddress";
     TextView textTitle;
-    EditText editLocation;
-    TextView textMapLocation;
+    EditText editLocation;//地址编辑框
+    TextView textMapLocation;//定位地址显示框
     LinearLayout linearAmapLocation;
 
 
@@ -75,6 +76,7 @@ public class SetDetailWithLocationActivity extends Activity implements AMapLocat
                 editLocation.setText("");
                 break;
             case R.id.tv_get_comfir:
+                //将编辑的地址作为详细地址
                 String address = editLocation.getText().toString().trim();
                 if (TextUtils.isEmpty(address) && !isLoacOk) {
                     Toast.makeText(this, "输入地址不能为空！", Toast.LENGTH_SHORT).show();
@@ -95,6 +97,7 @@ public class SetDetailWithLocationActivity extends Activity implements AMapLocat
         }
     }
 
+    /*把定位地址作为详细地址*/
     public void next() {
         if(!detail_address.contains(cityName+"市")){
             Toast.makeText(this, "请手动输入地址，必须包含"+cityName+"市", Toast.LENGTH_SHORT).show();

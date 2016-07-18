@@ -14,12 +14,13 @@ import util.LogUtil;
 
 /**
  * Created by sks on 2015/11/3.
+ * 个人中心---个人信息
  */
 public class PersonalInformationActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView iv_back;
     private TextView tv_activity_title;
-    private LinearLayout ll_modify_tel;
-    private LinearLayout ll_modify_password;
+    private LinearLayout ll_modify_tel;//更换手机
+    private LinearLayout ll_modify_password;//修改密码
     private TextView tv_tel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

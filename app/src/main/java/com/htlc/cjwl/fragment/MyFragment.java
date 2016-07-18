@@ -113,6 +113,7 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
 
     }
 
+    /*获取是否有新消息*/
     private void showNewMessagePoint() {
         image_point_new_message.setVisibility(View.INVISIBLE);
         App.appAction.getNewMessage(new ActionCallbackListener<Void>() {
@@ -134,6 +135,7 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
         CommonUtil.getApplication().removeLoginListener(this);
     }
 
+    /*根据是否登录，刷新用户信息*/
     public void updateView() {
         // 未登录
         String node = CommonUtil.getApplication().getNode();
@@ -176,6 +178,7 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
         });
     }
 
+    /*请求到个人信息后，进行展示*/
     private void showMyselfInfo(UserBean bean) {
         if(bean==null){
             tv_rank.setText("");
@@ -252,7 +255,7 @@ public class MyFragment extends Fragment implements View.OnClickListener, App.On
     }
 
     /**
-     * 确认对话框
+     * 退出确认对话框
      */
     public void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

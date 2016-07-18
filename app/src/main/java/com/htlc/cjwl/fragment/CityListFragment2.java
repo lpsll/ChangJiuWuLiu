@@ -40,7 +40,7 @@ import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/5.
- * 城市列表的fragment
+ * 城市列表的fragment,在选中出发地或目的地时使用
  */
 public class CityListFragment2 extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
@@ -51,12 +51,10 @@ public class CityListFragment2 extends Fragment implements View.OnClickListener,
     private ArrayList<String> indexPositionList = new ArrayList<String>();//用于获得点击快速索引的每个条目的位置（如果点击b，从该集合中取 indexOf("b"）
     private ArrayList<CityInfoBean> list = new ArrayList<CityInfoBean>();//城市列表信息的集合
     private CitysListAdapter adapter;//list view的adapter
-    private boolean flag;//用于标记该fragment在网点查询中使用，还是在 添加地址中使用
+    private boolean flag;//标记当前城市列表是出发地为true，目的地false
 
     /**
-     * Constant.TYPE_FRAGMENT_CITY_LIST_MORE 表示 网点查询
-     * Constant.TYPE_FRAGMENT_CITY_LIST_HOT 表示 添加地址
-     *
+     *标记当前Framgent的城市是，出发地，true
      * @param flag
      */
     public void setFlag(boolean flag) {

@@ -32,9 +32,9 @@ import util.ToastUtil;
 
 /**
  * Created by Larno 2016/04/01;
+ * 发票Fragment
  */
 public class BillStateFragment extends Fragment {
-    private static final String[] RefundFragmentStatus = {"1", "2"};
     private int id;
     private BaseAdapter adapter;
     private ArrayList billList = new ArrayList();//某种类型的订单集合
@@ -75,10 +75,11 @@ public class BillStateFragment extends Fragment {
                 }
             }
         });
+        //当Fragment id为0，表示是可申请状态；
         if (id == 0) {
             listView.getRefreshableView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
             adapter = new BillListSelectAdapter(id, billList, getActivity());
-        } else {
+        } else {//id为1，表示是已申请状态
             adapter = new BillListAdapter(id, billList, getActivity());
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -113,7 +114,7 @@ public class BillStateFragment extends Fragment {
     }
 
     /**
-     * 申请发票界面
+     * 获取要申请发票的订单，去申请发票界面
      */
     public void submitBill() {
         SparseBooleanArray checkedItemPositions = listView.getRefreshableView().getCheckedItemPositions();
@@ -164,6 +165,7 @@ public class BillStateFragment extends Fragment {
         initData();
     }
 
+    /*根据Fragment id，或可申请发票或历史发票列表*/
     public void initData() {
         if(id == 0){
             initBillList();

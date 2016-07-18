@@ -85,6 +85,7 @@ public class ServiceFragment extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ServiceInfoBean serviceInfoBean = items.get(position);
+        //条目类型为网页类型，跳转web view
         LogUtil.i("条目id："+this,serviceInfoBean.id+"；条目类型："+serviceInfoBean.service_type);
         if(Constant.TYPE_SERVICE_HTML.equals(serviceInfoBean.service_type)){
             LogUtil.i(this, "TYPE_SERVICE_HTML");

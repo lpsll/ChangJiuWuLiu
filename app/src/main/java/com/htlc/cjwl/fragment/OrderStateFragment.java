@@ -100,6 +100,7 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
         refreshData();
     }
 
+    /*刷新数据*/
     public void refreshData() {
         if(LoginUtil.isOnline()){
             initData();
@@ -115,6 +116,7 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
         refreshData();
     }
 
+    /*根据订单类型，获取订单数据*/
     public void initData() {
         page = 1;
         App.appAction.orderList(OrderStatus[id], page, new ActionCallbackListener<ArrayList<OrderInfoBean>>() {
@@ -139,6 +141,7 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
         });
     }
 
+    /*根据订单数据的有无，刷新view*/
     private void refreshView() {
         if(ordersList.size()>0){
             relativeNoOrder.setVisibility(View.INVISIBLE);
@@ -167,6 +170,7 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
         });
     }
 
+    /*去我要运车界面*/
     private void goShopping() {
         if (!LoginUtil.isOnline()) {
             startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -185,6 +189,7 @@ public class OrderStateFragment extends Fragment implements App.OnLoginListener,
         refreshData();
     }
 
+    /*去订单详情*/
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.e("OrderList","position="+position);

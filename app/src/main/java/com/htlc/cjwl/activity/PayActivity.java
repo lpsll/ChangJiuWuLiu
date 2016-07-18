@@ -55,6 +55,7 @@ import util.pay.PayResult;
 
 /**
  * Created by sks on 2016/4/7.
+ * 付款界面
  */
 public class PayActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String OrderID = "OrderID";
@@ -282,6 +283,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    /*调用微信支付*/
     private void wxPay(PayChargeBean chargeBean) {
         final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
         // 将该app注册到微信
@@ -312,6 +314,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
     }
 
+    /*调用支付宝支付*/
     private void aliPay(PayChargeBean chargeBean) {
         double aliPrice = Double.parseDouble(price) - Double.parseDouble(useScore);
 //        aliPrice = 0.01;
@@ -336,6 +339,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
         payThread.start();
     }
 
+    /*调用银联支付*/
     private void unionPay(PayChargeBean chargeBean) {
         if (TextUtils.isEmpty(chargeBean.tn)) {
             showTipsDialog("网络错误！", false);

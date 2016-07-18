@@ -19,6 +19,7 @@ import com.htlc.cjwl.util.CommonUtil;
 
 /**
  * Created by Administrator on 2015/10/28.
+ * 我的订单Fragment
  */
 public class OrdersFragment extends Fragment /*implements ActionBar.TabListener*/ {
     private LinearLayout mTabsLinearLayout;

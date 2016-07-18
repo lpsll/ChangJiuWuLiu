@@ -94,7 +94,7 @@ public class BillActivity extends AppCompatActivity{
     }
 
     /**
-     * 进入退款界面
+     * 进入申请发票界面
      */
     private void submitBill() {
         ((BillStateFragment)adapter.getItem(0)).submitBill();

@@ -21,6 +21,7 @@ import com.htlc.cjwl.activity.TraceActivity;
 import com.htlc.cjwl.bean.OrderInfoBean;
 import com.htlc.cjwl.fragment.OrderStateFragment;
 import com.htlc.cjwl.util.CommonUtil;
+
 import util.LogUtil;
 import util.ToastUtil;
 
@@ -31,7 +32,7 @@ import core.ActionCallbackListener;
 /**
  * Created by Larno 2016/04/01;
  */
-public class PullOrderAdapter extends BaseAdapter{
+public class PullOrderAdapter extends BaseAdapter {
 
     private int id;
     private ArrayList<OrderInfoBean> ordersList;
@@ -64,8 +65,8 @@ public class PullOrderAdapter extends BaseAdapter{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LogUtil.i(this, "list view条目数量：" + ordersList.size() + ";id=" + id);
-        ViewHolder holder = null ;
-        if(convertView == null){
+        ViewHolder holder = null;
+        if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.layout_order_item, null);
             holder = new ViewHolder();
             holder.tvOrderNo = (TextView) convertView.findViewById(R.id.order_no);
@@ -76,19 +77,19 @@ public class PullOrderAdapter extends BaseAdapter{
             holder.tvOrderCancel = (TextView) convertView.findViewById(R.id.order_cancel);
             holder.tvOrderCancel_2 = (TextView) convertView.findViewById(R.id.order_cancel_2);
             convertView.setTag(holder);
-        }else {
-            holder = (ViewHolder)convertView.getTag();
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
         OrderInfoBean orderInfoBean = ordersList.get(position);
         holder.tvOrderNo.setText(orderInfoBean.order_no);
-        if(TextUtils.isEmpty(orderInfoBean.to_address.trim())){
+        if (TextUtils.isEmpty(orderInfoBean.to_address.trim())) {
             holder.tvOrderDes.setText(orderInfoBean.to_cityname);
-        }else{
+        } else {
             holder.tvOrderDes.setText(orderInfoBean.to_address);
         }
-        if(TextUtils.isEmpty(orderInfoBean.from_address.trim())){
+        if (TextUtils.isEmpty(orderInfoBean.from_address.trim())) {
             holder.tvorderDep.setText(orderInfoBean.from_cityname);
-        }else{
+        } else {
             holder.tvorderDep.setText(orderInfoBean.from_address);
         }
         holder.tvOrderDate.setText(orderInfoBean.order_date);
@@ -98,7 +99,7 @@ public class PullOrderAdapter extends BaseAdapter{
         在途跟踪===={3在途跟踪(待发运)【取消订单】、4已发运}、
         已收车===={5待评价【评价】、6已收车(结单)}
         全部====｛7 未支付 8 已经支付 9 待退款 10已退款｝(取消订单的状态)*/
-        switch (orderInfoBean.order_status){
+        switch (orderInfoBean.order_status) {
             case "1":
                 holder.tvOrderState.setText("待确认");
                 holder.tvOrderCancel.setText("取消订单");
@@ -207,18 +208,21 @@ public class PullOrderAdapter extends BaseAdapter{
         return convertView;
     }
 
+    /*去评价界面*/
     private void goComment(int position) {
         Intent intent = new Intent(context, EvaluationActivity.class);
-        intent.putExtra(EvaluationActivity.OrderID,ordersList.get(position).order_no);
+        intent.putExtra(EvaluationActivity.OrderID, ordersList.get(position).order_no);
         context.startActivity(intent);
     }
 
+    /*去物流信息界面*/
     private void showTransportInfo(int position) {
         Intent intent = new Intent(context, TraceActivity.class);
-        intent.putExtra(TraceActivity.OrderId,ordersList.get(position).order_no);
+        intent.putExtra(TraceActivity.OrderId, ordersList.get(position).order_no);
         context.startActivity(intent);
     }
 
+    /*申请退款*/
     private void submitRefund(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("申请退款");//设置对话框标题
@@ -230,13 +234,13 @@ public class PullOrderAdapter extends BaseAdapter{
                 App.appAction.submitRefundOrder(ordersList.get(position).order_no, new ActionCallbackListener<Void>() {
                     @Override
                     public void onSuccess(Void data) {
-                        ToastUtil.showToast(App.app,"取消订单成功！");
+                        ToastUtil.showToast(App.app, "取消订单成功！");
                         orderStateFragment.initData();
                     }
 
                     @Override
                     public void onFailure(String errorEvent, String message) {
-                        ToastUtil.showToast(App.app,message);
+                        ToastUtil.showToast(App.app, message);
                     }
                 });
             }
@@ -256,13 +260,15 @@ public class PullOrderAdapter extends BaseAdapter{
         negativeButton.setTextColor(CommonUtil.getResourceColor(R.color.blue));
     }
 
+    /*去付款界面*/
     private void goPay(int position) {
         Intent intent = new Intent(context, PayActivity.class);
-        intent.putExtra(PayActivity.OrderID,ordersList.get(position).order_no);
+        intent.putExtra(PayActivity.OrderID, ordersList.get(position).order_no);
         context.startActivity(intent);
 
     }
 
+    /*取消订单*/
     private void cancelOrder(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("取消订单");//设置对话框标题
@@ -274,13 +280,13 @@ public class PullOrderAdapter extends BaseAdapter{
                 App.appAction.cancelOrder(ordersList.get(position).order_no, new ActionCallbackListener<Void>() {
                     @Override
                     public void onSuccess(Void data) {
-                        ToastUtil.showToast(App.app,"取消订单成功！");
+                        ToastUtil.showToast(App.app, "取消订单成功！");
                         orderStateFragment.initData();
                     }
 
                     @Override
                     public void onFailure(String errorEvent, String message) {
-                        ToastUtil.showToast(App.app,message);
+                        ToastUtil.showToast(App.app, message);
                     }
                 });
             }

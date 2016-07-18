@@ -16,6 +16,7 @@ import core.ActionCallbackListener;
 
 /**
  * Created by sks on 2015/11/3.
+ * 验证密码（修改密码第一步）
  */
 public class PreModifyPasswordActivity extends AppCompatActivity {
     private TextView tv_activity_title;

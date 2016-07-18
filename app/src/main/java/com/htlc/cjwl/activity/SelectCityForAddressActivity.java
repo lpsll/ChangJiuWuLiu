@@ -30,17 +30,17 @@ import util.ToastUtil;
  * Created by Larno on 16/04/06.
  */
 public class SelectCityForAddressActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    public static final int SelectFromAddress = 1;
-    public static final int SelectToAddress = 2;
+    public static final int SelectFromAddress = 1;//为了选择出发地
+    public static final int SelectToAddress = 2;//为了选择目的地
     public static final String SelectAddressType = "SelectAddressType";
     public static final String SelectCityName = "SelectCityName";
     public static final String SelectCityID = "SelectCityID";
     private ArrayList<CityInfoBean> list = new ArrayList<>();
-    private HotcityAdapter adapter;
+    private HotcityAdapter adapter;//热门城市adapter
     private int pointer = -1;//城市选中标签
-    private TextView textTitle;
-    private GridView gridView;
-    private boolean isTo;
+    private TextView textTitle;//标题
+    private GridView gridView;//热门城市view
+    private boolean isTo;//是否是选择目的地，true 是
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,8 @@ public class SelectCityForAddressActivity extends AppCompatActivity implements A
             }
         });
         textTitle = (TextView) findViewById(R.id.tv_activity_title);
+
+        //根据选择城市的类型，设置标题
         int selectAddressType = intent.getIntExtra(SelectAddressType, 1);
         isTo = selectAddressType == SelectToAddress;
         textTitle.setText(isTo ? "选择目的城市" : "选择出发城市");
@@ -83,6 +85,7 @@ public class SelectCityForAddressActivity extends AppCompatActivity implements A
         initData();
     }
 
+    /*获取（目的地或出发地）热门城市，及城市列表根据*/
     private void initData() {
         App.appAction.cityListForAddress(!isTo, new ActionCallbackListener<String>() {
             @Override
@@ -108,6 +111,7 @@ public class SelectCityForAddressActivity extends AppCompatActivity implements A
         });
     }
 
+    /*热门城市的点击事件*/
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         adapter.setSeclection(position);
